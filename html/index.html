@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" dark>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Forum</title>
+    <script src="../js/scripts.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<!--    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<div class="row g-0">
+    <div class="col-2">
+        <nav class="d-flex flex-column flex-shrink-0" id="navbar">
+            <a href="/"
+               class="d-flex align-items-center p-4 mb-3 mb-md-0 me-md-auto text-decoration-none fs-2 color-text"
+               id="navbar-brand">forum.</a>
+            <ul class="nav flex-column mb-auto" id="sidenav-nav">
+                <li class="nav-item ps-2">
+                    <a class="nav-link active p-4" href="/">
+                        <i class="fa fa-home pe-4"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item ps-2">
+                    <a class="nav-link p-4" href="/questions">
+                        <i class="fa fa-question pe-4"></i>
+                        Questions
+                    </a>
+                </li>
+                <li class="nav-item ps-2">
+                    <a class="nav-link p-4" href="/starred">
+                        <i class="fa fa-star pe-4"></i>
+                        Starred
+                    </a>
+                </li>
+                <li class="nav-item ps-2">
+                    <a class="nav-link p-4" href="/users">
+                        <i class="fa fa-users pe-4"></i>
+                        Users
+                    </a>
+                </li>
+                <hr class="m-4"/>
+                <li class="nav-item ps-2">
+                    <a class="nav-link p-4" href="/profile">
+                        <i class="fa fa-user pe-4"></i>
+                        Profile
+                    </a>
+                </li>
+                <li class="nav-item ps-2">
+                    <a class="nav-link p-4" href="/settings">
+                        <i class="fa fa-cog pe-4"></i>
+                        Settings
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-7 px-5 mb-4">
+        <div id="main-controls">
+            <div id="post-search-group">
+                <span class="fa fa-search" id="post-search-icon"></span>
+                <input type="search" placeholder="Search" name="post-search" id="post-search">
+            </div>
+            <button id="btn-ask">Ask Question</button>
+            <button id="btn-alerts"><i class="fa fa-bell"></i></button>
+        </div>
+        <div class="post-wrapper">
+            <div class="post-vote-container">
+                <div class="post-vote-up">
+                    <i class="fa fa-caret-up"></i>
+                </div>
+                <div class="post-vote-count">46</div>
+                <div class="post-vote-down">
+                    <i class="fa fa-caret-down"></i>
+                </div>
+            </div>
+            <div class="post-container">
+                <h2 class="post-title">What are the most surreal places to visit?</h2>
+                <div class="post-author-container">
+                    <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
+                    <div class="post-author">@davidmiller</div>
+                </div>
+                <p class="post-content">I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.</p>
+                <div class="footer-container">
+                    <div class="tags-container">
+                        <div class="tags">surreal</div>
+                        <div class="tags">travel</div>
+                        <div class="tags">adventure</div>
+                    </div>
+                    <div class="post-answers-count-container">
+                        <i class="fa fa-comment-dots"></i>
+                        <div class="post-answers-count">20 answers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="post-wrapper">
+            <div class="post-vote-container">
+                <div class="post-vote-up">
+                    <i class="fa fa-caret-up"></i>
+                </div>
+                <div class="post-vote-count">13</div>
+                <div class="post-vote-down">
+                    <i class="fa fa-caret-down"></i>
+                </div>
+            </div>
+            <div class="post-container">
+                <h2 class="post-title">What is the best forum for graphic designers?</h2>
+                <div class="post-author-container">
+                    <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=marieblanchet" alt="@marieblanchet">
+                    <div class="post-author">@marieblanchet</div>
+                </div>
+                <p class="post-content"></p>
+                <div class="footer-container">
+                    <div class="tags-container">
+                        <div class="tags">graphicdesign</div>
+                    </div>
+                    <div class="post-answers-count-container">
+                        <i class="fa fa-comment-dots"></i>
+                        <div class="post-answers-count">25 answers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="post-wrapper">
+            <div class="post-vote-container">
+                <div class="post-vote-up">
+                    <i class="fa fa-caret-up"></i>
+                </div>
+                <div class="post-vote-count">1.3k</div>
+                <div class="post-vote-down">
+                    <i class="fa fa-caret-down"></i>
+                </div>
+            </div>
+            <div class="post-container">
+                <h2 class="post-title">What single scene from a movie is a masterpiece?</h2>
+                <div class="post-author-container">
+                    <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=iansmith" alt="@iansmith">
+                    <div class="post-author">@iansmith</div>
+                </div>
+                <p class="post-content">Well would love to know about the visualization and the main concept of the movie.<br />
+                Please add answers regarding the movie production, actors, characters, roles, dialogues, scenes, and other related stuff.<br />
+                Thanks in advance!</p>
+                <div class="footer-container">
+                    <div class="tags-container">
+                        <div class="tags">cinephile</div>
+                        <div class="tags">filmcommunity</div>
+                    </div>
+                    <div class="post-answers-count-container">
+                        <i class="fa fa-comment-dots"></i>
+                        <div class="post-answers-count">2.5k answers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="bg-secondary m-4 ms-0 p-5 radius">
+            <div class="d-flex mb-3">
+                <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="Profile picture" id="profile-img">
+                <div class="d-flex flex-column ms-3">
+                        <h4 id="profile-name">Aaron Hall<i class="fa fa-badge-check ms-3 text-accent"></i></h4>
+                    <p id="profile-username">@aaronhall</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p class="color-text"><i class="fa fa-user-plus me-3"></i>5.2k Following</p>
+                </div>
+                <div class="col-6">
+                    <p class="color-text"><i class="fa fa-users me-3"></i>4.6M Followers</p>
+                </div>
+            </div>
+            <p class="color-text mb-0 text-muted fw-semibold"><i class="fa fa-calendar me-3"></i>Joined June 2009</p>
+        </div>
+        <div class="p-5" id="right-container">
+            <h3 class="mb-5">Trends for you</h3>
+            <div class="d-flex flex-column" id="trends-container">
+                <a href="#" class="mb-2">
+                    <h6>Tech</h6>
+                    <p class="text-muted fw-semibold">20.8k questions</p>
+                </a>
+                <a href="#" class="mb-2">
+                    <h6>AR</h6>
+                    <p class="text-muted fw-semibold">1.3k questions</p>
+                </a>
+                <a href="#" class="mb-2">
+                    <h6>Cinema</h6>
+                    <p class="text-muted fw-semibold">65k questions</p>
+                </a>
+            </div>
+            <hr class="mb-4" />
+            <div class="row" id="footer-container">
+                <div class="col-6">
+                    <div class="d-flex flex-column">
+                        <a href="/about" class="fw-semibold">About</a>
+                        <a href="/privacy" class="fw-semibold">Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex flex-column">
+                        <a href="/about" class="fw-semibold">Terms of Service</a>
+                        <a href="/privacy" class="fw-semibold">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
