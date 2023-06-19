@@ -183,8 +183,17 @@ p { font-family: var(--font-body); }
     cursor: pointer;
 }
 
-.post-vote-container > .post-vote-up:hover, .post-vote-container > .post-vote-down:hover {
+.post-vote-container > .post-vote-up:hover, .post-vote-container > .post-vote-down:hover,
+.post-vote-container > .post-vote-up.active, .post-vote-container > .post-vote-down.active {
     opacity: 1;
+}
+
+.post-vote-container > .post-vote-up.active {
+    color: #3C5;
+}
+
+.post-vote-container > .post-vote-down.active {
+    color: #C35;
 }
 
 .post-container {
