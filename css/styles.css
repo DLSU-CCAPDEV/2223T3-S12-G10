@@ -121,6 +121,7 @@ p { font-family: var(--font-body); }
     padding-left: 3.5rem;
     color: var(--color-text-muted);
     font-weight: 700;
+    transition: background-color 180ms ease;
 }
 
 #post-search::before {
@@ -135,6 +136,7 @@ p { font-family: var(--font-body); }
 
 #post-search:focus {
     outline: 0;
+    background-color: var(--color-accent);
 }
 
 #btn-ask {
@@ -144,6 +146,15 @@ p { font-family: var(--font-body); }
     border-radius: var(--radius);
     padding: 0 calc(0.5rem + var(--radius) / 2);
     font-weight: 700;
+    transition: background-color 180ms ease;
+}
+
+#btn-ask:hover {
+    background-color: var(--color-accent);
+}
+
+#btn-ask:active {
+    background-color: var(--color-secondary);
 }
 
 #btn-alerts {
@@ -153,6 +164,12 @@ p { font-family: var(--font-body); }
     border: 0;
     border-radius: var(--radius);
     padding: 0 calc(var(--radius) / 2);
+    transition: background-color 180ms ease;
+}
+
+#btn-alerts:hover {
+    background-color: var(--color-accent);
+    color: var(--color-background);
 }
 
 .post-wrapper {
