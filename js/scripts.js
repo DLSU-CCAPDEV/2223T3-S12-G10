@@ -192,11 +192,12 @@ $(document).ready(function() {
         let tags_container = document.getElementById('tags-preview');
         tags_container.innerHTML = "";
         post_tags.forEach(function(tag) {
+            tag = tag.trim();
             if (tag == "") return;
 
             let post_tags_el = document.createElement("div");
             post_tags_el.classList.add("tags");
-            post_tags_el.innerText = tag.trim();
+            post_tags_el.innerText = tag;
 
             tags_container.append(post_tags_el);
         });
