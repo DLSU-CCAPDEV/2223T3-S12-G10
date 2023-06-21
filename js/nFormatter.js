@@ -1,4 +1,5 @@
 function nFormatter(num, digits) {
+    if (num < 0) return num;
     const lookup = [
         { value: 1, symbol: "" },
         { value: 1e3, symbol: "k" },
