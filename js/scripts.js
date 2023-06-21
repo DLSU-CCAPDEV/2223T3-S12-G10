@@ -51,7 +51,7 @@ function handleVoteButtonsDown(e) {
 function validateForm(...forms) {
     let valid = true;
     forms.forEach(form => {
-        if (!form.value.trim().length)
+        if (!form.trim().length)
             valid = false;
             return valid;
     });
@@ -70,16 +70,14 @@ $(document).ready(function() {
     });
 
     $('#btn-post-form').click(function() {
-        const post_title_form = document.getElementById('post-title-form');
-        const post_content_form = document.getElementById('post-content-form');
-        const post_tags_form = document.getElementById('post-tags-form');
+        const post_title = $('#post-title-form').val();
+        const post_content = $('#post-content-form').val();
+        const post_tags_form = $('#post-tags-form').val();
 
-        if (!validateForm(post_title_form, post_content_form, post_tags_form)) return;
+        if (!validateForm(post_title, post_content, post_tags_form)) return;
         $('#modal-question').modal('hide');
 
-        let post_title = post_title_form.value;
-        let post_content = post_content_form.value;
-        let post_tags = post_tags_form.value.split(',');
+        let post_tags = post_tags_form.split(',');
 
         let post_wrapper = document.createElement("div");
         post_wrapper.classList.add("post-wrapper");
