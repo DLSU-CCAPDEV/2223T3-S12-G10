@@ -69,94 +69,96 @@
                 <span class="fa fa-search" id="post-search-icon"></span>
                 <input type="search" placeholder="Search" name="post-search" id="post-search">
             </div>
-            <button id="btn-ask">Ask Question</button>
+            <button id="btn-ask" data-bs-toggle="modal" data-bs-target="#modal-question">Ask Question</button>
             <button id="btn-alerts"><i class="fa fa-bell"></i></button>
         </div>
-        <div class="post-wrapper">
-            <div class="post-vote-container">
-                <div class="post-vote-up">
-                    <i class="fa fa-caret-up"></i>
-                </div>
-                <div class="post-vote-count" data-vote-count="46">46</div>
-                <div class="post-vote-down">
-                    <i class="fa fa-caret-down"></i>
-                </div>
-            </div>
-            <div class="post-container">
-                <h2 class="post-title">What are the most surreal places to visit?</h2>
-                <div class="post-author-container">
-                    <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
-                    <div class="post-author">@davidmiller</div>
-                </div>
-                <p class="post-content">I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.</p>
-                <div class="footer-container">
-                    <div class="tags-container">
-                        <div class="tags">surreal</div>
-                        <div class="tags">travel</div>
-                        <div class="tags">adventure</div>
+        <div id="posts-container">
+            <div class="post-wrapper">
+                <div class="post-vote-container">
+                    <div class="post-vote-up">
+                        <i class="fa fa-caret-up"></i>
                     </div>
-                    <div class="post-answers-count-container">
-                        <i class="fa fa-comment-dots"></i>
-                        <div class="post-answers-count">20 answers</div>
+                    <div class="post-vote-count" data-vote-count="46">46</div>
+                    <div class="post-vote-down">
+                        <i class="fa fa-caret-down"></i>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="post-wrapper">
-            <div class="post-vote-container">
-                <div class="post-vote-up">
-                    <i class="fa fa-caret-up"></i>
-                </div>
-                <div class="post-vote-count" data-vote-count="13">13</div>
-                <div class="post-vote-down">
-                    <i class="fa fa-caret-down"></i>
-                </div>
-            </div>
-            <div class="post-container">
-                <h2 class="post-title">What is the best forum for graphic designers?</h2>
-                <div class="post-author-container">
-                    <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=marieblanchet" alt="@marieblanchet">
-                    <div class="post-author">@marieblanchet</div>
-                </div>
-                <p class="post-content"></p>
-                <div class="footer-container">
-                    <div class="tags-container">
-                        <div class="tags">graphicdesign</div>
+                <div class="post-container">
+                    <h2 class="post-title">What are the most surreal places to visit?</h2>
+                    <div class="post-author-container">
+                        <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
+                        <div class="post-author">@davidmiller</div>
                     </div>
-                    <div class="post-answers-count-container">
-                        <i class="fa fa-comment-dots"></i>
-                        <div class="post-answers-count">25 answers</div>
+                    <p class="post-content">I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.</p>
+                    <div class="footer-container">
+                        <div class="tags-container">
+                            <div class="tags">surreal</div>
+                            <div class="tags">travel</div>
+                            <div class="tags">adventure</div>
+                        </div>
+                        <div class="post-answers-count-container">
+                            <i class="fa fa-comment-dots"></i>
+                            <div class="post-answers-count">20 answers</div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="post-wrapper">
-            <div class="post-vote-container">
-                <div class="post-vote-up">
-                    <i class="fa fa-caret-up"></i>
+            <div class="post-wrapper">
+                <div class="post-vote-container">
+                    <div class="post-vote-up">
+                        <i class="fa fa-caret-up"></i>
+                    </div>
+                    <div class="post-vote-count" data-vote-count="13">13</div>
+                    <div class="post-vote-down">
+                        <i class="fa fa-caret-down"></i>
+                    </div>
                 </div>
-                <div class="post-vote-count" data-vote-count="1305">1.3k</div>
-                <div class="post-vote-down">
-                    <i class="fa fa-caret-down"></i>
+                <div class="post-container">
+                    <h2 class="post-title">What is the best forum for graphic designers?</h2>
+                    <div class="post-author-container">
+                        <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=marieblanchet" alt="@marieblanchet">
+                        <div class="post-author">@marieblanchet</div>
+                    </div>
+                    <p class="post-content"></p>
+                    <div class="footer-container">
+                        <div class="tags-container">
+                            <div class="tags">graphicdesign</div>
+                        </div>
+                        <div class="post-answers-count-container">
+                            <i class="fa fa-comment-dots"></i>
+                            <div class="post-answers-count">25 answers</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="post-container">
-                <h2 class="post-title">What single scene from a movie is a masterpiece?</h2>
-                <div class="post-author-container">
-                    <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=iansmith" alt="@iansmith">
-                    <div class="post-author">@iansmith</div>
-                </div>
-                <p class="post-content">Well would love to know about the visualization and the main concept of the movie.<br />
-                Please add answers regarding the movie production, actors, characters, roles, dialogues, scenes, and other related stuff.<br />
-                Thanks in advance!</p>
-                <div class="footer-container">
-                    <div class="tags-container">
-                        <div class="tags">cinephile</div>
-                        <div class="tags">filmcommunity</div>
+            <div class="post-wrapper">
+                <div class="post-vote-container">
+                    <div class="post-vote-up">
+                        <i class="fa fa-caret-up"></i>
                     </div>
-                    <div class="post-answers-count-container">
-                        <i class="fa fa-comment-dots"></i>
-                        <div class="post-answers-count">2.5k answers</div>
+                    <div class="post-vote-count" data-vote-count="1305">1.3k</div>
+                    <div class="post-vote-down">
+                        <i class="fa fa-caret-down"></i>
+                    </div>
+                </div>
+                <div class="post-container">
+                    <h2 class="post-title">What single scene from a movie is a masterpiece?</h2>
+                    <div class="post-author-container">
+                        <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=iansmith" alt="@iansmith">
+                        <div class="post-author">@iansmith</div>
+                    </div>
+                    <p class="post-content">Well would love to know about the visualization and the main concept of the movie.<br />
+                    Please add answers regarding the movie production, actors, characters, roles, dialogues, scenes, and other related stuff.<br />
+                    Thanks in advance!</p>
+                    <div class="footer-container">
+                        <div class="tags-container">
+                            <div class="tags">cinephile</div>
+                            <div class="tags">filmcommunity</div>
+                        </div>
+                        <div class="post-answers-count-container">
+                            <i class="fa fa-comment-dots"></i>
+                            <div class="post-answers-count">2.5k answers</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -211,6 +213,39 @@
                         <a href="/privacy" class="fw-semibold">Privacy Policy</a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-question" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 m-0">Ask Question</h1>
+            </div>
+            <div class="modal-body">
+                <form action="" id="form-post">
+                    <div class="mb-3">
+                        <label for="post-title-form">Title</label>
+                        <input type="text" class="form-control" name="post-title" id="post-title-form" required="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="post-content-form">Content</label>
+                        <textarea class="form-control" name="post-content" id="post-content-form" required=""></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="post-tags-form">Tags</label>
+                        <input type="text" class="form-control" name="post-tags-form" id="post-tags-form" required="">
+                        <p class="fs-6 fw-semibold text-muted">Separate tags with a comma.</p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    <i class="fa fa-trash me-2"></i>Discard</button>
+                <button type="button" form="form-post" class="btn btn-success" id="btn-post-form">
+                    <i class="fa fa-check me-2"></i>Publish</button>
             </div>
         </div>
     </div>

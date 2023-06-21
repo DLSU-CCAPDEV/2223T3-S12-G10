@@ -330,3 +330,18 @@ p { font-family: var(--font-body); }
     font-size: 0.85em;
     margin-bottom: 1em;
 }
+
+.modal-content {
+    background-color: var(--color-secondary);
+}
+
+.modal-header {
+    border-bottom-color: var(--color-background);
+}
+
+input.form-control, textarea.form-control {
+    background-color: var(--color-primary);
+    border: 0;
+    transition: background-color 180ms ease;
+    color: var(--color-text);
+}
