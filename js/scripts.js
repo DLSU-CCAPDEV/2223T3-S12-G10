@@ -67,6 +67,10 @@ $(document).ready(function() {
         $('#post-title-form').val('');
         $('#post-content-form').val('');
         $('#post-tags-form').val('');
+
+        $('#post-title-preview').text('');
+        $('#post-content-preview').html('');
+        $('#tags-preview').html('');
     });
 
     $('#btn-post-form').click(function() {
