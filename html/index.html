@@ -11,7 +11,10 @@
 <!--    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css">
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/markdown.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/cure53/DOMPurify/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../js/nFormatter.js"></script>
     <script src="../js/scripts.js"></script>
 </head>
@@ -224,28 +227,39 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal-question" aria-hidden="true">
+<div class="modal fade modal-xl" id="modal-question" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5 m-0">Ask Question</h1>
             </div>
             <div class="modal-body">
-                <form action="" id="form-post">
-                    <div class="mb-3">
-                        <label for="post-title-form">Title</label>
-                        <input type="text" class="form-control" name="post-title" id="post-title-form" required="">
+                <div class="row">
+                    <div class="col-6">
+                        <form action="" id="form-post">
+                            <div class="mb-3">
+                                <label for="post-title-form" class="form-label">Title</label>
+                                <input type="text" class="form-control" name="post-title" id="post-title-form" required="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="post-content-form" class="form-label">Content</label>
+                                <textarea class="form-control" name="post-content" id="post-content-form" required="" rows="10"></textarea>
+                                <p class="fs-6 fw-semibold text-muted"><a href="https://commonmark.org/help/">CommonMark Markdown</a> formatting is supported.</p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="post-tags-form" class="form-label">Tags</label>
+                                <input type="text" class="form-control" name="post-tags-form" id="post-tags-form" required="">
+                                <p class="fs-6 fw-semibold text-muted">Separate tags with a comma.</p>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <label for="post-content-form">Content</label>
-                        <textarea class="form-control" name="post-content" id="post-content-form" required=""></textarea>
+                    <div class="col-6">
+                        <h2 class="post-title" id="post-title-preview"></h2>
+                        <div class="post-content" id="post-content-preview"></div>
+                        <div class="tags-container" id="tags-preview"></div>
                     </div>
-                    <div class="mb-3">
-                        <label for="post-tags-form">Tags</label>
-                        <input type="text" class="form-control" name="post-tags-form" id="post-tags-form" required="">
-                        <p class="fs-6 fw-semibold text-muted">Separate tags with a comma.</p>
-                    </div>
-                </form>
+                </div>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">

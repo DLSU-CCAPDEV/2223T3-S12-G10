@@ -133,8 +133,9 @@ $(document).ready(function() {
 
         post_author_container.append(post_author_img, post_author);
 
-        let post_content_el = document.createElement("p");
-        post_content_el.innerHTML = post_content;
+        let post_content_el = document.createElement("div");
+        post_content_el.classList.add("post-content");
+        post_content_el.innerHTML = DOMPurify.sanitize(marked.parse(post_content));
 
         let footer_container = document.createElement("div");
         footer_container.classList.add("footer-container");
@@ -171,4 +172,29 @@ $(document).ready(function() {
         let posts_container = $('#posts-container');
         posts_container.prepend(post_wrapper);
     });
+
+    $('#post-title-form').on("input", function() {
+        $('#post-title-preview').text($(this).val());
+    });
+
+    $('#post-content-form').on("input", function() {
+        $('#post-content-preview').html(
+            DOMPurify.sanitize(marked.parse($(this).val()))
+        );
+    })
+
+    $('#post-tags-form').on("input", function() {
+        let post_tags = $(this).val().trim().split(',');
+        let tags_container = document.getElementById('tags-preview');
+        tags_container.innerHTML = "";
+        post_tags.forEach(function(tag) {
+            if (tag == "") return;
+
+            let post_tags_el = document.createElement("div");
+            post_tags_el.classList.add("tags");
+            post_tags_el.innerText = tag.trim();
+
+            tags_container.append(post_tags_el);
+        });
+    })
 });
