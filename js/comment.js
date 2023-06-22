@@ -46,7 +46,7 @@ function handleReplies(e) {
             //pass the replyid
             let parentComment = e.target.closest('.comment-wrapper');
             console.log(parentComment);
-            createReply(parentComment, replyid);
+            createReply(parentComment, replyid); //important to note here is that the Parent is the wrapper
             $(e.currentTarget).parent().remove();
             replybtn.classList.remove('active-reply');
         })
@@ -74,8 +74,7 @@ function handleReplies(e) {
 function handleEditbutton(e) {
     console.log("Edit Button");
     //let replybtn = $(e.currentTarget).parent();
-    let editbtn = e.target.closest('.comment-container')
-    let editcomment = e.target.closest('.comment-content');
+    let editbtn = e.target.closest('.comment-container');
     //check if it has a certain class that appears iff reply has been pressed once
     if (editbtn.classList.contains('active-edit')) {
         //do nothing
@@ -93,7 +92,6 @@ function handleEditbutton(e) {
         editbox.setAttribute("id", editID);
         //add a save and cancel button
         let editbox_save = document.createElement("div");
-        console.log(editcomment);
         editbox.classList.add("save-edit");
         editbox_save.innerHTML = "SAVE";
         editbox_save.classList.add("save-button");
@@ -158,6 +156,10 @@ function createReply(parentComment, replyid) {
     //create the entire format for a reply/comment
     let inputtedtext = document.getElementById(replyid).value;
 
+    /**************************************/
+    //this creates another wrapper so that we can nest succeeding comments
+    //this gets appended to the main comment's wrapper
+    /**************************************/
     let reply_container = document.createElement("div");
     reply_container.classList.add("comment-wrapper", "opened");
 
@@ -284,9 +286,13 @@ function createReply(parentComment, replyid) {
 //functions exclusive to post-related control
 function handlePostEditbutton(e) {
     console.log("Edit Button");
-    //let replybtn = $(e.currentTarget).parent();
+    /**************************************/
+    //for post variant stuff, follow the exact same thought process
+    //except if it's for adding a comment
+    //    - you will be appending the comment-wrapper into the comments-container instead
+    //    -* this is because comments-container is the actual comments section
+    /**************************************/
     let editbtn = e.target.closest('.post-container')
-    let editcomment = e.target.closest('.post-content');
     //check if it has a certain class that appears iff reply has been pressed once
     if (editbtn.classList.contains('active-edit')) {
         //do nothing
@@ -304,7 +310,6 @@ function handlePostEditbutton(e) {
         editbox.setAttribute("id", editID);
         //add a save and cancel button
         let editbox_save = document.createElement("div");
-        console.log(editcomment);
         editbox.classList.add("save-edit");
         editbox_save.innerHTML = "SAVE";
         editbox_save.classList.add("save-button");
