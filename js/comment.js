@@ -15,6 +15,7 @@ function handleReplies(e) {
         replybtn.classList.add('active-reply');
         //create the textbox
         let inputbox_container = document.createElement("div");
+        inputbox_container.classList.add("inputbox-container");
         let inputbox = document.createElement("input");
         inputbox.setAttribute("type", "text");
         inputbox.setAttribute("placeholder", "type here...");
@@ -25,6 +26,7 @@ function handleReplies(e) {
         let inputbox_save = document.createElement("div");
         inputbox.classList.add("save");
         inputbox_save.innerHTML = "SAVE";
+        inputbox_save.classList.add("save-button");
         inputbox_save.addEventListener("click", function (e) {
             //get the inputted value so far then call the post building function
             //pass the replyid
@@ -34,19 +36,22 @@ function handleReplies(e) {
             $(e.currentTarget).parent().remove();
             replybtn.classList.remove('active-reply');
         })
+
         let inputbox_cancel = document.createElement("div");
         inputbox_cancel.innerHTML = "CANCEL";
+        inputbox_cancel.classList.add("cancel-button");
         inputbox_cancel.addEventListener("click", function (e) {
             replybtn.classList.remove('active-reply');
             $(e.currentTarget).parent().remove();            
         })
         //inputbox.classList.add("opened");
         //format box
-        inputbox_container.classList.add('post-content');
+        //inputbox_container.classList.add('post-content');
         //build the box
+        inputbox_container.append(inputbox);
         inputbox_container.append(inputbox_save);
         inputbox_container.append(inputbox_cancel);
-        inputbox_container.append(inputbox);
+        
         replybtn.append(inputbox_container);
     }
     
@@ -77,6 +82,7 @@ function handleEditbutton(e) {
         console.log(editcomment);
         editbox.classList.add("save-edit");
         editbox_save.innerHTML = "SAVE";
+        editbox_save.classList.add("save-button");
         editbox_save.addEventListener("click", function (e) {
             let parentComment = e.target.closest('.comment-card');
             let edit_comment = parentComment.querySelector('.post-content');
@@ -85,8 +91,10 @@ function handleEditbutton(e) {
             $(e.currentTarget).parent().remove();
             editbtn.classList.remove('active-edit');
         })
+
         let editbox_cancel = document.createElement("div");
         editbox_cancel.innerHTML = "CANCEL";
+        editbox_cancel.classList.add("cancel-button");
         editbox_cancel.addEventListener("click", function (e) {
             $(e.currentTarget).parent().remove();
             editbtn.classList.remove('active-edit');     
@@ -95,9 +103,9 @@ function handleEditbutton(e) {
         //format box
         //inputbox_container.classList.add('post-content');
         //build the box
+        editbox_container.append(editbox);
         editbox_container.append(editbox_save);
         editbox_container.append(editbox_cancel);
-        editbox_container.append(editbox);
         editbtn.append(editbox_container);
     }
 }

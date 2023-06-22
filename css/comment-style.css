@@ -67,3 +67,33 @@
 .deleted-comment {
     opacity: 20%;
 }
+
+.inputbox-container {
+    display: flex;
+    margin: 1rem;
+}
+
+.edit-box {
+    display: flex;
+    margin: 1rem;
+}
+
+.save-button {
+    margin-left: 1rem;
+    margin-right: 0.5rem;
+    opacity: 50%;
+}
+
+.cancel-button {
+    margin-left: 1rem;
+    margin-right: 0.5rem;
+    opacity: 50%;
+}
+
+.save-button:hover {
+    opacity: 100%;
+}
+
+.cancel-button:hover {
+    opacity: 100%;
+}
