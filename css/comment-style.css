@@ -1,25 +1,22 @@
+/*comment-section*/
 .post-comment-section {
-    margin-left: 3rem;
-    margin-top: 1rem;
+    border-style: solid;
+    border-color: var(--color-secondary);
+    border: 1px;
 }
 
 .post-comment-container {
     display: none;
     position: relative;
 }
-
-.post-comment-container.opened {
-    display: block;
-}
-
-.post-comment-container::before {
-    content: "";
-    background-color: #585E8E; /*--color-text-muted*/
-    background-color: #1C2146;/*--color-secondary*/
+/*That line at the side is this thing*/
+.post-comment-container::before{
+    content:"";
+    background-color: var(--color-primary);
     position: absolute;
     min-height: 100%;
-    width: 5px;
-    left: -20px;
+    width: 4px;
+    left: -10px;
 }
 
 .post-comment-container:not(:first-child) {
@@ -28,21 +25,45 @@
 }
 
 .comment-card {
-    padding: 20px;
-    background-color: #1C2146;/*--color-secondary*/
-    border: 1px solid;
-    border-color: #1C2146;/*--color-secondary*/;
+    padding: 0.1rem;
+    /*background-color: var(--color-primary);*/
+    border: 0.2rem;
+    border-style: solid;
+    border-color: var(--color-primary);
     border-radius: 0.5rem;
+    min-width: 100%;
 }
 
-.comment-footer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    opacity: 30%;
+.comment-card > .post-author, .post-content {
+    margin-bottom: 1rem;
+}
+
+.comment-card > .footer-container {
+    font-size: 0.7rem;
+    margin: 4px;
+}
+
+.comment-card > .footer-container > .comment-actions {
+    opacity: 40%;
+}
+
+.comment-card > .footer-container > .comment-actions:hover {
+    opacity: 100%;
 }
 
 .comment-actions {
-    margin-right: 0.5rem;
-    cursor: pointer;
+    margin-left: 0.5rem;
+    margin-right: 0.25 rem;
+}
+
+.show-replies {
+    font-weight: 700;
+}
+
+.opened {
+    display: block;
+}
+
+.deleted-comment {
+    opacity: 20%;
 }

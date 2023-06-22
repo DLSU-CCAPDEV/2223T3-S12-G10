@@ -62,12 +62,6 @@
                         Settings
                     </a>
                 </li>
-                <li class="nav-item ps-2">
-                    <a class="nav-link p-4" href="/logout">
-                        <i class="fa fa-sign-out pe-4"></i>
-                        Logout
-                    </a>
-                </li>
             </ul>
         </nav>
     </div>
@@ -77,77 +71,57 @@
                 <span class="fa fa-search" id="post-search-icon"></span>
                 <input type="search" placeholder="Search" name="post-search" id="post-search">
             </div>
-            <button id="btn-ask" data-bs-toggle="modal" data-bs-target="#modal-question">Ask Question</button>
+            <button id="btn-ask">Ask Question</button>
             <button id="btn-alerts"><i class="fa fa-bell"></i></button>
         </div>
-        <div id="posts-container">
-            <div class="post-wrapper">
-                <div class="post-vote-container">
-                    <div class="post-vote-up">
-                        <i class="fa fa-caret-up"></i>
-                    </div>
-                    <div class="post-vote-count" data-vote-count="46">46</div>
-                    <div class="post-vote-down">
-                        <i class="fa fa-caret-down"></i>
-                    </div>
+        <div class="post-wrapper">
+            <div class="post-vote-container">
+                <div class="post-vote-up">
+                    <i class="fa fa-caret-up"></i>
                 </div>
-                <div class="post-container">
-                    <h2 class="post-title">What are the most surreal places to visit?</h2>
-                    <div class="post-author-container">
-                        <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
-                        <div class="post-author">@davidmiller</div>
-                    </div>
-                    <p class="post-content">I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.</p>
-                    <div class="footer-container">
-                        <div class="tags-container">
-                            <div class="tags">surreal</div>
-                            <div class="tags">travel</div>
-                            <div class="tags">adventure</div>
-                        </div>
-                        <div class="post-answers-count-container">
-                            <i class="fa fa-comment-dots"></i>
-                            <div class="post-answers-count">20 answers</div>
-                        </div>
-                    </div>
+                <div class="post-vote-count" data-vote-count="13">13</div>
+                <div class="post-vote-down">
+                    <i class="fa fa-caret-down"></i>
                 </div>
             </div>
-        </div>
-        <div class="post-comment-section">
-            <!--Important to note: every reply will be nested within the
-            "post-comment-container" of its parent, and is built with its own
-            "post-comment container" to accomodate replies to it-->
-            <div class="post-comment-container opened">
-                <div class="comment-card">
-                    <div class="post-author-container">
-                        <img class="post-author-img">
-                        <div class="post-author">@username</div>
+            <div class="post-container">
+                <h2 class="post-title">What is the best forum for graphic designers?</h2>
+                <p class="post-content">Post Content</p>
+                <div class="post-author-container">
+                    <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=marieblanchet" alt="@marieblanchet">
+                    <div class="post-author">@marieblanchet</div>
+                </div>
+                <p class="post-content"></p>
+                <div class="footer-container">
+                    <div class="tags-container">
+                        <div class="tags">graphicdesign</div>
                     </div>
-                    <p class="comment-content">Anchor Comment here</p>
-                    <div class="comment-footer">
-                        <div class="create-reply comment-actions">Reply</div>
-                        <div class="edit-reply comment-actions">Edit</div>
-                        <div class="delete-reply comment-actions">Delete</div>
-                        <div class="show-replies comment-actions">Show more</div>
+                    <div class="post-answers-count-container">
+                        <i class="fa fa-comment-dots"></i>
+                        <div class="post-answers-count">25 answers</div>
                     </div>
                 </div>
-                <div class="post-comment-container">
-                    <div class="comment-card">
-                        <div class="post-author-container">
-                            <img class="post-author-img">
-                            <div class="post-author">@username</div>
-                        </div>
-                        <p class="comment-content">Nested Comment-1 </p>
-                        <div class="comment-footer">
-                            <div class="create-reply comment-actions">Reply</div>
-                            <div class="edit-reply comment-actions">Edit</div>
-                            <div class="delete-reply comment-actions">Delete</div>
-                            <div class="show-replies comment-actions">Show more</div>
+                <div class="post-comment-section"> <!--Main Box-->
+                    <div class="post-comment-container opened" id="parent-1"> <!--Contains comments themselves-->
+                        <div class="comment-card" data-active="0">
+                            <img>
+                            <div class="post-author">
+                                @username
+                            </div>
+                            <p class="post-content">Actual Comment here</p>
+                            <div class="footer-container">
+                                <div class="create-reply comment-actions">Reply</div>
+                                <div class="edit-reply comment-actions">Edit</div>
+                                <div class="delete-reply comment-actions">Delete</div>
+                                <div class="show-replies comment-actions">Show More</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <!--User Data-->
     <div class="col-3">
         <div class="bg-secondary m-4 ms-0 p-5 radius">
             <div class="d-flex mb-3">
@@ -197,39 +171,6 @@
                         <a href="/privacy" class="fw-semibold">Privacy Policy</a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modal-question" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5 m-0">Ask Question</h1>
-            </div>
-            <div class="modal-body">
-                <form action="" id="form-post">
-                    <div class="mb-3">
-                        <label for="post-title-form">Title</label>
-                        <input type="text" class="form-control" name="post-title" id="post-title-form" required="">
-                    </div>
-                    <div class="mb-3">
-                        <label for="post-content-form">Content</label>
-                        <textarea class="form-control" name="post-content" id="post-content-form" required=""></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="post-tags-form">Tags</label>
-                        <input type="text" class="form-control" name="post-tags-form" id="post-tags-form" required="">
-                        <p class="fs-6 fw-semibold text-muted">Separate tags with a comma.</p>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-                    <i class="fa fa-trash me-2"></i>Discard</button>
-                <button type="button" form="form-post" class="btn btn-success" id="btn-post-form">
-                    <i class="fa fa-check me-2"></i>Publish</button>
             </div>
         </div>
     </div>
