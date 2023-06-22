@@ -281,7 +281,6 @@ p { font-family: var(--font-body); }
 
 .post-answers-count-container {
     display: flex;
-    justify-content: end;
     color: var(--color-accent);
     align-items: center;
     justify-content: flex-end;
