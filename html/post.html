@@ -18,6 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../js/nFormatter.js"></script>
     <script src="../js/scripts.js"></script>
+    <script src="../js/comment.js"></script>
 </head>
 <body>
 <div class="row g-0">
@@ -112,8 +113,8 @@
                         </div>
                     </div>
                     <div class="post-controls-container">
-                        <div><i class="fa fa-pen me-2"></i>Edit</div>
-                        <div><i class="fa fa-trash me-2"></i>Delete</div>
+                        <div class="edit-post"><i class="fa fa-pen me-2"></i>Edit</div>
+                        <div class="delete-post"><i class="fa fa-trash me-2"></i>Delete</div>
                     </div>
                 </div>
             </div>
@@ -123,7 +124,7 @@
             <textarea id="add-comment-textarea" class="form-control" name="add-comment" placeholder="Write a comment …"></textarea>
         </div>
         <div id="comments-container">
-            <div class="comment-wrapper">
+            <div class="comment-wrapper opened">
                 <div class="comment-container">
                     <div class="comment-header-container">
                         <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
@@ -145,125 +146,10 @@
                             </div>
                         </div>
                         <div class="comment-controls-container">
-                            <div><i class="fa fa-reply me-2"></i>Reply</div>
-                            <div><i class="fa fa-pen me-2"></i>Edit</div>
-                            <div><i class="fa fa-trash me-2"></i>Delete</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="comment-wrapper">
-                    <div class="comment-container">
-                        <div class="comment-header-container">
-                            <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
-                            <div class="comment-author">@aaronhall</div>
-                            <div class="comment-header-separator">•</div>
-                            <div class="comment-timestamp">06/23/2023</div>
-                        </div>
-                        <div class="comment-content">
-                            I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.
-                        </div>
-                        <div class="comment-footer-container">
-                            <div class="comment-votes-container">
-                                <div class="comment-vote-up">
-                                    <i class="fa fa-arrow-up"></i>
-                                </div>
-                                <div class="comment-vote-count" data-vote-count="46">46</div>
-                                <div class="comment-vote-down">
-                                    <i class="fa fa-arrow-down"></i>
-                                </div>
-                            </div>
-                            <div class="comment-controls-container">
-                                <div><i class="fa fa-reply me-2"></i>Reply</div>
-                                <div><i class="fa fa-pen me-2"></i>Edit</div>
-                                <div><i class="fa fa-trash me-2"></i>Delete</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comment-wrapper">
-                        <div class="comment-container">
-                            <div class="comment-header-container">
-                                <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
-                                <div class="comment-author">@aaronhall</div>
-                                <div class="comment-header-separator">•</div>
-                                <div class="comment-timestamp">06/23/2023</div>
-                            </div>
-                            <div class="comment-content">
-                                I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.
-                            </div>
-                            <div class="comment-footer-container">
-                                <div class="comment-votes-container">
-                                    <div class="comment-vote-up">
-                                        <i class="fa fa-arrow-up"></i>
-                                    </div>
-                                    <div class="comment-vote-count" data-vote-count="46">46</div>
-                                    <div class="comment-vote-down">
-                                        <i class="fa fa-arrow-down"></i>
-                                    </div>
-                                </div>
-                                <div class="comment-controls-container">
-                                    <div><i class="fa fa-reply me-2"></i>Reply</div>
-                                    <div><i class="fa fa-pen me-2"></i>Edit</div>
-                                    <div><i class="fa fa-trash me-2"></i>Delete</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="comment-wrapper">
-                    <div class="comment-container">
-                        <div class="comment-header-container">
-                            <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
-                            <div class="comment-author">@aaronhall</div>
-                            <div class="comment-header-separator">•</div>
-                            <div class="comment-timestamp">06/23/2023</div>
-                        </div>
-                        <div class="comment-content">
-                            I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.
-                        </div>
-                        <div class="comment-footer-container">
-                            <div class="comment-votes-container">
-                                <div class="comment-vote-up">
-                                    <i class="fa fa-arrow-up"></i>
-                                </div>
-                                <div class="comment-vote-count" data-vote-count="46">46</div>
-                                <div class="comment-vote-down">
-                                    <i class="fa fa-arrow-down"></i>
-                                </div>
-                            </div>
-                            <div class="comment-controls-container">
-                                <div><i class="fa fa-reply me-2"></i>Reply</div>
-                                <div><i class="fa fa-pen me-2"></i>Edit</div>
-                                <div><i class="fa fa-trash me-2"></i>Delete</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="comment-wrapper">
-                        <div class="comment-container">
-                            <div class="comment-header-container">
-                                <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
-                                <div class="comment-author">@aaronhall</div>
-                                <div class="comment-header-separator">•</div>
-                                <div class="comment-timestamp">06/23/2023</div>
-                            </div>
-                            <div class="comment-content">
-                                I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.
-                            </div>
-                            <div class="comment-footer-container">
-                                <div class="comment-votes-container">
-                                    <div class="comment-vote-up">
-                                        <i class="fa fa-arrow-up"></i>
-                                    </div>
-                                    <div class="comment-vote-count" data-vote-count="46">46</div>
-                                    <div class="comment-vote-down">
-                                        <i class="fa fa-arrow-down"></i>
-                                    </div>
-                                </div>
-                                <div class="comment-controls-container">
-                                    <div><i class="fa fa-reply me-2"></i>Reply</div>
-                                    <div><i class="fa fa-pen me-2"></i>Edit</div>
-                                    <div><i class="fa fa-trash me-2"></i>Delete</div>
-                                </div>
-                            </div>
+                            <div class="create-reply"><i class="fa fa-reply me-2"></i>Reply</div>
+                            <div class="edit-reply"><i class="fa fa-pen me-2"></i>Edit</div>
+                            <div class="delete-reply"><i class="fa fa-trash me-2"></i>Delete</div>
+                            <div class="show-replies"><i class="fa fa-caret-down me-2"></i>Show More</div>
                         </div>
                     </div>
                 </div>

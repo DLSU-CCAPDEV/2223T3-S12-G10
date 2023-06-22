@@ -48,7 +48,7 @@
 }
 
 .comment-wrapper {
-    display: flex;
+    display: none;
     flex-direction: column;
 }
 
@@ -56,6 +56,15 @@
     margin-top: 1.5rem;
     padding-left: 3rem;
     border-left: 5px solid var(--color-secondary);
+}
+
+.comment-wrapper:not(:first-child) {
+    margin-left: 3rem;
+    margin-top: 1rem;
+}
+
+.comment-wrapper.opened {
+    display: flex;
 }
 
 .comment-container {
@@ -129,4 +138,8 @@
     color: var(--color-text-muted);
     text-decoration: none;
     font-weight: 600;
+}
+
+.deleted-comment {
+    opacity: 50%;
 }
