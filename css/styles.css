@@ -345,6 +345,12 @@ input.form-control, textarea.form-control {
     transition: background-color 180ms ease;
     color: var(--color-text);
 }
+
+#post-preview-container {
+    max-height: 32rem;
+    overflow-y: auto;
+}
+
 #login-wrapper {
     display: flex;
     align-items: center;
