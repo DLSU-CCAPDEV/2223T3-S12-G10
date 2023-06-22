@@ -11,8 +11,8 @@
 <!--    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css">
     <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/markdown.css">
     <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="../css/markdown.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/cure53/DOMPurify/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -28,7 +28,7 @@
                id="navbar-brand">forum.</a>
             <ul class="nav flex-column mb-auto" id="sidenav-nav">
                 <li class="nav-item ps-2">
-                    <a class="nav-link active p-4" href="/">
+                    <a class="nav-link p-4" href="/">
                         <i class="fa fa-home pe-4"></i>
                         Home
                     </a>
@@ -111,67 +111,159 @@
                             <div class="post-answers-count">20 answers</div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="post-wrapper">
-                <div class="post-vote-container">
-                    <div class="post-vote-up">
-                        <i class="fa fa-caret-up"></i>
-                    </div>
-                    <div class="post-vote-count" data-vote-count="13">13</div>
-                    <div class="post-vote-down">
-                        <i class="fa fa-caret-down"></i>
-                    </div>
-                </div>
-                <div class="post-container">
-                    <h2 class="post-title">What is the best forum for graphic designers?</h2>
-                    <div class="post-author-container">
-                        <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=marieblanchet" alt="@marieblanchet">
-                        <div class="post-author">@marieblanchet</div>
-                    </div>
-                    <p class="post-content"></p>
-                    <div class="footer-container">
-                        <div class="tags-container">
-                            <div class="tags">graphicdesign</div>
-                        </div>
-                        <div class="post-answers-count-container">
-                            <i class="fa fa-comment-dots"></i>
-                            <div class="post-answers-count">25 answers</div>
-                        </div>
-                    </div>
                     <div class="post-controls-container">
                         <div><i class="fa fa-pen me-2"></i>Edit</div>
-                        <div class="post-control-delete"><i class="fa fa-trash me-2"></i>Delete</div>
+                        <div><i class="fa fa-trash me-2"></i>Delete</div>
                     </div>
                 </div>
             </div>
-            <div class="post-wrapper">
-                <div class="post-vote-container">
-                    <div class="post-vote-up">
-                        <i class="fa fa-caret-up"></i>
+        </div>
+        <div id="add-comment-container">
+            <img class="profile-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
+            <textarea id="add-comment-textarea" class="form-control" name="add-comment" placeholder="Write a comment …"></textarea>
+        </div>
+        <div id="comments-container">
+            <div class="comment-wrapper">
+                <div class="comment-container">
+                    <div class="comment-header-container">
+                        <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
+                        <div class="comment-author">@aaronhall</div>
+                        <div class="comment-header-separator">•</div>
+                        <div class="comment-timestamp">06/23/2023</div>
                     </div>
-                    <div class="post-vote-count" data-vote-count="1305">1.3k</div>
-                    <div class="post-vote-down">
-                        <i class="fa fa-caret-down"></i>
+                    <div class="comment-content">
+                        I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.
+                    </div>
+                    <div class="comment-footer-container">
+                        <div class="comment-votes-container">
+                            <div class="comment-vote-up">
+                                <i class="fa fa-arrow-up"></i>
+                            </div>
+                            <div class="comment-vote-count" data-vote-count="46">46</div>
+                            <div class="comment-vote-down">
+                                <i class="fa fa-arrow-down"></i>
+                            </div>
+                        </div>
+                        <div class="comment-controls-container">
+                            <div><i class="fa fa-reply me-2"></i>Reply</div>
+                            <div><i class="fa fa-pen me-2"></i>Edit</div>
+                            <div><i class="fa fa-trash me-2"></i>Delete</div>
+                        </div>
                     </div>
                 </div>
-                <div class="post-container">
-                    <h2 class="post-title">What single scene from a movie is a masterpiece?</h2>
-                    <div class="post-author-container">
-                        <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=iansmith" alt="@iansmith">
-                        <div class="post-author">@iansmith</div>
-                    </div>
-                    <p class="post-content">Well would love to know about the visualization and the main concept of the movie.<br />
-                    Please add answers regarding the movie production, actors, characters, roles, dialogues, scenes, and other related stuff.<br />
-                    Thanks in advance!</p>
-                    <div class="footer-container">
-                        <div class="tags-container">
-                            <div class="tags">cinephile</div>
-                            <div class="tags">filmcommunity</div>
+                <div class="comment-wrapper">
+                    <div class="comment-container">
+                        <div class="comment-header-container">
+                            <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
+                            <div class="comment-author">@aaronhall</div>
+                            <div class="comment-header-separator">•</div>
+                            <div class="comment-timestamp">06/23/2023</div>
                         </div>
-                        <div class="post-answers-count-container">
-                            <i class="fa fa-comment-dots"></i>
-                            <div class="post-answers-count">2.5k answers</div>
+                        <div class="comment-content">
+                            I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.
+                        </div>
+                        <div class="comment-footer-container">
+                            <div class="comment-votes-container">
+                                <div class="comment-vote-up">
+                                    <i class="fa fa-arrow-up"></i>
+                                </div>
+                                <div class="comment-vote-count" data-vote-count="46">46</div>
+                                <div class="comment-vote-down">
+                                    <i class="fa fa-arrow-down"></i>
+                                </div>
+                            </div>
+                            <div class="comment-controls-container">
+                                <div><i class="fa fa-reply me-2"></i>Reply</div>
+                                <div><i class="fa fa-pen me-2"></i>Edit</div>
+                                <div><i class="fa fa-trash me-2"></i>Delete</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-wrapper">
+                        <div class="comment-container">
+                            <div class="comment-header-container">
+                                <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
+                                <div class="comment-author">@aaronhall</div>
+                                <div class="comment-header-separator">•</div>
+                                <div class="comment-timestamp">06/23/2023</div>
+                            </div>
+                            <div class="comment-content">
+                                I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.
+                            </div>
+                            <div class="comment-footer-container">
+                                <div class="comment-votes-container">
+                                    <div class="comment-vote-up">
+                                        <i class="fa fa-arrow-up"></i>
+                                    </div>
+                                    <div class="comment-vote-count" data-vote-count="46">46</div>
+                                    <div class="comment-vote-down">
+                                        <i class="fa fa-arrow-down"></i>
+                                    </div>
+                                </div>
+                                <div class="comment-controls-container">
+                                    <div><i class="fa fa-reply me-2"></i>Reply</div>
+                                    <div><i class="fa fa-pen me-2"></i>Edit</div>
+                                    <div><i class="fa fa-trash me-2"></i>Delete</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-wrapper">
+                    <div class="comment-container">
+                        <div class="comment-header-container">
+                            <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
+                            <div class="comment-author">@aaronhall</div>
+                            <div class="comment-header-separator">•</div>
+                            <div class="comment-timestamp">06/23/2023</div>
+                        </div>
+                        <div class="comment-content">
+                            I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.
+                        </div>
+                        <div class="comment-footer-container">
+                            <div class="comment-votes-container">
+                                <div class="comment-vote-up">
+                                    <i class="fa fa-arrow-up"></i>
+                                </div>
+                                <div class="comment-vote-count" data-vote-count="46">46</div>
+                                <div class="comment-vote-down">
+                                    <i class="fa fa-arrow-down"></i>
+                                </div>
+                            </div>
+                            <div class="comment-controls-container">
+                                <div><i class="fa fa-reply me-2"></i>Reply</div>
+                                <div><i class="fa fa-pen me-2"></i>Edit</div>
+                                <div><i class="fa fa-trash me-2"></i>Delete</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-wrapper">
+                        <div class="comment-container">
+                            <div class="comment-header-container">
+                                <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
+                                <div class="comment-author">@aaronhall</div>
+                                <div class="comment-header-separator">•</div>
+                                <div class="comment-timestamp">06/23/2023</div>
+                            </div>
+                            <div class="comment-content">
+                                I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.
+                            </div>
+                            <div class="comment-footer-container">
+                                <div class="comment-votes-container">
+                                    <div class="comment-vote-up">
+                                        <i class="fa fa-arrow-up"></i>
+                                    </div>
+                                    <div class="comment-vote-count" data-vote-count="46">46</div>
+                                    <div class="comment-vote-down">
+                                        <i class="fa fa-arrow-down"></i>
+                                    </div>
+                                </div>
+                                <div class="comment-controls-container">
+                                    <div><i class="fa fa-reply me-2"></i>Reply</div>
+                                    <div><i class="fa fa-pen me-2"></i>Edit</div>
+                                    <div><i class="fa fa-trash me-2"></i>Delete</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

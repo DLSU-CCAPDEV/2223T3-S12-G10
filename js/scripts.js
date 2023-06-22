@@ -224,4 +224,15 @@ $(document).ready(function() {
             if (tagCount == 5) break;
         }
     });
+
+    $('#add-comment-textarea').each(function () {
+        this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+    }).on('input', function () {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+
+    $('.post-control-delete').click((e) => {
+        $(e.target).closest('.post-wrapper').remove();
+    })
 });
