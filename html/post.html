@@ -111,19 +111,41 @@
                     </div>
                 </div>
             </div>
-                <div class="post-comment-container">
-                    <div class="comment-card">
+        </div>
+        <div class="post-comment-section">
+            <!--Important to note: every reply will be nested within the
+            "post-comment-container" of its parent, and is built with its own
+            "post-comment container" to accomodate replies to it-->
+            <div class="post-comment-container opened">
+                <div class="comment-card">
+                    <div class="post-author-container">
                         <img class="post-author-img">
                         <div class="post-author">@username</div>
-                        <p class="post-content">Actual Comment Here</p>
-                        <div class="footer-container">
-                            <div class="comment-reply comment-actions">Reply</div>
+                    </div>
+                    <p class="comment-content">Anchor Comment here</p>
+                    <div class="comment-footer">
+                        <div class="create-reply comment-actions">Reply</div>
+                        <div class="edit-reply comment-actions">Edit</div>
+                        <div class="delete-reply comment-actions">Delete</div>
+                        <div class="show-replies comment-actions">Show more</div>
+                    </div>
+                </div>
+                <div class="post-comment-container">
+                    <div class="comment-card">
+                        <div class="post-author-container">
+                            <img class="post-author-img">
+                            <div class="post-author">@username</div>
+                        </div>
+                        <p class="comment-content">Nested Comment-1 </p>
+                        <div class="comment-footer">
+                            <div class="create-reply comment-actions">Reply</div>
                             <div class="edit-reply comment-actions">Edit</div>
-                            <div class="delete-comment commen-actions">Delete</div>
-                            <div class="show-replies comment-actions">Show More</div>
+                            <div class="delete-reply comment-actions">Delete</div>
+                            <div class="show-replies comment-actions">Show more</div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
     <div class="col-3">
