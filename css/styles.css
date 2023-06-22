@@ -215,7 +215,7 @@ p { font-family: var(--font-body); }
 
 .post-container {
     margin-left: 1rem;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
     width: 100%;
 }
 
