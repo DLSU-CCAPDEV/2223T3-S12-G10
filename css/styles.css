@@ -250,12 +250,15 @@ p { font-family: var(--font-body); }
 
 .footer-container {
     display: flex;
+    gap: 1rem;
 }
 
 .tags-container {
     display: flex;
     gap: 0.5rem;
     align-items: center;
+    flex-grow: 1;
+    flex-wrap: wrap;
 }
 
 .tags {
@@ -278,10 +281,11 @@ p { font-family: var(--font-body); }
 
 .post-answers-count-container {
     display: flex;
-    width: 100%;
     justify-content: end;
     color: var(--color-accent);
     align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
 }
 
 .post-answers-count-container > .fa {
