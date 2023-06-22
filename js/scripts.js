@@ -1,3 +1,6 @@
+const e = require("express");
+const { Children } = require("react");
+
 function handleVoteButtons(e) {
     console.log(e.currentTarget);
     $(e.currentTarget).toggleClass('active');

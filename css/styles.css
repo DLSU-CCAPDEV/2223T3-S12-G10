@@ -295,6 +295,72 @@ p { font-family: var(--font-body); }
     font-weight: 700;
 }
 
+/*comment-section*/
+.post-comment-section {
+    border-style: solid;
+    border-color: var(--color-secondary);
+    border: 1px;
+}
+
+.post-comment-container {
+    display: none;
+    position: relative;
+}
+/*That line at the side is this thing*/
+.post-comment-container::before{
+    content:"";
+    background-color: var(--color-primary);
+    position: absolute;
+    min-height: 100%;
+    width: 4px;
+    left: -10px;
+}
+
+.post-comment-container:not(:first-child) {
+    margin-left: 3rem;
+    margin-top: 1rem;
+}
+
+.comment-card {
+    padding: 0.1rem;
+    /*background-color: var(--color-primary);*/
+    border: 0.2rem;
+    border-style: solid;
+    border-color: var(--color-primary);
+    border-radius: 0.5rem;
+    min-width: 100%;
+}
+
+.comment-card > .post-author, .post-content {
+    margin-bottom: 1rem;
+}
+
+.comment-card > .footer-container {
+    font-size: 0.7rem;
+    margin: 4px;
+}
+
+.comment-card > .footer-container > .comment-actions {
+    opacity: 40%;
+}
+
+.comment-card > .footer-container > .comment-actions:hover {
+    opacity: 100%;
+}
+
+.comment-actions {
+    margin-left: 0.5rem;
+    margin-right: 0.25 rem;
+}
+
+.show-replies {
+    font-weight: 700;
+}
+
+.post-comment-container.opened {
+    display: block;
+}
+
 #profile-img {
     width: 50px;
     border-radius: var(--radius);
