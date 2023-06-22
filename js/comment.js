@@ -144,7 +144,12 @@ function createReply(parentComment, replyid) {
     let reply_card = document.createElement("div");
     reply_card.classList.add("comment-card");
 
+    let author_container = document.createElement("div");
+    author_container.classList.add("post-author-container");
+
     let author_img = document.createElement("img");
+    author_img.classList.add("post-author-img");
+
     
     let author_username = document.createElement("div");
     author_username.classList.add("post-author");
@@ -180,7 +185,8 @@ function createReply(parentComment, replyid) {
 
     //build it
     footer_container.append(reply_btn, edit_btn, delete_btn, show_btn)
-    reply_card.append(author_img, author_username, post_content, footer_container);
+    author_container.append(author_img, author_username);
+    reply_card.append(author_container, post_content, footer_container);
     reply_card.append(footer_container);
     reply_container.append(reply_card); //built
 
