@@ -147,13 +147,25 @@ $(document).ready(function() {
         let tags_container = document.createElement("div");
         tags_container.classList.add("tags-container");
 
-        post_tags.forEach(function(tag) {
+        let uniqueTags = [];
+
+        post_tags.forEach((tag) => {
+            if (!uniqueTags.includes(tag.trim())) uniqueTags.push(tag.trim());
+        });
+
+        let tagCount = 0;
+        for (var i = 0; i < uniqueTags.length; i++) {
+            if (uniqueTags[i] == "") continue;
+
             let post_tags_el = document.createElement("div");
             post_tags_el.classList.add("tags");
-            post_tags_el.innerText = tag.trim();
+            post_tags_el.innerText = uniqueTags[i].replaceAll(' ', '-');
 
             tags_container.append(post_tags_el);
-        });
+
+            tagCount++;
+            if (tagCount == 5) break;
+        };
 
         let post_answers_count_container = document.createElement("div");
         post_answers_count_container.classList.add("post-answers-count-container");
@@ -191,15 +203,25 @@ $(document).ready(function() {
         let post_tags = $(this).val().trim().split(',');
         let tags_container = document.getElementById('tags-preview');
         tags_container.innerHTML = "";
-        post_tags.forEach(function(tag) {
-            tag = tag.trim();
-            if (tag == "") return;
+
+        let uniqueTags = [];
+
+        post_tags.forEach((tag) => {
+            if (!uniqueTags.includes(tag.trim())) uniqueTags.push(tag.trim());
+        });
+
+        let tagCount = 0;
+        for (let i = 0; i < uniqueTags.length; i++) {
+            if (uniqueTags[i] == "") continue;
 
             let post_tags_el = document.createElement("div");
             post_tags_el.classList.add("tags");
-            post_tags_el.innerText = tag;
+            post_tags_el.innerText = uniqueTags[i].replaceAll(' ', '-');
 
             tags_container.append(post_tags_el);
-        });
-    })
+
+            tagCount++;
+            if (tagCount == 5) break;
+        }
+    });
 });
