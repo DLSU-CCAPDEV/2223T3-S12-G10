@@ -21,12 +21,18 @@
         <h3 id="login-heading">LOGIN</h3>
         <form method="POST" action="index.html" id="form-login">
             <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
+                <label for="username" class="form-label">
+                    <i class="fa fa-user me-2"></i>Username</label>
                 <input type="text" class="form-control" name="username" id="username">
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">
+                    <i class="fa fa-lock me-2"></i>Password</label>
                 <input type="password" class="form-control" name="password" id="password">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" name="remember-me" id="remember-me">
+                <label for="remember-me" class="form-check-label">Remember me</label>
             </div>
             <div id="error-container" data-error-status="normal"></div>
             <div>
