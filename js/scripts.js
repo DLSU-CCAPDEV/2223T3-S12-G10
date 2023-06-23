@@ -230,7 +230,18 @@ $(document).ready(function() {
     }).on('input', function () {
         this.style.height = 'auto';
         this.style.height = (this.scrollHeight) + 'px';
+
+        if (!this.value == "") {
+            $('#add-comment-controls-container').removeClass('d-none');
+        } else {
+            $('#add-comment-controls-container').addClass('d-none');
+        }
     });
+
+    $('#btn-comment-discard').click(function() {
+        $('#add-comment-textarea').val('');
+        $('#add-comment-controls-container').addClass('d-none');
+    })
 
     $('.post-control-delete').click((e) => {
         $(e.target).closest('.post-wrapper').remove();
