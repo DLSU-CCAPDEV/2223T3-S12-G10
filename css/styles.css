@@ -420,3 +420,52 @@ input.form-control, textarea.form-control {
     text-transform: uppercase;
     font-weight: 700;
 }
+
+#btn-register {
+    background-color: var(--color-accent);
+    width: 20%;
+    text-transform: uppercase;
+    font-weight: 700;
+    float: right;
+
+}
+
+ #avatars {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    width: 400px; 
+  }
+
+.avatar-selection{
+    height: 100px;
+    width: 100px;
+    cursor: pointer;
+    border: 1px solid var(--color-secondary);
+}
+
+.avatar-selection:hover {
+    border-color:  var(--color-accent);
+  
+}
+
+.avatar-selection.selected {
+    border-color: red;
+  }
+
+#submit-register{
+    background-color: var(--color-accent);
+    width: 30%;
+    text-transform: uppercase;
+    font-weight: 700;
+    float: right;
+}
+
+#cancel-register{
+    background-color: var(--color-accent);
+    width: 30%;
+    text-transform: uppercase;
+    font-weight: 700;
+   
+}
