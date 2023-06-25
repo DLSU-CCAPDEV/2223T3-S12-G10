@@ -357,14 +357,151 @@ function handlePostDelete (e) {
 //for directly replying to the post
 function handlePostReplies(e) {
     console.log("Reply Test");
-    let basis = $('#posts-container').closest('#comments-container');
+    let travel_path = $(e.target).parents('#add-comment-wrapper').siblings('#comments-container')
+    //target a parent on the same level as comments-container then search siblings for it
+
     //target the comment section "comments-container"=
     //check if it has a certain class that appears iff reply has been pressed once
     //reply is active, makes it so that clicking reply doesn't create
     //another textbox
-    console.log(basis);
-    let replyid = $('#add-comment-textarea');
-    createReply(replybtn, replyid); //parent is the comment section
+    console.log(travel_path);
+    let reply_data = $(e.target).parents('#add-comment-wrapper').children('#add-comment-container').children('#add-comment-textarea');
+    console.log(reply_data);
+    createPostReply(travel_path, reply_data.val()); //parent is the comment section
+    $('#add-comment-textarea').val('');
+    $('#add-comment-controls-container').addClass('d-none');
+
+}
+
+function createPostReply(parentComment, inputtedtext) {
+    //create the entire format for a reply/comment
+    
+
+    /**************************************/
+    //this creates another wrapper so that we can nest succeeding comments
+    //this gets appended to the main comment's wrapper
+    /**************************************/
+    let reply_container = document.createElement("div");
+    reply_container.classList.add("comment-wrapper", "opened", "m-0", "mt-1");
+
+    /*let comment_container = document.createElement("div");
+    comment_container.classList.add("post-comment-container");*/
+    
+    let reply_card = document.createElement("div");
+    reply_card.classList.add("comment-container");
+
+    let author_container = document.createElement("div");
+    author_container.classList.add("comment-header-container");
+
+    let author_img = document.createElement("img");
+    author_img.classList.add("comment-author-img");
+    author_img.setAttribute("src", "https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall")
+    
+    let author_username = document.createElement("div");
+    author_username.classList.add("comment-author");
+    author_username.innerHTML = "@aaronhall";
+
+    let comment_header_separator = document.createElement("div");
+    comment_header_separator.classList.add("comment-header-separator");
+    comment_header_separator.innerHTML = "•";
+
+    let comment_timestamp = document.createElement("div");
+    comment_timestamp.classList.add("comment-timestamp");
+    comment_timestamp.innerHTML = "06/23/2023";
+
+    let comment_content = document.createElement("p");
+    comment_content.innerHTML = inputtedtext; //this is the reply
+    comment_content.classList.add("comment-content");
+
+    let footer_container = document.createElement("div");
+    footer_container.classList.add("comment-footer-container");
+
+    let comment_votes_container = document.createElement("div");
+    comment_votes_container.classList.add("comment-votes-container");
+
+    let comment_vote_up = document.createElement("div");
+    comment_vote_up.classList.add("comment-vote-up");
+
+    let up_arrow = document.createElement("i");
+    up_arrow.classList.add("fa", "fa-arrow-up");
+
+    let comment_vote_count = document.createElement("div");
+    comment_vote_count.classList.add("comment-vote-count");
+    comment_vote_count.setAttribute("data-vote-count", 46);
+    comment_vote_count.innerHTML = 0;
+
+    let comment_vote_down = document.createElement("div");
+    comment_vote_down.classList.add("comment-vote-down");
+
+    let down_arrow = document.createElement("i");
+    down_arrow.classList.add("fa", "fa-arrow-down");
+
+    let comment_controls_container = document.createElement("div");
+    comment_controls_container.classList.add("comment-controls-container");
+
+    //
+    let reply_btn = document.createElement("div");
+    reply_btn.classList.add("create-reply")
+    reply_btn.innerHTML = "Reply";
+    //add the event
+    reply_btn.addEventListener("click", handleReplies);
+
+    let fa_reply = document.createElement("i");
+    fa_reply.classList.add("fa", "fa-reply", "me-2");
+
+    //
+    let edit_btn = document.createElement("div");
+    edit_btn.classList.add("edit-reply");
+    edit_btn.innerHTML = "Edit";
+    edit_btn.addEventListener("click", handleEditbutton);
+
+    let fa_pen = document.createElement("i");
+    fa_pen.classList.add("fa", "fa-pen", "me-2");
+
+    //
+    let delete_btn = document.createElement("div");
+    delete_btn.classList.add("delete-reply");
+    delete_btn.innerHTML = "Delete";
+    delete_btn.addEventListener("click", handleDelete);
+
+    let fa_delete = document.createElement("i");
+    fa_delete.classList.add("fa", "fa-trash", "me-2");
+
+    //
+    let show_btn = document.createElement("div");
+    show_btn.classList.add("show-replies")
+    show_btn.innerHTML = "Show More";
+    show_btn.addEventListener("click", handleShowbutton);
+
+    let fa_show = document.createElement("i");
+    fa_show.classList.add("fa", "fa-caret-down", "me-2");
+
+    //build it
+    //the little vote-interactables
+    comment_vote_up.append(up_arrow);
+    comment_vote_down.append(down_arrow);
+    //votes container
+    comment_votes_container.append(comment_vote_up, comment_vote_count, comment_vote_down);
+    
+    //the control-interactables
+    reply_btn.prepend(fa_reply);
+    edit_btn.prepend(fa_pen);
+    delete_btn.prepend(fa_delete);
+    show_btn.prepend(fa_show);
+    //control container
+    comment_controls_container.append(reply_btn, edit_btn, delete_btn, show_btn);
+    //make the footer-container
+    footer_container.append(comment_votes_container, comment_controls_container);
+
+    //make the header container
+    author_container.append(author_img, author_username, comment_header_separator, comment_timestamp);
+
+    //create the reply itself
+    reply_card.append(author_container, comment_content, footer_container);
+    reply_container.append(reply_card); //built
+
+    //append it to the parent container
+    parentComment.append(reply_container);
 }
     
 $(document).ready(function () {
@@ -376,5 +513,5 @@ $(document).ready(function () {
 
     $('.edit-post').click(handlePostEditbutton);
     $('.delete-post').click(handlePostDelete);
-    $('.reply-post').click(handlePostReplies)
+    $('.post-reply').click(handlePostReplies)
 });
