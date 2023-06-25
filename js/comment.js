@@ -19,6 +19,7 @@ function handleReplies(e) {
 
     //let replybtn = $(e.currentTarget).parent();
     let replybtn = e.target.closest('.comment-container')
+    console.log(replybtn);
     //check if it has a certain class that appears iff reply has been pressed once
     if (replybtn.classList.contains('active-reply')) {
         //do nothing
@@ -342,7 +343,7 @@ function handlePostEditbutton(e) {
 }
 
 function handlePostDelete (e) {
-    let parentComment = e.target.closest('.post-container');
+    let parentComment = $(e.currentTarget).closest('.post-container');
     console.log(parentComment);
     let deleteComment = parentComment.querySelector('.post-content');
     deleteComment.classList.add('deleted-comment');
@@ -353,6 +354,19 @@ function handlePostDelete (e) {
     parentComment.querySelector('.delete-post').remove();
 }
 
+//for directly replying to the post
+function handlePostReplies(e) {
+    console.log("Reply Test");
+    let basis = $('#posts-container').closest('#comments-container');
+    //target the comment section "comments-container"=
+    //check if it has a certain class that appears iff reply has been pressed once
+    //reply is active, makes it so that clicking reply doesn't create
+    //another textbox
+    console.log(basis);
+    let replyid = $('#add-comment-textarea');
+    createReply(replybtn, replyid); //parent is the comment section
+}
+    
 $(document).ready(function () {
     //open and hide replies
     $('.show-replies').click(handleShowbutton);
@@ -362,4 +376,5 @@ $(document).ready(function () {
 
     $('.edit-post').click(handlePostEditbutton);
     $('.delete-post').click(handlePostDelete);
+    $('.reply-post').click(handlePostReplies)
 });
