@@ -37,7 +37,7 @@
     padding: 0 1.5rem;
     height: var(--add-comment-height);
     line-height: var(--add-comment-height);
-    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 180ms ease;
 }
 
 #add-comment-container > #add-comment-textarea::placeholder {
@@ -122,6 +122,17 @@
 
 .comment-content {
     margin-bottom: 1.5rem;
+    transition: background-color 180ms ease, padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.comment-content[contenteditable=true] {
+    padding: 1rem;
+    outline: none !important;
+    border: 1px solid var(--color-accent);
+}
+
+.comment-content[contenteditable=true]:focus {
+    background-color: var(--color-primary);
 }
 
 .comment-footer-container {
@@ -152,6 +163,7 @@
 }
 
 .comment-footer-container > .comment-controls-container > * {
+    cursor: pointer;
     color: var(--color-text-muted);
     text-decoration: none;
     font-weight: 600;

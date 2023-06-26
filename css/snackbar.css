@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+#snackbar-container {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 1000;
+}
+
+.snackbar {
+    padding: 16px;
+    min-width: 250px;
+    border-radius: 6px;
+    box-shadow: 4px 2px 16px rgba(0, 0, 0, 0.15);
+    font-family: "Roboto", sans-serif;
+    color: #FFF;
+    animation: snackbar-in 0.375s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.snackbar.sb-primary { background-color: #333; }
+.snackbar.sb-error { background-color: #D32F2F; }
+
+.snackbar + .snackbar { margin-top: 1rem; }
+
+@keyframes snackbar-in {
+    from {
+        opacity: 0;
+        transform: translateY(20%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.snackbar.sb-out {
+    opacity: 0;
+    transform: translateY(20%);
+    transition: opacity 180ms ease-in-out, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
