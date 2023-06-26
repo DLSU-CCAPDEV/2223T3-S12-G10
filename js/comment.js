@@ -348,4 +348,5 @@ $(document).ready(function () {
 
     $('.edit-post').click(handlePostEditbutton);
     $('.delete-post').click(handlePostDelete);
+    $('.reply-post').click(handlePostReply);
 });
