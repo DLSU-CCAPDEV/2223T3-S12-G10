@@ -221,6 +221,7 @@ p { font-family: var(--font-body); }
 
 .post-title {
     font-size: 1.75rem;
+    color: var(--color-text);
     margin-bottom: 1.0rem;
 }
 
@@ -293,6 +294,7 @@ p { font-family: var(--font-body); }
 
 .post-answers-count {
     font-weight: 700;
+    color: var(--color-accent);
 }
 
 #profile-img {
