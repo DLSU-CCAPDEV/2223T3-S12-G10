@@ -13,22 +13,25 @@
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/markdown.css">
     <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="../css/snackbar.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/cure53/DOMPurify/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="../js/nFormatter.js"></script>
     <script src="../js/scripts.js"></script>
+    <script src="../js/comment.js"></script>
+    <script src="../js/snackbar.js"></script>
 </head>
 <body>
 <div class="row g-0">
     <div class="col-2">
         <nav class="d-flex flex-column flex-shrink-0" id="navbar">
-            <a href="/html/"
+            <a href="../html/"
                class="d-flex align-items-center p-4 mb-3 mb-md-0 me-md-auto text-decoration-none fs-2 color-text"
                id="navbar-brand">forum.</a>
             <ul class="nav flex-column mb-auto" id="sidenav-nav">
                 <li class="nav-item ps-2">
-                    <a class="nav-link active p-4" href="/html/">
+                    <a class="nav-link active p-4" href="../html/">
                         <i class="fa fa-home pe-4"></i>
                         Home
                     </a>
@@ -130,12 +133,12 @@
                     </div>
                 </div>
                 <div class="post-container">
-                    <a href="/html/post.html" class="text-decoration-none">
+                    <a href="../html/post.html" class="text-decoration-none">
                         <h2 class="post-title">What is the best forum for graphic designers?</h2>
                     </a>
                     <div class="post-author-container">
                         <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=marieblanchet" alt="@marieblanchet">
-                        <a href="/html/profile.html" class="text-decoration-none">
+                        <a href="../html/profile.html" class="text-decoration-none">
                             <div class="post-author">@aaronhall</div>
                         </a>
                     </div>
@@ -146,13 +149,13 @@
                         </div>
                         <div class="post-answers-count-container">
                             <i class="fa fa-comment-dots"></i>
-                            <a href="/html/post.html" class="text-decoration-none">
+                            <a href="../html/post.html" class="text-decoration-none">
                                 <div class="post-answers-count">25 answers</div>
                             </a>
                         </div>
                     </div>
                     <div class="post-controls-container">
-                        <div><i class="fa fa-pen me-2"></i>Edit</div>
+                        <div class="edit-post"><i class="fa fa-pen me-2"></i>Edit</div>
                         <div class="post-control-delete"><i class="fa fa-trash me-2"></i>Delete</div>
                     </div>
                 </div>
@@ -168,12 +171,12 @@
                     </div>
                 </div>
                 <div class="post-container">
-                    <a href="/html/post.html" class="text-decoration-none">
+                    <a href="../html/post.html" class="text-decoration-none">
                         <h2 class="post-title">What single scene from a movie is a masterpiece?</h2>
                     </a>
                     <div class="post-author-container">
                         <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=iansmith" alt="@iansmith">
-                        <a href="/html/profile.html" class="text-decoration-none">
+                        <a href="../html/profile.html" class="text-decoration-none">
                             <div class="post-author">@iansmith</div>
                         </a>
                     </div>
@@ -187,7 +190,7 @@
                         </div>
                         <div class="post-answers-count-container">
                             <i class="fa fa-comment-dots"></i>
-                            <a href="/html/post.html" class="text-decoration-none">
+                            <a href="../html/post.html" class="text-decoration-none">
                                 <div class="post-answers-count">2.5k answers</div>
                             </a>
                         </div>
@@ -205,12 +208,12 @@
                     </div>
                 </div>
                 <div class="post-container">
-                    <a href="/html/post.html" class="text-decoration-none">
+                    <a href="../html/post.html" class="text-decoration-none">
                         <h2 class="post-title">What cellphone should I buy?</h2>
                     </a>
                     <div class="post-author-container">
                         <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
-                        <a href="/html/profile.html" class="text-decoration-none">
+                        <a href="../html/profile.html" class="text-decoration-none">
                             <div class="post-author">@ravayager</div>
                         </a>
                     </div>
@@ -224,7 +227,7 @@
                         </div>
                         <div class="post-answers-count-container">
                             <i class="fa fa-comment-dots"></i>
-                            <a href="/html/post.html" class="text-decoration-none">
+                            <a href="../html/post.html" class="text-decoration-none">
                                 <div class="post-answers-count">20 answers</div>
                             </a>
                         </div>
@@ -242,12 +245,12 @@
                     </div>
                 </div>
                 <div class="post-container">
-                    <a href="/html/post.html" class="text-decoration-none">
+                    <a href="../html/post.html" class="text-decoration-none">
                         <h2 class="post-title">I can't seem to figure out this SQL code snippet, anybody think they can help?</h2>
                     </a>
                     <div class="post-author-container">
                         <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
-                        <a href="/html/profile.html" class="text-decoration-none">
+                        <a href="../html/profile.html" class="text-decoration-none">
                             <div class="post-author">@mattquibs</div>
                         </a>
                     </div>
@@ -266,7 +269,7 @@ FROM integrated_sales</code></pre>
                         </div>
                         <div class="post-answers-count-container">
                             <i class="fa fa-comment-dots"></i>
-                            <a href="/html/post.html" class="text-decoration-none">
+                            <a href="../html/post.html" class="text-decoration-none">
                                 <div class="post-answers-count">3 answers</div>
                             </a>
                         </div>
