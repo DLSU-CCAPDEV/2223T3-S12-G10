@@ -280,72 +280,34 @@ function createReply(parentComment, replyid) {
 
 //functions exclusive to post-related control
 function handlePostEditbutton(e) {
-    console.log("Edit Button");
-    /**************************************/
-    //for post variant stuff, follow the exact same thought process
-    //except if it's for adding a comment
-    //    - you will be appending the comment-wrapper into the comments-container instead
-    //    -* this is because comments-container is the actual comments section
-    /**************************************/
-    let editbtn = e.target.closest('.post-container')
-    //check if it has a certain class that appears iff reply has been pressed once
-    if (editbtn.classList.contains('active-edit')) {
-        //do nothing
-        console.log("Active edit")
+    let comment_content = $(e.target).parents('.post-controls-container').siblings('.post-content');
+    if (!comment_content.attr('contenteditable') || comment_content.attr('contenteditable') == 'false') {
+        comment_content.attr('contenteditable', 'true');
+        comment_content.focus();
+        e.target.childNodes[0].classList.remove("fa-pen");
+        e.target.childNodes[0].classList.add("fa-check");
+        e.target.childNodes[1].textContent = "Save";
     } else {
-        //reply is active, makes it so that clicking reply doesn't create
-        editbtn.classList.add('active-edit');
-        //create the textbox
-        let editbox_container = document.createElement("div");
-        editbox_container.classList.add("edit-box");
-        let editbox = document.createElement("input");
-        editbox.setAttribute("type", "text");
-        editbox.setAttribute("placeholder", "type here...");
-        let editID = Date.now();
-        editbox.setAttribute("id", editID);
-        //add a save and cancel button
-        let editbox_save = document.createElement("div");
-        editbox.classList.add("save-edit");
-        editbox_save.innerHTML = "SAVE";
-        editbox_save.classList.add("save-button");
-        editbox_save.addEventListener("click", function (e) {
-            let parentComment = e.target.closest('.post-container');
-            let edit_comment = parentComment.querySelector('.post-content');
-            console.log(edit_comment);
-            console.log("edited innerHTML: " + edit_comment.innerHTML);
-            applyEdit(edit_comment, editID);
-            $(e.currentTarget).parent().remove();
-            editbtn.classList.remove('active-edit');
-        })
+        if (comment_content.text() == '') {
+            snackbar({
+                text: "Error: You may not leave an empty comment/reply!",
+                status: 'error'
+            });
+            return;
+        }
 
-        let editbox_cancel = document.createElement("div");
-        editbox_cancel.innerHTML = "CANCEL";
-        editbox_cancel.classList.add("cancel-button");
-        editbox_cancel.addEventListener("click", function (e) {
-            $(e.currentTarget).parent().remove();
-            editbtn.classList.remove('active-edit');     
-        })
-        //inputbox.classList.add("opened");
-        //format box
-        //inputbox_container.classList.add('post-content');
-        //build the box
-        editbox_container.append(editbox);
-        editbox_container.append(editbox_save);
-        editbox_container.append(editbox_cancel);
-        editbtn.append(editbox_container);
+        comment_content.attr('contenteditable', 'false');
+        e.target.childNodes[0].classList.remove("fa-check");
+        e.target.childNodes[0].classList.add("fa-pen");
+        e.target.childNodes[1].textContent = "Edit";
     }
 }
 
 function handlePostDelete (e) {
-    let parentComment = $(e.currentTarget).closest('.post-container');
-    console.log(parentComment);
-    let deleteComment = parentComment.querySelector('.post-content');
-    deleteComment.classList.add('deleted-comment');
-
-    //change it
-    deleteComment.innerHTML = "This comment has been deleted.";
-    parentComment.querySelector('.edit-post').remove();
-    parentComment.querySelector('.delete-post').remove();
+    let edit_post = document.querySelector('.post-content');
+    edit_post.innerHTML = "This comment has been deleted";
+    edit_post.classList.add('deleted-comment');
+    $(e.target).parents('.post-controls-container').remove();
 }
 
 //for directly replying to the post
