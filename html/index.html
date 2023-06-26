@@ -23,12 +23,12 @@
 <div class="row g-0">
     <div class="col-2">
         <nav class="d-flex flex-column flex-shrink-0" id="navbar">
-            <a href="/"
+            <a href="/html/"
                class="d-flex align-items-center p-4 mb-3 mb-md-0 me-md-auto text-decoration-none fs-2 color-text"
                id="navbar-brand">forum.</a>
             <ul class="nav flex-column mb-auto" id="sidenav-nav">
                 <li class="nav-item ps-2">
-                    <a class="nav-link active p-4" href="/html">
+                    <a class="nav-link active p-4" href="/html/">
                         <i class="fa fa-home pe-4"></i>
                         Home
                     </a>
@@ -65,7 +65,7 @@
                     </a>
                 </li>
                 <li class="nav-item ps-2">
-                    <a class="nav-link p-4" href="/logout">
+                    <a class="nav-link p-4" href="/html/login.html">
                         <i class="fa fa-sign-out pe-4"></i>
                         Logout
                     </a>
@@ -94,10 +94,14 @@
                     </div>
                 </div>
                 <div class="post-container">
-                    <h2 class="post-title">What are the most surreal places to visit?</h2>
+                    <a href="/html/post.html" class="text-decoration-none">
+                        <h2 class="post-title">What are the most surreal places to visit?</h2>
+                    </a>
                     <div class="post-author-container">
                         <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
-                        <div class="post-author">@davidmiller</div>
+                        <a href="/html/profile.html" class="text-decoration-none">
+                            <div class="post-author">@davidmiller</div>
+                        </a>
                     </div>
                     <p class="post-content">I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.</p>
                     <div class="footer-container">
@@ -108,7 +112,9 @@
                         </div>
                         <div class="post-answers-count-container">
                             <i class="fa fa-comment-dots"></i>
-                            <div class="post-answers-count">20 answers</div>
+                            <a href="/html/post.html" class="text-decoration-none">
+                                <div class="post-answers-count">20 answers</div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -183,7 +189,7 @@
             <div class="d-flex mb-3">
                 <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="Profile picture" id="profile-img">
                 <div class="d-flex flex-column ms-3">
-                        <h4 id="profile-name">Aaron Hall<i class="fa fa-badge-check ms-3 text-accent"></i></h4>
+                        <a href="/html/profile.html" class="text-decoration-none"><h4 id="profile-name">Aaron Hall<i class="fa fa-badge-check ms-3 text-accent"></i></h4></a>
                     <p id="profile-username">@aaronhall</p>
                 </div>
             </div>
