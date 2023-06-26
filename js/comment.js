@@ -31,16 +31,23 @@ function handleReplies(e) {
         //create the textbox
         let inputbox_container = document.createElement("div");
         inputbox_container.classList.add("inputbox-container");
+        inputbox_container.classList.add("mt-3");
+
         let inputbox = document.createElement("input");
+        inputbox.classList.add("form-control", "replybox");
         inputbox.setAttribute("type", "text");
         inputbox.setAttribute("placeholder", "type here...");
+        
         //get unique reply id
         let replyid = Date.now();
         inputbox.setAttribute("id", replyid)
+        //create a container for the reply controls
+        let inputbox_controls = document.createElement('div');
+        inputbox_controls.classList.add('inputbox-controls');
+
         //add a save and cancel button
-        let inputbox_save = document.createElement("div");
-        inputbox.classList.add("save");
-        inputbox_save.innerHTML = "SAVE";
+        let inputbox_save = document.createElement("button");
+        inputbox_save.classList.add("save", "btn", "btn-success");
         inputbox_save.classList.add("save-button");
         inputbox_save.addEventListener("click", function (e) {
             //get the inputted value so far then call the post building function
@@ -48,24 +55,38 @@ function handleReplies(e) {
             let parentComment = e.target.closest('.comment-wrapper');
             console.log(parentComment);
             createReply(parentComment, replyid); //important to note here is that the Parent is the wrapper
-            $(e.currentTarget).parent().remove();
+            $(e.currentTarget).parents('.inputbox-container').remove(); 
             replybtn.classList.remove('active-reply');
         })
+        //add an internal symbol style
+        let save_symbol = document.createElement('i');
+        save_symbol.classList.add('fa-solid', 'fa-floppy-disk', "me-2");
+        
+        inputbox_save.innerHTML = "Save";
+        inputbox_save.prepend(save_symbol);
+        
 
-        let inputbox_cancel = document.createElement("div");
-        inputbox_cancel.innerHTML = "CANCEL";
-        inputbox_cancel.classList.add("cancel-button");
+        //
+        let inputbox_cancel = document.createElement("button");
+        inputbox_cancel.classList.add("cancel-button", 'btn', 'btn-danger');
         inputbox_cancel.addEventListener("click", function (e) {
             replybtn.classList.remove('active-reply');
-            $(e.currentTarget).parent().remove();            
+            $(e.currentTarget).parents('.inputbox-container').remove();            
         })
+        //internal discard symbol
+        let cancel_symbol = document.createElement('i');
+        cancel_symbol.classList.add('fa', 'fa-times', 'me-2');
+
+        inputbox_cancel.innerHTML = "Cancel";
+        inputbox_cancel.prepend(cancel_symbol);
+
         //inputbox.classList.add("opened");
         //format box
         //inputbox_container.classList.add('post-content');
         //build the box
         inputbox_container.append(inputbox);
-        inputbox_container.append(inputbox_save);
-        inputbox_container.append(inputbox_cancel);
+        inputbox_controls.append(inputbox_save, inputbox_cancel)
+        inputbox_container.append(inputbox_controls);
         
         replybtn.append(inputbox_container);
     }
@@ -85,40 +106,58 @@ function handleEditbutton(e) {
         editbtn.classList.add('active-edit');
         //create the textbox
         let editbox_container = document.createElement("div");
-        editbox_container.classList.add("edit-box");
+        editbox_container.classList.add("editbox-container");
+        editbox_container.classList.add("mt-3", "d-flex");
+
+
         let editbox = document.createElement("input");
+        editbox.classList.add("form-control");
         editbox.setAttribute("type", "text");
         editbox.setAttribute("placeholder", "type here...");
         let editID = Date.now();
         editbox.setAttribute("id", editID);
+
         //add a save and cancel button
-        let editbox_save = document.createElement("div");
-        editbox.classList.add("save-edit");
-        editbox_save.innerHTML = "SAVE";
+        let editbox_controls = document.createElement('div');
+        editbox_controls.classList.add('editbox-controls')
+
+        let editbox_save = document.createElement("button");
+        editbox_save.classList.add("save-edit", "btn", "btn-success");
         editbox_save.classList.add("save-button");
         editbox_save.addEventListener("click", function (e) {
             let parentComment = e.target.closest('.comment-container');
             let edit_comment = parentComment.querySelector('.comment-content');
             console.log("edited innerHTML: " + edit_comment.innerHTML);
             applyEdit(edit_comment, editID);
-            $(e.currentTarget).parent().remove();
+            $(e.currentTarget).parents('.editbox-container').remove();
             editbtn.classList.remove('active-edit');
         })
+        let save_symbol = document.createElement('i');
+        save_symbol.classList.add("fa-solid", "fa-floppy-disk", "me-2");
 
-        let editbox_cancel = document.createElement("div");
-        editbox_cancel.innerHTML = "CANCEL";
-        editbox_cancel.classList.add("cancel-button");
+        editbox_save.innerHTML = "Save";
+        editbox_save.prepend(save_symbol);
+
+        //
+        let editbox_cancel = document.createElement("button");
+        editbox_cancel.classList.add("cancel-button", "btn", "btn-danger");
         editbox_cancel.addEventListener("click", function (e) {
-            $(e.currentTarget).parent().remove();
+            $(e.currentTarget).parents('.editbox-container').remove();
             editbtn.classList.remove('active-edit');     
         })
+        let cancel_symbol = document.createElement('i');
+        cancel_symbol.classList.add('fa', 'fa-times', 'me-2');
+
+        editbox_cancel.append(cancel_symbol);
+        editbox_cancel.innerHTML = "Cancel";
         //inputbox.classList.add("opened");
         //format box
         //inputbox_container.classList.add('post-content');
         //build the box
         editbox_container.append(editbox);
-        editbox_container.append(editbox_save);
-        editbox_container.append(editbox_cancel);
+        editbox_controls.append(editbox_save, editbox_cancel);
+        editbox_container.append(editbox_controls);
+
         editbtn.append(editbox_container);
     }
 }
