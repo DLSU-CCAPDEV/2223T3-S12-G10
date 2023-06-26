@@ -354,7 +354,7 @@ input.form-control, textarea.form-control {
     overflow-y: auto;
 }
 
-#login-wrapper {
+#login-wrapper,#register-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -369,7 +369,7 @@ input.form-control, textarea.form-control {
     font-weight: 600;
 }
 
-#login-container {
+#login-container,#register-container {
     min-width: 25%;
     background-color: var(--color-secondary);
     border-radius: var(--radius);
