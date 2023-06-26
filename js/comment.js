@@ -94,7 +94,13 @@ function handleReplies(e) {
 }
 
 function handleEditbutton(e) {
-    let comment_content = $(e.target).parents('.comment-footer-container').siblings('.comment-content');
+    let comment_content;
+    if (e.target.classList.contains('edit-post')) {
+        comment_content = $(e.target).parents('.post-controls-container').siblings('.post-content');
+    } else if (e.target.classList.contains('edit-reply')) {
+        comment_content = $(e.target).parents('.comment-footer-container').siblings('.comment-content');
+    }
+
     if (!comment_content.attr('contenteditable') || comment_content.attr('contenteditable') == 'false') {
         comment_content.attr('contenteditable', 'true');
         comment_content.focus();
@@ -123,28 +129,21 @@ function handleShowbutton (e) {
     console.log(parentContainer);
     $(parentContainer).children().toggleClass('opened');
 }
-function applyEdit(editingComment, editid) {
-    let edited_text = document.getElementById(editid).value;
-    if (edited_text == '') {
-        console.log("Empty Edit, don't change")
-    }
-    else {
-        console.log("Edited Comment: " + edited_text);
-        //apply change
-        editingComment.innerHTML = edited_text;
-    }
-    
-}
 
 function handleDelete (e) {
-    let parentComment = e.target.closest('.comment-container');
-    console.log(parentComment);
-    let deleteComment = parentComment.querySelector('.comment-content');
-    deleteComment.classList.add('deleted-comment');
-
-    //change it
-    deleteComment.innerHTML = "This comment has been deleted.";
-    parentComment.querySelector('.edit-reply').remove();
+    let content;
+    if (e.target.classList.contains('delete-reply')) {
+        content = $(e.target).parents('.comment-footer-container').siblings('.comment-content');
+        $(e.target).siblings('.edit-reply').remove();
+    } else if (e.target.classList.contains('delete-post')) {
+        content = $('.post-content');
+        $(e.target).parents('.post-controls-container').remove();
+    }
+    content.html("This comment has been deleted.");
+    content.addClass('deleted-comment');
+    if (content.attr('contenteditable') == 'true') {
+        content.attr('contenteditable', 'false');
+    }
 }
 
 function createReply(parentComment, replyid) {
@@ -279,36 +278,6 @@ function createReply(parentComment, replyid) {
 }
 
 //functions exclusive to post-related control
-function handlePostEditbutton(e) {
-    let comment_content = $(e.target).parents('.post-controls-container').siblings('.post-content');
-    if (!comment_content.attr('contenteditable') || comment_content.attr('contenteditable') == 'false') {
-        comment_content.attr('contenteditable', 'true');
-        comment_content.focus();
-        e.target.childNodes[0].classList.remove("fa-pen");
-        e.target.childNodes[0].classList.add("fa-check");
-        e.target.childNodes[1].textContent = "Save";
-    } else {
-        if (comment_content.text() == '') {
-            snackbar({
-                text: "Error: You may not leave an empty comment/reply!",
-                status: 'error'
-            });
-            return;
-        }
-
-        comment_content.attr('contenteditable', 'false');
-        e.target.childNodes[0].classList.remove("fa-check");
-        e.target.childNodes[0].classList.add("fa-pen");
-        e.target.childNodes[1].textContent = "Edit";
-    }
-}
-
-function handlePostDelete (e) {
-    let edit_post = document.querySelector('.post-content');
-    edit_post.innerHTML = "This comment has been deleted";
-    edit_post.classList.add('deleted-comment');
-    $(e.target).parents('.post-controls-container').remove();
-}
 
 //for directly replying to the post
 function handlePostReplies(e) {
@@ -467,7 +436,7 @@ $(document).ready(function () {
     $('.edit-reply').click(handleEditbutton);
     $('.delete-reply').click(handleDelete);
 
-    $('.edit-post').click(handlePostEditbutton);
-    $('.delete-post').click(handlePostDelete);
+    $('.edit-post').click(handleEditbutton);
+    $('.delete-post').click(handleDelete);
     $('.post-reply').click(handlePostReplies)
 });
