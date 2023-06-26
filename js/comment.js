@@ -36,7 +36,7 @@ function handleReplies(e) {
         let inputbox = document.createElement("input");
         inputbox.classList.add("form-control", "replybox");
         inputbox.setAttribute("type", "text");
-        inputbox.setAttribute("placeholder", "Type here …");
+        inputbox.setAttribute("placeholder", "type here...");
         
         //get unique reply id
         let replyid = Date.now();
@@ -94,13 +94,7 @@ function handleReplies(e) {
 }
 
 function handleEditbutton(e) {
-    let comment_content;
-    if (e.target.classList.contains('edit-post')) {
-        comment_content = $(e.target).parents('.post-controls-container').siblings('.post-content');
-    } else if (e.target.classList.contains('edit-reply')) {
-        comment_content = $(e.target).parents('.comment-footer-container').siblings('.comment-content');
-    }
-
+    let comment_content = $(e.target).parents('.comment-footer-container').siblings('.comment-content');
     if (!comment_content.attr('contenteditable') || comment_content.attr('contenteditable') == 'false') {
         comment_content.attr('contenteditable', 'true');
         comment_content.focus();
@@ -129,21 +123,28 @@ function handleShowbutton (e) {
     console.log(parentContainer);
     $(parentContainer).children().toggleClass('opened');
 }
+function applyEdit(editingComment, editid) {
+    let edited_text = document.getElementById(editid).value;
+    if (edited_text == '') {
+        console.log("Empty Edit, don't change")
+    }
+    else {
+        console.log("Edited Comment: " + edited_text);
+        //apply change
+        editingComment.innerHTML = edited_text;
+    }
+    
+}
 
 function handleDelete (e) {
-    let content;
-    if (e.target.classList.contains('delete-reply')) {
-        content = $(e.target).parents('.comment-footer-container').siblings('.comment-content');
-        $(e.target).siblings('.edit-reply').remove();
-    } else if (e.target.classList.contains('delete-post')) {
-        content = $('.post-content');
-        $(e.target).parents('.post-controls-container').remove();
-    }
-    content.html("This comment has been deleted.");
-    content.addClass('deleted-comment');
-    if (content.attr('contenteditable') == 'true') {
-        content.attr('contenteditable', 'false');
-    }
+    let parentComment = e.target.closest('.comment-container');
+    console.log(parentComment);
+    let deleteComment = parentComment.querySelector('.comment-content');
+    deleteComment.classList.add('deleted-comment');
+
+    //change it
+    deleteComment.innerHTML = "This comment has been deleted.";
+    parentComment.querySelector('.edit-reply').remove();
 }
 
 function createReply(parentComment, replyid) {
@@ -194,21 +195,17 @@ function createReply(parentComment, replyid) {
 
     let comment_vote_up = document.createElement("div");
     comment_vote_up.classList.add("comment-vote-up");
-    comment_vote_up.addEventListener("click", handleVoteButtons);
-    comment_vote_up.addEventListener("click", handleVoteButtonUp);
 
     let up_arrow = document.createElement("i");
     up_arrow.classList.add("fa", "fa-arrow-up");
 
     let comment_vote_count = document.createElement("div");
     comment_vote_count.classList.add("comment-vote-count");
-    comment_vote_count.setAttribute("data-vote-count", 0);
+    comment_vote_count.setAttribute("data-vote-count", 46);
     comment_vote_count.innerHTML = 0;
 
     let comment_vote_down = document.createElement("div");
     comment_vote_down.classList.add("comment-vote-down");
-    comment_vote_down.addEventListener("click", handleVoteButtons);
-    comment_vote_down.addEventListener("click", handleVoteButtonsDown);
 
     let down_arrow = document.createElement("i");
     down_arrow.classList.add("fa", "fa-arrow-down");
@@ -282,6 +279,36 @@ function createReply(parentComment, replyid) {
 }
 
 //functions exclusive to post-related control
+function handlePostEditbutton(e) {
+    let comment_content = $(e.target).parents('.post-controls-container').siblings('.post-content');
+    if (!comment_content.attr('contenteditable') || comment_content.attr('contenteditable') == 'false') {
+        comment_content.attr('contenteditable', 'true');
+        comment_content.focus();
+        e.target.childNodes[0].classList.remove("fa-pen");
+        e.target.childNodes[0].classList.add("fa-check");
+        e.target.childNodes[1].textContent = "Save";
+    } else {
+        if (comment_content.text() == '') {
+            snackbar({
+                text: "Error: You may not leave an empty comment/reply!",
+                status: 'error'
+            });
+            return;
+        }
+
+        comment_content.attr('contenteditable', 'false');
+        e.target.childNodes[0].classList.remove("fa-check");
+        e.target.childNodes[0].classList.add("fa-pen");
+        e.target.childNodes[1].textContent = "Edit";
+    }
+}
+
+function handlePostDelete (e) {
+    let edit_post = document.querySelector('.post-content');
+    edit_post.innerHTML = "This comment has been deleted";
+    edit_post.classList.add('deleted-comment');
+    $(e.target).parents('.post-controls-container').remove();
+}
 
 //for directly replying to the post
 function handlePostReplies(e) {
@@ -311,7 +338,7 @@ function createPostReply(parentComment, inputtedtext) {
     //this gets appended to the main comment's wrapper
     /**************************************/
     let reply_container = document.createElement("div");
-    reply_container.classList.add("comment-wrapper", "opened");
+    reply_container.classList.add("comment-wrapper", "opened", "m-0", "mt-1");
 
     /*let comment_container = document.createElement("div");
     comment_container.classList.add("post-comment-container");*/
@@ -350,21 +377,17 @@ function createPostReply(parentComment, inputtedtext) {
 
     let comment_vote_up = document.createElement("div");
     comment_vote_up.classList.add("comment-vote-up");
-    comment_vote_up.addEventListener("click", handleVoteButtons);
-    comment_vote_up.addEventListener("click", handleVoteButtonUp);
 
     let up_arrow = document.createElement("i");
     up_arrow.classList.add("fa", "fa-arrow-up");
 
     let comment_vote_count = document.createElement("div");
     comment_vote_count.classList.add("comment-vote-count");
-    comment_vote_count.setAttribute("data-vote-count", 0);
+    comment_vote_count.setAttribute("data-vote-count", 46);
     comment_vote_count.innerHTML = 0;
 
     let comment_vote_down = document.createElement("div");
     comment_vote_down.classList.add("comment-vote-down");
-    comment_vote_down.addEventListener("click", handleVoteButtons);
-    comment_vote_down.addEventListener("click", handleVoteButtonsDown);
 
     let down_arrow = document.createElement("i");
     down_arrow.classList.add("fa", "fa-arrow-down");
@@ -444,7 +467,7 @@ $(document).ready(function () {
     $('.edit-reply').click(handleEditbutton);
     $('.delete-reply').click(handleDelete);
 
-    $('.edit-post').click(handleEditbutton);
-    $('.delete-post').click(handleDelete);
+    $('.edit-post').click(handlePostEditbutton);
+    $('.delete-post').click(handlePostDelete);
     $('.post-reply').click(handlePostReplies)
 });
