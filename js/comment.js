@@ -36,7 +36,7 @@ function handleReplies(e) {
         let inputbox = document.createElement("input");
         inputbox.classList.add("form-control", "replybox");
         inputbox.setAttribute("type", "text");
-        inputbox.setAttribute("placeholder", "type here...");
+        inputbox.setAttribute("placeholder", "Type here …");
         
         //get unique reply id
         let replyid = Date.now();
