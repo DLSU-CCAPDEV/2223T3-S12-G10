@@ -453,7 +453,12 @@ input.form-control, textarea.form-control {
 .profile-other{
     background-color: var(--color-primary);
     border-radius: var(--radius);
-    padding: 15px;
+    padding: 1rem calc(0.5rem + var(--radius) / 2);
+    font-weight: 600;
+}
+
+.profile-other:hover {
+    background-color: var(--color-accent);
 }
 
 #btn-register {
