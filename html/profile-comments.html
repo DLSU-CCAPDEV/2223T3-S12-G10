@@ -12,9 +12,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css">
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/markdown.css">
+    <link rel="stylesheet" href="../css/snackbar.css">
+    <link rel="stylesheet" href="../css/post.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/cure53/DOMPurify/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../js/snackbar.js"></script>
+    <script src="../js/comment.js"></script>
     <script src="../js/nFormatter.js"></script>
     <script src="../js/scripts.js"></script>
 </head>
@@ -89,33 +93,161 @@
                     <a class="nav-link profile-other" href="/html/profile.html">Profile ></a>
                 </div>
             </div>
-            <div id="posts-container">
-                <div class="post-wrapper">
-                    <div class="post-vote-container">
-                        <div class="post-vote-up">
-                            <i class="fa fa-caret-up"></i>
+            <div id="comments-container">
+                <div class="comment-wrapper opened">
+                    <div class="comment-container">
+                        <div class="comment-header-container">
+                            <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
+                            <div class="comment-author">@aaronhall</div>
+                            <div class="comment-header-separator">•</div>
+                            <div class="comment-timestamp">06/23/2023</div>
                         </div>
-                        <div class="post-vote-count" data-vote-count="46">46</div>
-                        <div class="post-vote-down">
-                            <i class="fa fa-caret-down"></i>
+                        <div class="comment-content">
+                            I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.
+                        </div>
+                        <div class="comment-footer-container">
+                            <div class="comment-votes-container">
+                                <div class="comment-vote-up">
+                                    <i class="fa fa-arrow-up"></i>
+                                </div>
+                                <div class="comment-vote-count" data-vote-count="46">46</div>
+                                <div class="comment-vote-down">
+                                    <i class="fa fa-arrow-down"></i>
+                                </div>
+                            </div>
+                            <div class="comment-controls-container">
+                                <div class="create-reply"><i class="fa fa-reply me-2"></i>Reply</div>
+                                <div class="edit-reply"><i class="fa fa-pen me-2"></i>Edit</div>
+                                <div class="delete-reply"><i class="fa fa-trash me-2"></i>Delete</div>
+                                <div class="show-replies"><i class="fa fa-caret-down me-2"></i>Show More</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="post-container">
-                        <h2 class="post-title">What are the most surreal places to visit?</h2>
-                        <div class="post-author-container">
-                            <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
-                            <div class="post-author">@davidmiller</div>
+                </div>
+            </div>
+            <div id="comments-container">
+                <div class="comment-wrapper opened">
+                    <div class="comment-container">
+                        <div class="comment-header-container">
+                            <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
+                            <div class="comment-author">@aaronhall</div>
+                            <div class="comment-header-separator">•</div>
+                            <div class="comment-timestamp">11/16/2022</div>
                         </div>
-                        <p class="post-content">I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.</p>
-                        <div class="footer-container">
-                            <div class="tags-container">
-                                <div class="tags">surreal</div>
-                                <div class="tags">travel</div>
-                                <div class="tags">adventure</div>
+                        <div class="comment-content">
+                            A  house on the hill normally conveys an image of a lone house away from the rest of the city (building on a hill is difficult when theres plenty of homes) and a sole house on a hill can also signify a higher status (higher houses on a difficult place to build shows status)
+                        </div>
+                        <div class="comment-footer-container">
+                            <div class="comment-votes-container">
+                                <div class="comment-vote-up">
+                                    <i class="fa fa-arrow-up"></i>
+                                </div>
+                                <div class="comment-vote-count" data-vote-count="16">16</div>
+                                <div class="comment-vote-down">
+                                    <i class="fa fa-arrow-down"></i>
+                                </div>
                             </div>
-                            <div class="post-answers-count-container">
-                                <i class="fa fa-comment-dots"></i>
-                                <div class="post-answers-count">20 answers</div>
+                            <div class="comment-controls-container">
+                                <div class="create-reply"><i class="fa fa-reply me-2"></i>Reply</div>
+                                <div class="edit-reply"><i class="fa fa-pen me-2"></i>Edit</div>
+                                <div class="delete-reply"><i class="fa fa-trash me-2"></i>Delete</div>
+                                <div class="show-replies"><i class="fa fa-caret-down me-2"></i>Show More</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="comments-container">
+                <div class="comment-wrapper opened">
+                    <div class="comment-container">
+                        <div class="comment-header-container">
+                            <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
+                            <div class="comment-author">@aaronhall</div>
+                            <div class="comment-header-separator">•</div>
+                            <div class="comment-timestamp">06/04/2021</div>
+                        </div>
+                        <div class="comment-content">
+                            Me when I love Jesus. Jesus Christ is actually the best savior in the world.
+                        </div>
+                        <div class="comment-footer-container">
+                            <div class="comment-votes-container">
+                                <div class="comment-vote-up">
+                                    <i class="fa fa-arrow-up"></i>
+                                </div>
+                                <div class="comment-vote-count" data-vote-count="12">12</div>
+                                <div class="comment-vote-down">
+                                    <i class="fa fa-arrow-down"></i>
+                                </div>
+                            </div>
+                            <div class="comment-controls-container">
+                                <div class="create-reply"><i class="fa fa-reply me-2"></i>Reply</div>
+                                <div class="edit-reply"><i class="fa fa-pen me-2"></i>Edit</div>
+                                <div class="delete-reply"><i class="fa fa-trash me-2"></i>Delete</div>
+                                <div class="show-replies"><i class="fa fa-caret-down me-2"></i>Show More</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="comments-container">
+                <div class="comment-wrapper opened">
+                    <div class="comment-container">
+                        <div class="comment-header-container">
+                            <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
+                            <div class="comment-author">@aaronhall</div>
+                            <div class="comment-header-separator">•</div>
+                            <div class="comment-timestamp">01/21/2021</div>
+                        </div>
+                        <div class="comment-content">
+                            I genuinely don't believe that Grigris are somehow better than free solo-ing. Alex Honnold is proof that you don't need equipment to climb.
+                        </div>
+                        <div class="comment-footer-container">
+                            <div class="comment-votes-container">
+                                <div class="comment-vote-up">
+                                    <i class="fa fa-arrow-up"></i>
+                                </div>
+                                <div class="comment-vote-count" data-vote-count="146">146</div>
+                                <div class="comment-vote-down">
+                                    <i class="fa fa-arrow-down"></i>
+                                </div>
+                            </div>
+                            <div class="comment-controls-container">
+                                <div class="create-reply"><i class="fa fa-reply me-2"></i>Reply</div>
+                                <div class="edit-reply"><i class="fa fa-pen me-2"></i>Edit</div>
+                                <div class="delete-reply"><i class="fa fa-trash me-2"></i>Delete</div>
+                                <div class="show-replies"><i class="fa fa-caret-down me-2"></i>Show More</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="comments-container">
+                <div class="comment-wrapper opened">
+                    <div class="comment-container">
+                        <div class="comment-header-container">
+                            <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
+                            <div class="comment-author">@aaronhall</div>
+                            <div class="comment-header-separator">•</div>
+                            <div class="comment-timestamp">12/21/2020</div>
+                        </div>
+                        <div class="comment-content">
+                            I wonder how affordable going to an outdoor climb this time of year would be considering you'd have to account for snow travel, snow equipment, and proper preparation.
+                        </div>
+                        <div class="comment-footer-container">
+                            <div class="comment-votes-container">
+                                <div class="comment-vote-up">
+                                    <i class="fa fa-arrow-up"></i>
+                                </div>
+                                <div class="comment-vote-count" data-vote-count="12">12</div>
+                                <div class="comment-vote-down">
+                                    <i class="fa fa-arrow-down"></i>
+                                </div>
+                            </div>
+                            <div class="comment-controls-container">
+                                <div class="create-reply"><i class="fa fa-reply me-2"></i>Reply</div>
+                                <div class="edit-reply"><i class="fa fa-pen me-2"></i>Edit</div>
+                                <div class="delete-reply"><i class="fa fa-trash me-2"></i>Delete</div>
+                                <div class="show-replies"><i class="fa fa-caret-down me-2"></i>Show More</div>
                             </div>
                         </div>
                     </div>
