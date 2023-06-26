@@ -1,10 +1,3 @@
-/*This is the file for comment section work*/
-
-/******************************/
-//THIS IS A REFACTORED VERSION
-/******************************/
-
-//Noted, I have brain damage -Raphael
 /*
 Equivalence Table
 comment-section = comments-container
@@ -12,8 +5,8 @@ post-comment-container = comment-wrapper
 comment-card = comment-container
 comment-content = post-content
 comment-comment-footer-container = comment-footer-container
-
 */
+
 function handleReplies(e) {
     console.log("Reply Test");
 
@@ -72,55 +65,18 @@ function handleReplies(e) {
 }
 
 function handleEditbutton(e) {
-    console.log("Edit Button");
-    //let replybtn = $(e.currentTarget).parent();
-    let editbtn = e.target.closest('.comment-container')
-    let editcomment = e.target.closest('.comment-content');
-    //check if it has a certain class that appears iff reply has been pressed once
-    if (editbtn.classList.contains('active-edit')) {
-        //do nothing
-        console.log("Active edit")
+    let comment_content = $(e.target).parents('.comment-footer-container').siblings('.comment-content');
+    if (!comment_content.attr('contenteditable') || comment_content.attr('contenteditable') == 'false') {
+        comment_content.attr('contenteditable', 'true');
+        comment_content.focus();
+        e.target.childNodes[0].classList.remove("fa-pen");
+        e.target.childNodes[0].classList.add("fa-check");
+        e.target.childNodes[1].textContent = "Save";
     } else {
-        //reply is active, makes it so that clicking reply doesn't create
-        editbtn.classList.add('active-edit');
-        //create the textbox
-        let editbox_container = document.createElement("div");
-        editbox_container.classList.add("edit-box");
-        let editbox = document.createElement("input");
-        editbox.setAttribute("type", "text");
-        editbox.setAttribute("placeholder", "type here...");
-        let editID = Date.now();
-        editbox.setAttribute("id", editID);
-        //add a save and cancel button
-        let editbox_save = document.createElement("div");
-        console.log(editcomment);
-        editbox.classList.add("save-edit");
-        editbox_save.innerHTML = "SAVE";
-        editbox_save.classList.add("save-button");
-        editbox_save.addEventListener("click", function (e) {
-            let parentComment = e.target.closest('.comment-container');
-            let edit_comment = parentComment.querySelector('.comment-content');
-            console.log("edited innerHTML: " + edit_comment.innerHTML);
-            applyEdit(edit_comment, editID);
-            $(e.currentTarget).parent().remove();
-            editbtn.classList.remove('active-edit');
-        })
-
-        let editbox_cancel = document.createElement("div");
-        editbox_cancel.innerHTML = "CANCEL";
-        editbox_cancel.classList.add("cancel-button");
-        editbox_cancel.addEventListener("click", function (e) {
-            $(e.currentTarget).parent().remove();
-            editbtn.classList.remove('active-edit');     
-        })
-        //inputbox.classList.add("opened");
-        //format box
-        //inputbox_container.classList.add('post-content');
-        //build the box
-        editbox_container.append(editbox);
-        editbox_container.append(editbox_save);
-        editbox_container.append(editbox_cancel);
-        editbtn.append(editbox_container);
+        comment_content.attr('contenteditable', 'false');
+        e.target.childNodes[0].classList.remove("fa-check");
+        e.target.childNodes[0].classList.add("fa-pen");
+        e.target.childNodes[1].textContent = "Edit";
     }
 }
 
