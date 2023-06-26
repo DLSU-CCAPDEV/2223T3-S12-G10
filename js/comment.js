@@ -54,7 +54,7 @@ function handleReplies(e) {
             //pass the replyid
             let parentComment = e.target.closest('.comment-wrapper');
             console.log(parentComment);
-            createReply(parentComment, replyid); //important to note here is that the Parent is the wrapper
+            createReply(parentComment, replyid);
             $(e.currentTarget).parents('.inputbox-container').remove(); 
             replybtn.classList.remove('active-reply');
         })
@@ -94,71 +94,26 @@ function handleReplies(e) {
 }
 
 function handleEditbutton(e) {
-    console.log("Edit Button");
-    //let replybtn = $(e.currentTarget).parent();
-    let editbtn = e.target.closest('.comment-container');
-    //check if it has a certain class that appears iff reply has been pressed once
-    if (editbtn.classList.contains('active-edit')) {
-        //do nothing
-        console.log("Active edit")
+    let comment_content = $(e.target).parents('.comment-footer-container').siblings('.comment-content');
+    if (!comment_content.attr('contenteditable') || comment_content.attr('contenteditable') == 'false') {
+        comment_content.attr('contenteditable', 'true');
+        comment_content.focus();
+        e.target.childNodes[0].classList.remove("fa-pen");
+        e.target.childNodes[0].classList.add("fa-check");
+        e.target.childNodes[1].textContent = "Save";
     } else {
-        //reply is active, makes it so that clicking reply doesn't create
-        editbtn.classList.add('active-edit');
-        //create the textbox
-        let editbox_container = document.createElement("div");
-        editbox_container.classList.add("editbox-container");
-        editbox_container.classList.add("mt-3", "d-flex");
+        if (comment_content.text() == '') {
+            snackbar({
+                text: "Error: You may not leave an empty comment/reply!",
+                status: 'error'
+            });
+            return;
+        }
 
-
-        let editbox = document.createElement("input");
-        editbox.classList.add("form-control", "replybox");
-        editbox.setAttribute("type", "text");
-        editbox.setAttribute("placeholder", "type here...");
-        let editID = Date.now();
-        editbox.setAttribute("id", editID);
-
-        //add a save and cancel button
-        let editbox_controls = document.createElement('div');
-        editbox_controls.classList.add('editbox-controls')
-
-        let editbox_save = document.createElement("button");
-        editbox_save.classList.add("save-edit", "btn", "btn-success");
-        editbox_save.classList.add("save-button");
-        editbox_save.addEventListener("click", function (e) {
-            let parentComment = e.target.closest('.comment-container');
-            let edit_comment = parentComment.querySelector('.comment-content');
-            console.log("edited innerHTML: " + edit_comment.innerHTML);
-            applyEdit(edit_comment, editID);
-            $(e.currentTarget).parents('.editbox-container').remove();
-            editbtn.classList.remove('active-edit');
-        })
-        let save_symbol = document.createElement('i');
-        save_symbol.classList.add("fa-solid", "fa-floppy-disk", "me-2");
-
-        editbox_save.innerHTML = "Save";
-        editbox_save.prepend(save_symbol);
-
-        //
-        let editbox_cancel = document.createElement("button");
-        editbox_cancel.classList.add("cancel-button", "btn", "btn-danger");
-        editbox_cancel.addEventListener("click", function (e) {
-            $(e.currentTarget).parents('.editbox-container').remove();
-            editbtn.classList.remove('active-edit');     
-        })
-        let cancel_symbol = document.createElement('i');
-        cancel_symbol.classList.add('fa', 'fa-times', 'me-2');
-
-        editbox_cancel.append(cancel_symbol);
-        editbox_cancel.innerHTML = "Cancel";
-        //inputbox.classList.add("opened");
-        //format box
-        //inputbox_container.classList.add('post-content');
-        //build the box
-        editbox_container.append(editbox);
-        editbox_controls.append(editbox_save, editbox_cancel);
-        editbox_container.append(editbox_controls);
-
-        editbtn.append(editbox_container);
+        comment_content.attr('contenteditable', 'false');
+        e.target.childNodes[0].classList.remove("fa-check");
+        e.target.childNodes[0].classList.add("fa-pen");
+        e.target.childNodes[1].textContent = "Edit";
     }
 }
 
@@ -393,25 +348,6 @@ function handlePostDelete (e) {
     parentComment.querySelector('.delete-post').remove();
 }
 
-//for directly replying to the post
-function handlePostReplies(e) {
-    console.log("Reply Test");
-    let travel_path = $(e.target).parents('#add-comment-wrapper').siblings('#comments-container')
-    //target a parent on the same level as comments-container then search siblings for it
-
-    //target the comment section "comments-container"=
-    //check if it has a certain class that appears iff reply has been pressed once
-    //reply is active, makes it so that clicking reply doesn't create
-    //another textbox
-    console.log(travel_path);
-    let reply_data = $(e.target).parents('#add-comment-wrapper').children('#add-comment-container').children('#add-comment-textarea');
-    console.log(reply_data);
-    createPostReply(travel_path, reply_data.val()); //parent is the comment section
-    $('#add-comment-textarea').val('');
-    $('#add-comment-controls-container').addClass('d-none');
-
-}
-
 function createPostReply(parentComment, inputtedtext) {
     //create the entire format for a reply/comment
     
@@ -552,5 +488,4 @@ $(document).ready(function () {
 
     $('.edit-post').click(handlePostEditbutton);
     $('.delete-post').click(handlePostDelete);
-    $('.post-reply').click(handlePostReplies)
 });
