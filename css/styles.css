@@ -421,6 +421,18 @@ input.form-control, textarea.form-control {
     font-weight: 700;
 }
 
+.profile-current{
+    font-size: 2.75rem;
+    font-family: var(--font-heading);
+    font-weight: bolder;
+}
+
+.profile-other{
+    background-color: var(--color-primary);
+    border-radius: var(--radius);
+    padding: 15px;
+}
+
 #btn-register {
     background-color: var(--color-accent);
     width: 20%;
