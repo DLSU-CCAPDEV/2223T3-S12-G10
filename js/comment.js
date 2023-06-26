@@ -111,7 +111,7 @@ function handleEditbutton(e) {
 
 
         let editbox = document.createElement("input");
-        editbox.classList.add("form-control");
+        editbox.classList.add("form-control", "replybox");
         editbox.setAttribute("type", "text");
         editbox.setAttribute("placeholder", "type here...");
         let editID = Date.now();
