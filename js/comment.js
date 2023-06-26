@@ -80,13 +80,20 @@ function handleEditbutton(e) {
         e.target.childNodes[0].classList.add("fa-check");
         e.target.childNodes[1].textContent = "Save";
     } else {
+        if (comment_content.text() == '') {
+            snackbar({
+                text: "Error: You may not leave an empty comment/reply!",
+                status: 'error'
+            });
+            return;
+        }
+
         comment_content.attr('contenteditable', 'false');
         e.target.childNodes[0].classList.remove("fa-check");
         e.target.childNodes[0].classList.add("fa-pen");
         e.target.childNodes[1].textContent = "Edit";
     }
 }
-
 function handleShowbutton (e) {
     let parentContainer= e.target.closest('.comment-wrapper');
     
