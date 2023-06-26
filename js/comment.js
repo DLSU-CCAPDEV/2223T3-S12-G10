@@ -348,6 +348,25 @@ function handlePostDelete (e) {
     parentComment.querySelector('.delete-post').remove();
 }
 
+//for directly replying to the post
+function handlePostReplies(e) {
+    console.log("Reply Test");
+    let travel_path = $(e.target).parents('#add-comment-wrapper').siblings('#comments-container')
+    //target a parent on the same level as comments-container then search siblings for it
+
+    //target the comment section "comments-container"=
+    //check if it has a certain class that appears iff reply has been pressed once
+    //reply is active, makes it so that clicking reply doesn't create
+    //another textbox
+    console.log(travel_path);
+    let reply_data = $(e.target).parents('#add-comment-wrapper').children('#add-comment-container').children('#add-comment-textarea');
+    console.log(reply_data);
+    createPostReply(travel_path, reply_data.val()); //parent is the comment section
+    $('#add-comment-textarea').val('');
+    $('#add-comment-controls-container').addClass('d-none');
+
+}
+
 function createPostReply(parentComment, inputtedtext) {
     //create the entire format for a reply/comment
     
@@ -488,4 +507,5 @@ $(document).ready(function () {
 
     $('.edit-post').click(handlePostEditbutton);
     $('.delete-post').click(handlePostDelete);
+    $('.post-reply').click(handlePostReplies)
 });

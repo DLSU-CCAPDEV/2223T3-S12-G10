@@ -185,3 +185,17 @@
     color: white;
 }
 
+.inputbox-container {
+    animation: fadein 0.250s cubic-bezier(0.1, 0.1, 0.1, 0.1);
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+        transition: cubic-bezier(0.075, 0.82, 0.165, 1) all ease-in-out;
+}
+
+    to {
+        opacity: 1;
+    }
+}
