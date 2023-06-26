@@ -172,3 +172,16 @@
 .deleted-comment {
     opacity: 50%;
 }
+
+.inputbox-container {
+    display: flex;
+    gap: 1rem;
+}
+.inputbox-controls {
+    display:flex;
+    gap: 1rem;
+}
+.replybox::placeholder {
+    color: white;
+}
+
