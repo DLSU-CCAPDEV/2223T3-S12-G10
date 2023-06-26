@@ -194,22 +194,27 @@ p { font-family: var(--font-body); }
     font-size: 2rem;
 }
 
-.post-vote-container > .post-vote-up, .post-vote-container > .post-vote-down {
+.post-vote-container > .post-vote-up, .post-vote-container > .post-vote-down,
+.comment-votes-container > .comment-vote-up, .comment-votes-container > .comment-vote-down {
     opacity: 0.5;
     transition: all 180ms ease-in-out;
     cursor: pointer;
 }
 
 .post-vote-container > .post-vote-up:hover, .post-vote-container > .post-vote-down:hover,
-.post-vote-container > .post-vote-up.active, .post-vote-container > .post-vote-down.active {
+.post-vote-container > .post-vote-up.active, .post-vote-container > .post-vote-down.active,
+.comment-votes-container > .comment-vote-up:hover, .comment-votes-container > .comment-vote-down:hover,
+.comment-votes-container > .comment-vote-up.active, .comment-votes-container > .comment-vote-down.active {
     opacity: 1;
 }
 
-.post-vote-container > .post-vote-up.active {
+.post-vote-container > .post-vote-up.active,
+.comment-votes-container > .comment-vote-up.active {
     color: #3C5;
 }
 
-.post-vote-container > .post-vote-down.active {
+.post-vote-container > .post-vote-down.active,
+.comment-votes-container > .comment-vote-down.active {
     color: #C35;
 }
 

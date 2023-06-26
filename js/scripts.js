@@ -13,8 +13,17 @@ function handleVoteButtons(e) {
 }
 
 function handleVoteButtonUp(e) {
+    let mode;
+    if (e.currentTarget.classList.contains('post-vote-up') ||
+        e.currentTarget.classList.contains('post-vote-down')) {
+        mode = '.post';
+    } else if (e.currentTarget.classList.contains('comment-vote-up') ||
+               e.currentTarget.classList.contains('comment-vote-down')) {
+        mode = '.comment';
+    }
+
     let parent = $(e.currentTarget).parent();
-    let vote_count = $(e.currentTarget).siblings('.post-vote-count');
+    let vote_count = $(e.currentTarget).siblings(mode + '-vote-count');
     let data_vote_count = vote_count.attr('data-vote-count');
     if (parent.attr('data-vote-status') != 1) {
         var diff = 1;
@@ -22,7 +31,7 @@ function handleVoteButtonUp(e) {
         vote_count.text(nFormatter(parseInt(data_vote_count) + diff, 1));
         vote_count.attr('data-vote-count', parseInt(data_vote_count) + diff);
         parent.attr('data-vote-status', 1);
-        $(e.currentTarget).siblings('.post-vote-down').removeClass('active');
+        $(e.currentTarget).siblings(mode + '-vote-down').removeClass('active');
     } else {
         parent.attr('data-vote-status', 0);
         vote_count.text(nFormatter(parseInt(data_vote_count) - 1, 1));
@@ -31,8 +40,17 @@ function handleVoteButtonUp(e) {
 }
 
 function handleVoteButtonsDown(e) {
+    let mode;
+    if (e.currentTarget.classList.contains('post-vote-up') ||
+        e.currentTarget.classList.contains('post-vote-down')) {
+        mode = '.post';
+    } else if (e.currentTarget.classList.contains('comment-vote-up') ||
+        e.currentTarget.classList.contains('comment-vote-down')) {
+        mode = '.comment';
+    }
+
     let parent = $(e.currentTarget).parent();
-    let vote_count = $(e.currentTarget).siblings('.post-vote-count');
+    let vote_count = $(e.currentTarget).siblings(mode + '-vote-count');
     let data_vote_count = vote_count.attr('data-vote-count');
     if (parent.attr('data-vote-status') != -1) {
         var diff = 1;
@@ -40,7 +58,7 @@ function handleVoteButtonsDown(e) {
         vote_count.text(nFormatter(parseInt(data_vote_count) - diff, 1));
         vote_count.attr('data-vote-count', parseInt(data_vote_count) - diff);
         parent.attr('data-vote-status', -1);
-        $(e.currentTarget).siblings('.post-vote-up').removeClass('active');
+        $(e.currentTarget).siblings(mode + '-vote-up').removeClass('active');
     } else {
         parent.attr('data-vote-status', 0);
         vote_count.text(nFormatter(parseInt(data_vote_count) + 1, 1));
@@ -59,9 +77,9 @@ function validateForm(...forms) {
 }
 
 $(document).ready(function() {
-    $('.post-vote-up, .post-vote-down').click(handleVoteButtons);
-    $('.post-vote-up').click(handleVoteButtonUp);
-    $('.post-vote-down').click(handleVoteButtonsDown);
+    $('.post-vote-up, .post-vote-down, .comment-vote-up, .comment-vote-down').click(handleVoteButtons);
+    $('.post-vote-up, .comment-vote-up').click(handleVoteButtonUp);
+    $('.post-vote-down, .comment-vote-down').click(handleVoteButtonsDown);
 
     $('#btn-ask').click(function() {
         $('#post-title-form').val('');

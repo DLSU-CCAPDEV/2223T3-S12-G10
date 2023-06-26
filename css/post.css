@@ -64,6 +64,10 @@
     margin-top: 1.5rem;
 }
 
+#comments-container > .comment-wrapper {
+    margin-left: 0;
+}
+
 .comment-wrapper {
     display: none;
     flex-direction: column;

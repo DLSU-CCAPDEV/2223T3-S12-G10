@@ -194,17 +194,21 @@ function createReply(parentComment, replyid) {
 
     let comment_vote_up = document.createElement("div");
     comment_vote_up.classList.add("comment-vote-up");
+    comment_vote_up.addEventListener("click", handleVoteButtons);
+    comment_vote_up.addEventListener("click", handleVoteButtonUp);
 
     let up_arrow = document.createElement("i");
     up_arrow.classList.add("fa", "fa-arrow-up");
 
     let comment_vote_count = document.createElement("div");
     comment_vote_count.classList.add("comment-vote-count");
-    comment_vote_count.setAttribute("data-vote-count", 46);
+    comment_vote_count.setAttribute("data-vote-count", 0);
     comment_vote_count.innerHTML = 0;
 
     let comment_vote_down = document.createElement("div");
     comment_vote_down.classList.add("comment-vote-down");
+    comment_vote_down.addEventListener("click", handleVoteButtons);
+    comment_vote_down.addEventListener("click", handleVoteButtonsDown);
 
     let down_arrow = document.createElement("i");
     down_arrow.classList.add("fa", "fa-arrow-down");
@@ -307,7 +311,7 @@ function createPostReply(parentComment, inputtedtext) {
     //this gets appended to the main comment's wrapper
     /**************************************/
     let reply_container = document.createElement("div");
-    reply_container.classList.add("comment-wrapper", "opened", "m-0", "mt-1");
+    reply_container.classList.add("comment-wrapper", "opened");
 
     /*let comment_container = document.createElement("div");
     comment_container.classList.add("post-comment-container");*/
@@ -346,17 +350,21 @@ function createPostReply(parentComment, inputtedtext) {
 
     let comment_vote_up = document.createElement("div");
     comment_vote_up.classList.add("comment-vote-up");
+    comment_vote_up.addEventListener("click", handleVoteButtons);
+    comment_vote_up.addEventListener("click", handleVoteButtonUp);
 
     let up_arrow = document.createElement("i");
     up_arrow.classList.add("fa", "fa-arrow-up");
 
     let comment_vote_count = document.createElement("div");
     comment_vote_count.classList.add("comment-vote-count");
-    comment_vote_count.setAttribute("data-vote-count", 46);
+    comment_vote_count.setAttribute("data-vote-count", 0);
     comment_vote_count.innerHTML = 0;
 
     let comment_vote_down = document.createElement("div");
     comment_vote_down.classList.add("comment-vote-down");
+    comment_vote_down.addEventListener("click", handleVoteButtons);
+    comment_vote_down.addEventListener("click", handleVoteButtonsDown);
 
     let down_arrow = document.createElement("i");
     down_arrow.classList.add("fa", "fa-arrow-down");
