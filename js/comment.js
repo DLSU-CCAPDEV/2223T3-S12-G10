@@ -1,5 +1,7 @@
 /*This is the file for comment section work*/
 
+//const e = require("express");
+
 /******************************/
 //THIS IS A REFACTORED VERSION
 /******************************/
@@ -149,6 +151,13 @@ function handleDelete (e) {
 function createReply(parentComment, replyid) {
     //create the entire format for a reply/comment
     let inputtedtext = document.getElementById(replyid).value;
+    if (inputtedtext == '' || inputtedtext  ==' ') {
+        snackbar({
+            text: "Error: You may not leave an empty comment/reply!",
+            status: 'error'
+        });
+        return;
+    }
 
     /**************************************/
     //this creates another wrapper so that we can nest succeeding comments

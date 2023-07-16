@@ -20,6 +20,11 @@ function snackbar(sb) {
 
     document.getElementById('snackbar-container').appendChild(snackbar_el);
 
+    //extra
+    snackbar_el.addEventListener('click', function () {
+        snackbar_el.remove();
+    });
+
     setTimeout(() => {
         snackbar_el.classList.add("sb-out");
     }, 4000);
