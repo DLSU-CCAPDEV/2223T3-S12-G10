@@ -164,26 +164,7 @@ $(document).ready(function() {
 
         let tags_container = document.createElement("div");
         tags_container.classList.add("tags-container");
-
-        let uniqueTags = [];
-
-        post_tags.forEach((tag) => {
-            if (!uniqueTags.includes(tag.trim())) uniqueTags.push(tag.trim());
-        });
-
-        let tagCount = 0;
-        for (var i = 0; i < uniqueTags.length; i++) {
-            if (uniqueTags[i] == "") continue;
-
-            let post_tags_el = document.createElement("div");
-            post_tags_el.classList.add("tags");
-            post_tags_el.innerText = uniqueTags[i].replaceAll(' ', '-');
-
-            tags_container.append(post_tags_el);
-
-            tagCount++;
-            if (tagCount == 5) break;
-        };
+        addTags(post_tags, tags_container);
 
         let post_answers_count_container = document.createElement("div");
         post_answers_count_container.classList.add("post-answers-count-container");
@@ -221,26 +202,7 @@ $(document).ready(function() {
         let post_tags = $(this).val().trim().split(',');
         let tags_container = document.getElementById('tags-preview');
         tags_container.innerHTML = "";
-
-        let uniqueTags = [];
-
-        post_tags.forEach((tag) => {
-            if (!uniqueTags.includes(tag.trim())) uniqueTags.push(tag.trim());
-        });
-
-        let tagCount = 0;
-        for (let i = 0; i < uniqueTags.length; i++) {
-            if (uniqueTags[i] == "") continue;
-
-            let post_tags_el = document.createElement("div");
-            post_tags_el.classList.add("tags");
-            post_tags_el.innerText = uniqueTags[i].replaceAll(' ', '-');
-
-            tags_container.append(post_tags_el);
-
-            tagCount++;
-            if (tagCount == 5) break;
-        }
+        addTags(post_tags, tags_container);
     });
 
     $('#add-comment-textarea').each(function () {
@@ -265,3 +227,24 @@ $(document).ready(function() {
         $(e.target).closest('.post-wrapper').remove();
     })
 });
+
+function addTags(tags, tags_container) {
+    let uniqueTags = [];
+
+    tags.map(tag => tag.trim().replaceAll(' ', '-')).forEach((tag) => {
+        if (tag == "") return;
+        if (!uniqueTags.includes(tag)) uniqueTags.push(tag);
+    });
+
+    let tagCount = 0;
+    for (let i = 0; i < uniqueTags.length; i++) {
+        let post_tags_el = document.createElement("div");
+        post_tags_el.classList.add("tags");
+        post_tags_el.innerText = uniqueTags[i];
+
+        tags_container.append(post_tags_el);
+
+        tagCount++;
+        if (tagCount == 5) break;
+    }
+}
