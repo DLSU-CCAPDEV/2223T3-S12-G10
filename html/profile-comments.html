@@ -31,7 +31,7 @@
                    id="navbar-brand">forum.</a>
                 <ul class="nav flex-column mb-auto" id="sidenav-nav">
                     <li class="nav-item ps-2">
-                        <a class="nav-link active p-4" href="/html">
+                        <a class="nav-link p-4" href="/html">
                             <i class="fa fa-home pe-4"></i>
                             Home
                         </a>
@@ -56,7 +56,7 @@
                     </li>
                     <hr class="m-4"/>
                     <li class="nav-item ps-2">
-                        <a class="nav-link p-4" href="/html/profile.html">
+                        <a class="nav-link active p-4" href="/html/profile.html">
                             <i class="fa fa-user pe-4"></i>
                             Profile
                         </a>
@@ -83,17 +83,17 @@
                     <input type="search" placeholder="Search" name="post-search" id="post-search">
                 </div>
                 <button id="btn-ask" data-bs-toggle="modal" data-bs-target="#modal-question">Ask Question</button>
-                <button id="btn-alerts"><i class="fa fa-bell"></i></button>
+                <button id="btn-mode-toggle"><i class="fa fa-moon"></i></button>
             </div>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between mb-3">
                 <div>
-                    <p class="profile-current">Comments</p>
+                    <h2 class="profile-current">Comments</h2>
                 </div>
                 <div>
                     <a class="nav-link profile-other" href="../html/profile.html">Profile<i class="fa fa-chevron-right ms-3"></i></a>
                 </div>
             </div>
-            <div id="comments-container">
+            <div id="comments-container" class="mt-0">
                 <div class="comment-wrapper opened">
                     <div class="comment-container">
                         <div class="comment-header-container">
@@ -124,8 +124,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="comments-container">
                 <div class="comment-wrapper opened">
                     <div class="comment-container">
                         <div class="comment-header-container">
@@ -156,8 +154,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="comments-container">
                 <div class="comment-wrapper opened">
                     <div class="comment-container">
                         <div class="comment-header-container">
@@ -188,8 +184,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="comments-container">
                 <div class="comment-wrapper opened">
                     <div class="comment-container">
                         <div class="comment-header-container">
@@ -220,8 +214,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="comments-container">
                 <div class="comment-wrapper opened">
                     <div class="comment-container">
                         <div class="comment-header-container">
@@ -256,14 +248,14 @@
         </div>
         <div class="col-3">
             <div class="bg-secondary m-4 ms-0 p-5 radius">
-                <div class="d-flex justify-content-center mb-3">
-                    <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="Profile picture" id="profile-img" style="width: 250px; border-radius: 50%;">
+                <div class="mb-4">
+                    <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="Profile picture" id="profile-img-large">
                 </div>
-                <div class="d-flex flex-column align-items-center" >
+                <div class="d-flex flex-column align-items-center my-3">
                     <a href="/html/profile.html" class="text-decoration-none">
                         <h4 id="profile-name">Aaron Hall<i class="fa fa-badge-check ms-3 text-accent"></i></h4>
                     </a>
-                    <p id="profile-username" style="margin-bottom: 10px;">@aaronhall</p>
+                    <p id="profile-username" class="mt-1">@aaronhall</p>
                  </div>
                 <div class="row">
                     <div class="col-6">

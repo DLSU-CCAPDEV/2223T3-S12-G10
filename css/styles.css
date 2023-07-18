@@ -5,10 +5,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
-    --color-text: #030E1B;
-    --color-text-muted: #585E8E;
-    --color-background: #F6F9FE;
-    --color-primary: #1C72E3;
+    --color-text: #333;
+    --color-text-muted: #9DA5E1;
+    --color-background: #F1F6FA;
+    --color-primary: #BBD5F7;
     --color-secondary: #FFFFFF;
     --color-accent: #3380E6;
 }
@@ -20,6 +20,10 @@
     --color-primary: #313B6B;
     --color-secondary: #1C2146;
     --color-accent: #9696F7;
+}
+
+* {
+    transition: background-color 0.375s ease-in-out, color 80ms ease-in-out;
 }
 
 html {
@@ -82,12 +86,15 @@ p { font-family: var(--font-body); }
 }
 
 #sidenav-nav > li > a {
-    color: var(--color-text);
+    color: var(--color-accent);
     transition: opacity 180ms ease 0s;
+    font-weight: 700;
 }
 
 #sidenav-nav > li > a:not(.active) {
     opacity: 0.5;
+    color: var(--color-text);
+    font-weight: 400;
 }
 
 #sidenav-nav > li > a:not(.active):hover {
@@ -107,7 +114,7 @@ p { font-family: var(--font-body); }
 
 #post-search-icon {
     position: absolute;
-    top: 1.1rem;
+    top: calc(1.1rem + (3px / 2));
     left: 1.5rem;
     color: var(--color-text-muted);
 }
@@ -121,7 +128,8 @@ p { font-family: var(--font-body); }
     padding-left: 3.5rem;
     color: var(--color-text-muted);
     font-weight: 700;
-    transition: background-color 180ms ease;
+    transition: border-color 180ms ease;
+    border: 3px solid transparent;
 }
 
 #post-search::before {
@@ -136,7 +144,8 @@ p { font-family: var(--font-body); }
 
 #post-search:focus {
     outline: 0;
-    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
 }
 
 #btn-ask {
@@ -151,13 +160,15 @@ p { font-family: var(--font-body); }
 
 #btn-ask:hover {
     background-color: var(--color-accent);
+    color: var(--color-background);
+    opacity: 1;
 }
 
 #btn-ask:active {
     background-color: var(--color-secondary);
 }
 
-#btn-alerts {
+#btn-mode-toggle {
     background-color: var(--color-primary);
     color: var(--color-accent);
     opacity: 0.7;
@@ -167,7 +178,7 @@ p { font-family: var(--font-body); }
     transition: background-color 180ms ease;
 }
 
-#btn-alerts:hover {
+#btn-mode-toggle:hover {
     background-color: var(--color-accent);
     color: var(--color-background);
 }
@@ -232,8 +243,11 @@ p { font-family: var(--font-body); }
 
 .post-content {
     font-size: 1rem;
-    opacity: 0.7;
     margin-bottom: 1.5rem;
+}
+
+.post-content p:not(:has(img)), .post-content ul, .post-content ol {
+    opacity: 0.7;
 }
 
 .post-author-container {
@@ -307,6 +321,11 @@ p { font-family: var(--font-body); }
     border-radius: var(--radius);
 }
 
+#profile-img-large {
+    width: 100%;
+    border-radius: calc(var(--radius) / 2);
+}
+
 #profile-name, #profile-username {
     color: var(--color-text);
     margin-bottom: 0;
@@ -350,7 +369,7 @@ p { font-family: var(--font-body); }
 }
 
 input.form-control, textarea.form-control {
-    background-color: var(--color-primary);
+    background-color: var(--color-background);
     border: 0;
     transition: background-color 180ms ease;
     color: var(--color-text);
@@ -422,6 +441,7 @@ input.form-control, textarea.form-control {
 
 #btn-login {
     background-color: var(--color-accent);
+    color: var(--color-background);
     margin-top: 1.5rem;
     width: 100%;
     text-transform: uppercase;
@@ -455,10 +475,14 @@ input.form-control, textarea.form-control {
     border-radius: var(--radius);
     padding: 1rem calc(0.5rem + var(--radius) / 2);
     font-weight: 600;
+    display: block;
+    color: var(--color-text);
+    text-decoration: none;
 }
 
 .profile-other:hover {
     background-color: var(--color-accent);
+    color: var(--color-background);
 }
 
 #btn-register {
@@ -492,20 +516,16 @@ input.form-control, textarea.form-control {
 
 .avatar-selection.selected {
     border-color: red;
-  }
-
-#submit-register{
-    background-color: var(--color-accent);
-    width: 30%;
-    text-transform: uppercase;
-    font-weight: 700;
-    float: right;
 }
 
-#cancel-register{
+#submit-register, #cancel-register {
     background-color: var(--color-accent);
+    color: var(--color-background);
     width: 30%;
     text-transform: uppercase;
     font-weight: 700;
-   
+}
+
+#submit-register{
+    float: right;
 }

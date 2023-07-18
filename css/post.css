@@ -127,19 +127,25 @@
 .comment-content,
 .post-content {
     margin-bottom: 1.5rem;
-    transition: background-color 180ms ease, padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color 180ms ease, padding 0.5s cubic-bezier(0.25, 0.75, 0.2, 1);
 }
 
 .comment-content[contenteditable=true],
 .post-content[contenteditable=true] {
-    padding: 1rem;
+    padding: calc(0.5rem + var(--radius) / 4);
     outline: none !important;
     border: 1px solid var(--color-accent);
+    border-radius: calc(var(--radius) / 2);
 }
 
 .comment-content[contenteditable=true]:focus,
 .post-content[contenteditable=true]:focus {
     background-color: var(--color-primary);
+}
+
+.comment-content > p:last-child,
+.post-content > p:last-child {
+    margin-block-end: 0;
 }
 
 .comment-footer-container {

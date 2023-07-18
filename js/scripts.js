@@ -225,7 +225,26 @@ $(document).ready(function() {
 
     $('.post-control-delete').click((e) => {
         $(e.target).closest('.post-wrapper').remove();
-    })
+    });
+
+    $('#btn-mode-toggle').click(function() {
+       let isDark = $('html').attr('dark') != undefined;
+
+       $(this).html("");
+
+       let day_night_icon = document.createElement("i");
+       day_night_icon.classList.add("fa");
+
+       if (isDark) {
+           $('html').removeAttr('dark');
+           day_night_icon.classList.add("fa-sun");
+       } else {
+           $('html').attr('dark', '');
+           day_night_icon.classList.add("fa-moon");
+       }
+
+       this.appendChild(day_night_icon);
+    });
 });
 
 function addTags(tags, tags_container) {
