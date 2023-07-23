@@ -344,6 +344,8 @@ const postController = {
         }
     },
 
+
+    //for posting comment, not sure how it's gonna get called
     postComment: async function (req, res) {
         //assuming this is coming from /post/:_id
         var CommentPostId = req.params._id;
@@ -361,7 +363,23 @@ const postController = {
         if (response != null) {
             console.log('Comment: ' + response);
         }
+    },
+
+    //deleting stuff
+    deletePost: async function(req, res) {
+        //not a true delete
+        //id somehow
+        var filter = {_id: req.params._id};
+
+        var condition = {$set: {postTitle: 'Deleted Post', postText: "Post has been deleted"}};
+        
+        var response = await db.updateOne(Comment, filter, condition);
+
+        if (response != null) {
+            console.log("A post has been deleted.")
+        }
     }
+
 }
 
 /*
