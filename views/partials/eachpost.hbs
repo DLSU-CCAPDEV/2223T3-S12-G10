@@ -1,0 +1,46 @@
+{{#each post}}
+            <div class="post-wrapper">
+                <div class="post-vote-container">
+                    <div class="post-vote-up">
+                        <i class="fa fa-caret-up"></i>
+                    </div>
+                    <div class="post-vote-count">
+                    {{#if (isNull upvotes) }}
+                        {{#if (isNull downvotes) }}
+                            0
+                        {{/if}}
+                    {{else}}
+                        {{upvotes.length-downvotes.length}}
+                    {{/if}}</div>
+                    <div class="post-vote-down">
+                        <i class="fa fa-caret-down"></i>
+                    </div>
+                </div>
+                <div class="post-container">
+                    <a href="/post/{{_id}}" class="text-decoration-none">
+                        <h2 class="post-title">{{postTitle}}</h2>
+                    </a>
+                    <div class="post-author-container">
+                        <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
+                        <a href="../html/profile.html" class="text-decoration-none">
+                            <div class="post-author">@{{postUserId}}</div>
+                        </a>
+                    </div>
+                    <p class="post-content">{{postText}}
+                    </p>
+                    <div class="footer-container">
+                        <div class="tags-container">
+                            {{#each postTags}}
+                            <div class="tags">{{this}}</div>
+                            {{/each}}                            
+                        </div>
+                        <div class="post-answers-count-container">
+                            <i class="fa fa-comment-dots"></i>
+                            <a href="../html/post.html" class="text-decoration-none">
+                                <div class="post-answers-count">{{commentCount}}</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{{/each}}
