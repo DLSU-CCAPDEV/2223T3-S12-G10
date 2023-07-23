@@ -33,6 +33,7 @@ app.get('/favicon.ico', controller.getFavicon);
     when a client sends an HTTP GET request for `/`
 */
 app.get('/', postController.getManyPosts);
+
 app.get('/index', postController.getManyPosts);
 
 /*
@@ -40,14 +41,14 @@ app.get('/index', postController.getManyPosts);
     defined in object `signupController` in `../controllers/signupController.js`
     when a client sends an HTTP GET request for `/signup`
 */
-app.get('/signup', signupController.getSignUp);
+app.get('/register', signupController.getSignUp);
 
 /*
     execute function postSignUp()
     defined in object `signupController` in `../controllers/signupController.js`
     when a client sends an HTTP POST request for `/signup`
 */
-app.post('/signup', signupController.postSignUp);
+app.post('/register', signupController.postSignUp);
 
 /*
     execute function getSuccess()

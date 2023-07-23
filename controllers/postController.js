@@ -168,7 +168,7 @@ const postController = {
             date: postDate,
             postText: postText,
             postTags: postTags
-        }
+        };
 
         var response = await db.insertOne(Post, post);
         console.log(req.body);
@@ -179,7 +179,7 @@ const postController = {
             console.log('Post-Title: ' + postTitle);
             console.log('Post-Date: ' + date.getUTCDate());
             
-            res.redirect('/post/posting');
+            res.redirect('/');
         }
         else {
             res.render('error');

@@ -11,16 +11,37 @@ function validateForm(...forms) {
 $(document).ready(function(){
     //empty for now
     $('#btn-post-form').click(function () {
-        const post_title = $('#post-title-form').val();
-        const post_content = $('#post-content-form').val();
-        const post_tags_form = $('#post-tags-form').val();
+        const post_title = $('#postTitle').val();
+        const post_content = $('#postContent').val();
+        const post_tags_form = $('#postTags').val();
 
         console.log('Backend postTitle:' + post_title);
 
         if (!validateForm(post_title, post_content, post_tags_form)) return;
         console.log('Btn Successful!');
         $('#modal-question').modal('hide');
-        $.get('/getPosts');
+        //$.get('/');
+    });
+
+    $('#submit-register').click(function () {
+        //for signing up and creating users
+        const username = $('#username').val();
+        const password = $('#password').val();
+        const confirmpassword = $('#confirm_passowrd').val();
+
+        if (password !== confirm_password) {
+            password_error.innerHTML = "Passwords do not match.";
+            return;
+        } 
+
+        $.post('/register');
+    });
+
+    $('#cancel-register').click(function () {
+        //reset field values
+        $('#username').val('');
+        $('#password').val('');
+        $('#confirm_passowrd').val('');
     });
 
     $('#postSearch').keydown(function (event) {

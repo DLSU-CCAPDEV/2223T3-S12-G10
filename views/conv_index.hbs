@@ -20,7 +20,7 @@
     <script src="../js/backend.js"></script>
     <script src="../js/nFormatter.js"></script>
     <script src="../js/scripts.js"></script>
-    <script src="../js/comment.js"></script>
+    {{!-- <script src="../js/comment.js"></script> --}}
     <script src="../js/snackbar.js"></script>
 </head>
 <body>
@@ -39,8 +39,52 @@
             <button id="btn-alerts"><i class="fa fa-bell"></i></button>
         </div>
         <div id="posts-container">
-            {{#> eachpost post}}
-            {{/eachpost}}
+            {{#each post}}
+            <div class="post-wrapper">
+                <div class="post-vote-container">
+                    <div class="post-vote-up">
+                        <i class="fa fa-caret-up"></i>
+                    </div>
+                    <div class="post-vote-count">
+                    {{#if (isNull upvotes) }}
+                        {{#if (isNull downvotes) }}
+                            0
+                        {{/if}}
+                    {{else}}
+                        {{upvotes.length-downvotes.length}}
+                    {{/if}}</div>
+                    <div class="post-vote-down">
+                        <i class="fa fa-caret-down"></i>
+                    </div>
+                </div>
+                <div class="post-container">
+                    <a href="/post/{{_id}}" class="text-decoration-none">
+                        <h2 class="post-title">{{postTitle}}</h2>
+                    </a>
+                    <div class="post-author-container">
+                        <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
+                        <a href="../html/profile.html" class="text-decoration-none">
+                            <div class="post-author">@{{postUserId}}</div>
+                        </a>
+                    </div>
+                    <p class="post-content">{{postText}}
+                    </p>
+                    <div class="footer-container">
+                        <div class="tags-container">
+                            {{#each postTags}}
+                            <div class="tags">{{this}}</div>
+                            {{/each}}                            
+                        </div>
+                        <div class="post-answers-count-container">
+                            <i class="fa fa-comment-dots"></i>
+                            <a href="../html/post.html" class="text-decoration-none">
+                                <div class="post-answers-count">0</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{{/each}}
         </div>
     </div>
 
@@ -94,20 +138,18 @@
                         <form id="form-post" method="post">
                             <div class="mb-3">
                                 <label for="post-title-form" class="form-label">Title</label>
-                                <input type="text" class="form-control" name="postTitle" id="post-title-form" required>
+                                <input type="text" class="form-control" name="postTitle" id="postTitle" required>
                             </div>
                             <div class="mb-3">
                                 <label for="post-content-form" class="form-label">Content</label>
-                                <textarea class="form-control" name="postContent" id="post-content-form" required rows="10"></textarea>
+                                <textarea class="form-control" name="postContent" id="postContent" required rows="10"></textarea>
                                 <p class="fs-6 fw-semibold text-muted"><a href="https://commonmark.org/help/">CommonMark Markdown</a> formatting is supported.</p>
                             </div>
                             <div class="mb-3">
                                 <label for="post-tags-form" class="form-label">Tags</label>
-                                <input type="text" class="form-control" name="postTags" id="post-tags-form" required>
+                                <input type="text" class="form-control" name="postTags" id="postTags" required>
                                 <p class="fs-6 fw-semibold text-muted">Separate tags with a comma. Maximum of 5 tags allowed.</p>
-                            </div>
-                            
-                        
+                            </div>    
                     </div>
                     <div class="col-6" id="post-preview-container">
                         <h2 class="post-title" id="post-title-preview"></h2>
@@ -115,7 +157,6 @@
                         <div class="tags-container" id="tags-preview"></div>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">

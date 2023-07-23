@@ -16,7 +16,7 @@ const signupController = {
         as defined in `../routes/routes.js`
     */
     getSignUp: function (req, res) {
-        res.render('signup');
+        res.render('register');
     },
 
     /*
@@ -35,12 +35,10 @@ const signupController = {
         var username = req.body.username;
         var password = req.body.password;
         console.log('password is: ' + password);
-        var userdescription = req.body.userdescription;
 
         var user = {
             username: username,
-            password: password,
-            userdescription: userdescription
+            password: password
         }
 
         /*
@@ -60,7 +58,7 @@ const signupController = {
         */
 
         if(response != null){
-            res.redirect('/success?username=' + username);
+            res.redirect('/');
         }
         else {
             res.render('error');
