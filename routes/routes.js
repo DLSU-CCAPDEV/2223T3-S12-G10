@@ -33,7 +33,7 @@ app.get('/favicon.ico', controller.getFavicon);
     when a client sends an HTTP GET request for `/`
 */
 app.get('/', postController.getManyPosts);
-app.get('/index', controller.getIndex);
+app.get('/index', postController.getManyPosts);
 
 /*
     execute function getSignUp()
