@@ -93,29 +93,36 @@
                     <div class="post-vote-up">
                         <i class="fa fa-caret-up"></i>
                     </div>
-                    <div class="post-vote-count" data-vote-count="46">{{}}</div>
+                    <div class="post-vote-count">
+                    {{#if (isNull upvotes) }}
+                        {{#if (isNull downvotes) }}
+                            0
+                        {{/if}}
+                    {{else}}
+                        {{upvotes.length-downvotes.length}}
+                    {{/if}}</div>
                     <div class="post-vote-down">
                         <i class="fa fa-caret-down"></i>
                     </div>
                 </div>
                 <div class="post-container">
-                    <h2 class="post-title">What are the most surreal places to visit?</h2>
+                    <h2 class="post-title">{{postTitle}}</h2>
                     <div class="post-author-container">
                         <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
-                        <div class="post-author">@davidmiller</div>
+                        <div class="post-author">@{{postUserId}}</div>
                     </div>
                     <div class="post-content">
-                        <p>I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.</p>
+                        <p>{{postText}}</p>
                     </div>
                     <div class="footer-container">
                         <div class="tags-container">
-                            <div class="tags">surreal</div>
-                            <div class="tags">travel</div>
-                            <div class="tags">adventure</div>
+                            {{#each postTags}}
+                            <div class="tags">{{this}}</div>
+                            {{/each}}                            
                         </div>
                         <div class="post-answers-count-container">
                             <i class="fa fa-comment-dots"></i>
-                            <div class="post-answers-count">20 answers</div>
+                            <div class="post-answers-count">{{commentCount}}</div>
                         </div>
                     </div>
                     <div class="post-controls-container">
@@ -139,6 +146,7 @@
         </div>
         <div id="comments-container">
             <div class="comment-wrapper opened">
+                {{#each comment}}
                 <div class="comment-container">
                     <div class="comment-header-container">
                         <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
@@ -167,6 +175,7 @@
                         </div>
                     </div>
                 </div>
+                {{/each}}
             </div>
         </div>
     </div>
