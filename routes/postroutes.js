@@ -17,7 +17,7 @@ router.post('/posting', postController.postPost)
 
 // router.get('/post/:_id', postController.getOnePost);
 
-// router.get('/search/posts/:postSearch', postController.getSearchedPosts);
+router.get('/search/:postSearch', postController.searchPost);
 
 // router.get('/successPost', postController.getSuccessPost)
 

@@ -70,7 +70,8 @@ app.get('/search/searchedPosts', postController.getSearchedPosts);
 /*
     these ones will be used specifically to get posts in the main index page
 */
-app.use('/post', postRouter);
+//this
+app.use('', postRouter);
 
 /*
     exports the object `app` (defined above)

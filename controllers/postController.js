@@ -19,12 +19,65 @@ const postController = {
         To be used for GETTING posts
     */
     getManyPosts: async function (req, res) {
-        console.log("GetPost function called.")
         // find post via title
         //var query = {postTitle: req.params.postTitle};
         //empty query
         var query = {}; //empty for testing
         console.log(req.params);
+        // fields to be returned
+        //get the entire thing
+        var projection = '';
+
+        /*
+            calls the function findOne()
+            defined in the `database` object in `../models/db.js`
+            this function searches the collection `users`
+            based on the value set in object `query`
+            the third parameter is a string containing fields to be returned
+        */
+       //limit is how many  documents it'll find, use skiplimited when loading MORE documents
+         //placeholder\
+        let limit = 0;
+        var results = await db.limitedFind(Post, query, projection, limit); //limiting works
+        //limit = limit + 5;
+
+        console.log('Limit variable testing: ' + limit);
+
+        /*
+            if the user exists in the database
+            render the profile page with their details
+        */
+        if(results != null) {
+            console.log("Nonnull result");
+            //console.log(results);
+            //console.log(results.postTags);
+            
+            var details = {
+                post: results
+            }
+
+            //console.log(details;
+            //pass the entire thing
+            // render `../views/profile.hbs`
+            res.render('conv_index', details);
+        }
+
+        /*
+            if the user does not exist in the database
+            render the error page
+        */
+        else {
+            console.log("Getting Post Ended in Failure.")
+            res.render('error');
+        }
+    },
+
+    getOnePost: async function (req, res) {
+        // find post via title
+        //var query = {postTitle: req.params.postTitle};
+        //empty query
+        var query = {_id: req.params._id}; //empty for testing
+        // console.log(req.params);
         // fields to be returned
         //get the entire thing
         var projection = '';
@@ -188,6 +241,8 @@ const postController = {
         //req.body
         var query = {_id: req.body._id};
 
+        
+        //these aren't the real variable names yet
         var editedTitle = req.body.editedTitle;
         var editedText = req.body.editedText;
         var editedTags = req.body.editedTags;
