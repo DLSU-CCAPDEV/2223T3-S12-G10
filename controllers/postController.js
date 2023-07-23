@@ -107,13 +107,13 @@ const postController = {
             //console.log(results.postTags);
             
             var details = {
-                post: results
+                post: results,
             }
 
             //console.log(details;
             //pass the entire thing
             // render `../views/profile.hbs`
-            res.render('conv_index', details);
+            res.render('singlepost', details);
         }
 
         /*

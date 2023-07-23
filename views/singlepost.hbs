@@ -94,29 +94,29 @@
                         <i class="fa fa-caret-up"></i>
                     </div>
                     <div class="post-vote-count">
-                    {{#if (isNull upvotes) }}
-                        {{#if (isNull downvotes) }}
+                    {{#if (isNull post.upvotes) }}
+                        {{#if (isNull post.downvotes) }}
                             0
                         {{/if}}
                     {{else}}
-                        {{upvotes.length-downvotes.length}}
+                        {{post.upvotes.length-post.downvotes.length}}
                     {{/if}}</div>
                     <div class="post-vote-down">
                         <i class="fa fa-caret-down"></i>
                     </div>
                 </div>
                 <div class="post-container">
-                    <h2 class="post-title">{{postTitle}}</h2>
+                    <h2 class="post-title">{{post.postTitle}}</h2>
                     <div class="post-author-container">
                         <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
-                        <div class="post-author">@{{postUserId}}</div>
+                        <div class="post-author">@{{post.postUserId}}</div>
                     </div>
                     <div class="post-content">
-                        <p>{{postText}}</p>
+                        <p>{{post.postText}}</p>
                     </div>
                     <div class="footer-container">
                         <div class="tags-container">
-                            {{#each postTags}}
+                            {{#each post.postTags}}
                             <div class="tags">{{this}}</div>
                             {{/each}}                            
                         </div>
