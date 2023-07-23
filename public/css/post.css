@@ -31,7 +31,7 @@
     width: var(--add-comment-height);
 }
 
-#add-comment-container > #add-comment-textarea {
+#add-comment-container > #addcommenttextarea {
     border-radius: calc(var(--radius) / 2);
     resize: none;
     padding: 0 1.5rem;
@@ -40,17 +40,17 @@
     transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 180ms ease;
 }
 
-#add-comment-container > #add-comment-textarea::placeholder {
+#add-comment-container > #addcommenttextarea::placeholder {
     color: var(--color-text);
 }
 
-#add-comment-container > #add-comment-textarea:focus,
-#add-comment-container > #add-comment-textarea:not(:placeholder-shown) {
+#add-comment-container > #addcommenttextarea:focus,
+#add-comment-container > #addcommenttextarea:not(:placeholder-shown) {
     padding: 1rem 1.5rem;
     line-height: initial;
 }
 
-#add-comment-container > #add-comment-textarea:placeholder-shown {
+#add-comment-container > #addcommenttextarea:placeholder-shown {
     height: var(--add-comment-height) !important;
 }
 

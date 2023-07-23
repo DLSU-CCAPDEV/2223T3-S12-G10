@@ -196,7 +196,7 @@ $(document).ready(function() {
         addTags(post_tags, tags_container);
     });
 
-    $('#add-comment-textarea').each(function () {
+    $('#addcommenttextarea').each(function () {
         this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
     }).on('input', function () {
         this.style.height = 'auto';
@@ -210,7 +210,7 @@ $(document).ready(function() {
     });
 
     $('#btn-comment-discard').click(function() {
-        $('#add-comment-textarea').val('');
+        $('#addcommenttextarea').val('');
         $('#add-comment-controls-container').addClass('d-none');
     })
 

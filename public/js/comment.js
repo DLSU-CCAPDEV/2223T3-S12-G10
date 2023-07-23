@@ -15,85 +15,85 @@ comment-card = comment-container
 comment-content = post-content
 comment-comment-footer-container = comment-footer-container
 
-*/
-function handleReplies(e) {
-    console.log("Reply Test");
+// */
+// function handleReplies(e) {
+//     console.log("Reply Test");
 
-    //let replybtn = $(e.currentTarget).parent();
-    let replybtn = e.target.closest('.comment-container')
-    console.log(replybtn);
-    //check if it has a certain class that appears iff reply has been pressed once
-    if (replybtn.classList.contains('active-reply')) {
-        //do nothing
-        console.log("Active reply")
-    } else {
-        //reply is active, makes it so that clicking reply doesn't create
-        //another textbox
-        replybtn.classList.add('active-reply');
-        //create the textbox
-        let inputbox_container = document.createElement("div");
-        inputbox_container.classList.add("inputbox-container");
-        inputbox_container.classList.add("mt-3");
+//     //let replybtn = $(e.currentTarget).parent();
+//     let replybtn = e.target.closest('.comment-container')
+//     console.log(replybtn);
+//     //check if it has a certain class that appears iff reply has been pressed once
+//     if (replybtn.classList.contains('active-reply')) {
+//         //do nothing
+//         console.log("Active reply")
+//     } else {
+//         //reply is active, makes it so that clicking reply doesn't create
+//         //another textbox
+//         replybtn.classList.add('active-reply');
+//         //create the textbox
+//         let inputbox_container = document.createElement("div");
+//         inputbox_container.classList.add("inputbox-container");
+//         inputbox_container.classList.add("mt-3");
 
-        let inputbox = document.createElement("input");
-        inputbox.classList.add("form-control", "replybox");
-        inputbox.setAttribute("type", "text");
-        inputbox.setAttribute("placeholder", "Type here …");
+//         let inputbox = document.createElement("input");
+//         inputbox.classList.add("form-control", "replybox");
+//         inputbox.setAttribute("type", "text");
+//         inputbox.setAttribute("placeholder", "Type here …");
         
-        //get unique reply id
-        let replyid = Date.now();
-        inputbox.setAttribute("id", replyid)
-        //create a container for the reply controls
-        let inputbox_controls = document.createElement('div');
-        inputbox_controls.classList.add('inputbox-controls');
+//         //get unique reply id
+//         let replyid = Date.now();
+//         inputbox.setAttribute("id", replyid)
+//         //create a container for the reply controls
+//         let inputbox_controls = document.createElement('div');
+//         inputbox_controls.classList.add('inputbox-controls');
 
-        //add a save and cancel button
-        let inputbox_save = document.createElement("button");
-        inputbox_save.classList.add("save", "btn", "btn-success");
-        inputbox_save.classList.add("save-button");
-        inputbox_save.addEventListener("click", function (e) {
-            //get the inputted value so far then call the post building function
-            //pass the replyid
-            let parentComment = e.target.closest('.comment-wrapper');
-            console.log(parentComment);
-            createReply(parentComment, replyid);
-            $(e.currentTarget).parents('.inputbox-container').remove(); 
-            replybtn.classList.remove('active-reply');
-        })
-        //add an internal symbol style
-        let save_symbol = document.createElement('i');
-        save_symbol.classList.add('fa-solid', 'fa-floppy-disk', "me-2");
+//         //add a save and cancel button
+//         let inputbox_save = document.createElement("button");
+//         inputbox_save.classList.add("save", "btn", "btn-success");
+//         inputbox_save.classList.add("save-button");
+//         inputbox_save.addEventListener("click", function (e) {
+//             //get the inputted value so far then call the post building function
+//             //pass the replyid
+//             let parentComment = e.target.closest('.comment-wrapper');
+//             console.log(parentComment);
+//             createReply(parentComment, replyid);
+//             $(e.currentTarget).parents('.inputbox-container').remove(); 
+//             replybtn.classList.remove('active-reply');
+//         })
+//         //add an internal symbol style
+//         let save_symbol = document.createElement('i');
+//         save_symbol.classList.add('fa-solid', 'fa-floppy-disk', "me-2");
         
-        inputbox_save.innerHTML = "Save";
-        inputbox_save.prepend(save_symbol);
+//         inputbox_save.innerHTML = "Save";
+//         inputbox_save.prepend(save_symbol);
         
 
-        //
-        let inputbox_cancel = document.createElement("button");
-        inputbox_cancel.classList.add("cancel-button", 'btn', 'btn-danger');
-        inputbox_cancel.addEventListener("click", function (e) {
-            replybtn.classList.remove('active-reply');
-            $(e.currentTarget).parents('.inputbox-container').remove();            
-        })
-        //internal discard symbol
-        let cancel_symbol = document.createElement('i');
-        cancel_symbol.classList.add('fa', 'fa-times', 'me-2');
+//         //
+//         let inputbox_cancel = document.createElement("button");
+//         inputbox_cancel.classList.add("cancel-button", 'btn', 'btn-danger');
+//         inputbox_cancel.addEventListener("click", function (e) {
+//             replybtn.classList.remove('active-reply');
+//             $(e.currentTarget).parents('.inputbox-container').remove();            
+//         })
+//         //internal discard symbol
+//         let cancel_symbol = document.createElement('i');
+//         cancel_symbol.classList.add('fa', 'fa-times', 'me-2');
 
-        inputbox_cancel.innerHTML = "Cancel";
-        inputbox_cancel.prepend(cancel_symbol);
+//         inputbox_cancel.innerHTML = "Cancel";
+//         inputbox_cancel.prepend(cancel_symbol);
 
-        //inputbox.classList.add("opened");
-        //format box
-        //inputbox_container.classList.add('post-content');
-        //build the box
-        inputbox_container.append(inputbox);
-        inputbox_controls.append(inputbox_save, inputbox_cancel)
-        inputbox_container.append(inputbox_controls);
+//         //inputbox.classList.add("opened");
+//         //format box
+//         //inputbox_container.classList.add('post-content');
+//         //build the box
+//         inputbox_container.append(inputbox);
+//         inputbox_controls.append(inputbox_save, inputbox_cancel)
+//         inputbox_container.append(inputbox_controls);
         
-        replybtn.append(inputbox_container);
-    }
+//         replybtn.append(inputbox_container);
+//     }
     
-}
+// }
 
 function handleEditbutton(e) {
     let comment_content;
@@ -294,19 +294,19 @@ function createReply(parentComment, replyid) {
 
 //for directly replying to the post
 function handlePostReplies(e) {
-    console.log("Reply Test");
-    let travel_path = $(e.target).parents('#add-comment-wrapper').siblings('#comments-container')
-    //target a parent on the same level as comments-container then search siblings for it
+    // console.log("Reply Test");
+    // let travel_path = $(e.target).parents('#add-comment-wrapper').siblings('#comments-container')
+    // //target a parent on the same level as comments-container then search siblings for it
 
-    //target the comment section "comments-container"=
-    //check if it has a certain class that appears iff reply has been pressed once
-    //reply is active, makes it so that clicking reply doesn't create
-    //another textbox
-    console.log(travel_path);
-    let reply_data = $(e.target).parents('#add-comment-wrapper').children('#add-comment-container').children('#add-comment-textarea');
-    console.log(reply_data);
-    createPostReply(travel_path, reply_data.val()); //parent is the comment section
-    $('#add-comment-textarea').val('');
+    // //target the comment section "comments-container"=
+    // //check if it has a certain class that appears iff reply has been pressed once
+    // //reply is active, makes it so that clicking reply doesn't create
+    // //another textbox
+    // console.log(travel_path);
+    // let reply_data = $(e.target).parents('#add-comment-wrapper').children('#add-comment-container').children('#addcomment-textarea');
+    // console.log(reply_data);
+    // createPostReply(travel_path, reply_data.val()); //parent is the comment section
+    $('#addcommenttextarea').val('');
     $('#add-comment-controls-container').addClass('d-none');
 
 }
@@ -449,7 +449,7 @@ function createPostReply(parentComment, inputtedtext) {
 $(document).ready(function () {
     //open and hide replies
     $('.show-replies').click(handleShowbutton);
-    $('.create-reply').click(handleReplies);
+    // $('.create-reply').click(handleReplies);
     $('.edit-reply').click(handleEditbutton);
     $('.delete-reply').click(handleDelete);
 

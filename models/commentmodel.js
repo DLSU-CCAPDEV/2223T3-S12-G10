@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 
 //comments
 var CommentSchema = new mongoose.Schema({
-    CommentId: mongoose.ObjectId,
     Date: {type:Date},
     CommentUserId: {type: mongoose.ObjectId},
     CommentPostId: {type: mongoose.ObjectId}, //tracks which post it belongs to

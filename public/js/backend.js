@@ -41,7 +41,7 @@ $(document).ready(function(){
         //reset field values
         $('#username').val('');
         $('#password').val('');
-        $('#confirm_passowrd').val('');
+        $('#confirm_password').val('');
     });
 
     $('#postSearch').keydown(function (event) {
@@ -49,5 +49,10 @@ $(document).ready(function(){
             // $.get('/search/' + $('#postSearch').val());
             $.post('/search/' + $('#postSearch').val());
         }
+    });
+
+    $('#btn_comment_send').click(function () {
+        console.log("Commenting......")
+        $.post('/addcomment');
     });
 });

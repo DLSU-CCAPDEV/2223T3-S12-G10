@@ -8,8 +8,6 @@ const router = express.Router();
 router.get('/questions', postController.getManyPosts);
 router.get('/post/:_id', postController.getOnePost);
 
-router.get('/:_id', postController.getOnePost);
-
 // router.get('/posting', postController.getPosting);
 
 router.post('/posting', postController.postPost)
@@ -19,6 +17,8 @@ router.post('/posting', postController.postPost)
 // router.get('/post/:_id', postController.getOnePost);
 
 router.get('/search/:postSearch', postController.searchPost);
+
+router.post('/addcomment', postController.postComment);
 
 // router.get('/successPost', postController.getSuccessPost)
 

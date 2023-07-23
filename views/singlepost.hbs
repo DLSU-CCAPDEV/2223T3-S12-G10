@@ -19,6 +19,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/cure53/DOMPurify/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../js/backend.js"></script>
     <script src="../js/snackbar.js"></script>
     <script src="../js/nFormatter.js"></script>
     <script src="../js/scripts.js"></script>
@@ -27,56 +28,8 @@
 <body>
 <div class="row g-0">
     <div class="col-2">
-        <nav class="d-flex flex-column flex-shrink-0" id="navbar">
-            <a href="/html/"
-               class="d-flex align-items-center p-4 mb-3 mb-md-0 me-md-auto text-decoration-none fs-2 color-text"
-               id="navbar-brand">forum.</a>
-            <ul class="nav flex-column mb-auto" id="sidenav-nav">
-                <li class="nav-item ps-2">
-                    <a class="nav-link p-4" href="/html/">
-                        <i class="fa fa-home pe-4"></i>
-                        Home
-                    </a>
-                </li>
-                <li class="nav-item ps-2">
-                    <a class="nav-link p-4" href="/html">
-                        <i class="fa fa-question pe-4"></i>
-                        Questions
-                    </a>
-                </li>
-                <li class="nav-item ps-2">
-                    <a class="nav-link p-4" href="/starred">
-                        <i class="fa fa-star pe-4"></i>
-                        Starred
-                    </a>
-                </li>
-                <li class="nav-item ps-2">
-                    <a class="nav-link p-4" href="/users">
-                        <i class="fa fa-users pe-4"></i>
-                        Users
-                    </a>
-                </li>
-                <hr class="m-4"/>
-                <li class="nav-item ps-2">
-                    <a class="nav-link p-4" href="/html/profile.html">
-                        <i class="fa fa-user pe-4"></i>
-                        Profile
-                    </a>
-                </li>
-                <li class="nav-item ps-2">
-                    <a class="nav-link p-4" href="/settings">
-                        <i class="fa fa-cog pe-4"></i>
-                        Settings
-                    </a>
-                </li>
-                <li class="nav-item ps-2">
-                    <a class="nav-link p-4" href="/html/login.html">
-                        <i class="fa fa-sign-out pe-4"></i>
-                        Logout
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        {{#> nav user}}
+        {{/nav}}
     </div>
     <div class="col-7 px-5 mb-4">
         <div id="main-controls">
@@ -137,12 +90,12 @@
         <div id="add-comment-wrapper">
             <div id="add-comment-container">
                 <img class="profile-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
-                <textarea id="add-comment-textarea" class="form-control" name="add-comment" placeholder="Write a comment …"></textarea>
+                <textarea id="addcommenttextarea" class="form-control" name="add-comment" placeholder="Write a comment …"></textarea>
             </div>
             <div id="add-comment-controls-container" class="d-none">
                 <button type="button" class="btn btn-danger" id="btn-comment-discard">
                     <i class="fa fa-times me-2"></i>Discard</button>
-                <button type="button" class="btn btn-success post-reply" id="btn-comment-send">
+                <button type="button" class="btn btn-success" id="btn_comment_send">
                     <i class="fa fa-paper-plane me-2"></i>Send</button>
             </div>
         </div>

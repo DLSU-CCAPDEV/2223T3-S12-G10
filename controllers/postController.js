@@ -7,6 +7,8 @@ const Post = require('../models/postmodel.js');
 
 const User = require('../models/usermodel.js');
 
+const Comment = require('../models/commentmodel.js');
+
 //let limit = 0;
 /*
     defines an object which contains functions executed as callback
@@ -90,12 +92,18 @@ const postController = {
             the third parameter is a string containing fields to be returned
         */
        //limit is how many  documents it'll find, use skiplimited when loading MORE documents
-         //placeholder\
+        //Finds the post
         let limit = 0;
         var results = await db.limitedFind(Post, query, projection, limit); //limiting works
         //limit = limit + 5;
 
         console.log('Limit variable testing: ' + limit);
+
+        //find the comments connected to it, can be empty
+        query = {CommentPostId: req.params._id};
+        projection = '';
+        var comments = await db.findMany(Comment, query, projection);
+
 
         /*
             if the user exists in the database
@@ -107,7 +115,8 @@ const postController = {
             //console.log(results.postTags);
             
             var details = {
-                post: results
+                post: results,
+                comments: comments
             }
             //console.log(details;
             //pass the entire thing
@@ -332,6 +341,25 @@ const postController = {
                 var condition = {$push:{downvotes: {_id: userID} }};
                 var downvote = await db.updateOne(Post, addquery, condition);
             }
+        }
+    },
+
+    postComment: async function (req, res) {
+        //assuming this is coming from /post/:_id
+        var CommentPostId = req.params._id;
+
+        var comment = {
+            // commentUserId: req.session._id
+            CommentPostId: CommentPostId,
+            Body: req.body.addcommenttextarea,
+        };
+
+        console.log(Comment);
+
+        var response = await db.insertOne(Comment, comment);
+
+        if (response != null) {
+            console.log('Comment: ' + response);
         }
     }
 }
