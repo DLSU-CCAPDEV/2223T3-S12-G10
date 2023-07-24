@@ -101,23 +101,30 @@
         </div>
         <div id="comments-container">
             <div class="comment-wrapper opened">
-                {{#each comment}}
+                {{#each comments}}
                 <div class="comment-container">
                     <div class="comment-header-container">
                         <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
-                        <div class="comment-author">@aaronhall</div>
+                        <div class="comment-author">@{{CommentUserId}}</div>
                         <div class="comment-header-separator">•</div>
-                        <div class="comment-timestamp">06/23/2023</div>
+                        <div class="comment-timestamp">{{Date}}</div>
                     </div>
                     <div class="comment-content">
-                        I'm looking for places that are accessible by car, train, or boats. I want to be near of local culture with authentic food, cliffside hikes, and coastal views.
+                        {{Body}}
                     </div>
                     <div class="comment-footer-container">
                         <div class="comment-votes-container">
                             <div class="comment-vote-up">
                                 <i class="fa fa-arrow-up"></i>
                             </div>
-                            <div class="comment-vote-count" data-vote-count="46">46</div>
+                            <div class="comment-vote-count">
+                    {{#if (isNull upvotes) }}
+                        {{#if (isNull downvotes) }}
+                            0
+                        {{/if}}
+                    {{else}}
+                        {{upvotes.length-downvotes.length}}
+                    {{/if}}</div>
                             <div class="comment-vote-down">
                                 <i class="fa fa-arrow-down"></i>
                             </div>
@@ -135,26 +142,8 @@
         </div>
     </div>
     <div class="col-3">
-        <div class="bg-secondary m-4 ms-0 p-5 radius">
-            <div class="d-flex mb-3">
-                <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="Profile picture" id="profile-img">
-                <div class="d-flex flex-column ms-3">
-                        <a href="/html/profile.html" class="text-decoration-none">
-                            <h4 id="profile-name">Aaron Hall<i class="fa fa-badge-check ms-3 text-accent"></i></h4>
-                        </a>
-                    <p id="profile-username">@aaronhall</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <p class="color-text"><i class="fa fa-user-plus me-3"></i>5.2k Following</p>
-                </div>
-                <div class="col-6">
-                    <p class="color-text"><i class="fa fa-users me-3"></i>4.6M Followers</p>
-                </div>
-            </div>
-            <p class="color-text mb-0 text-muted fw-semibold"><i class="fa fa-calendar me-3"></i>Joined June 2009</p>
-        </div>
+        {{#> rightuser user}}
+        {{/rightuser}}
         <div class="p-5" id="right-container">
             <h3 class="mb-5">Trends for you</h3>
             <div class="d-flex flex-column" id="trends-container">

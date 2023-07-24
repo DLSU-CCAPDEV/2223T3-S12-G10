@@ -20,6 +20,7 @@ const postController = {
         as defined in `../routes/routes.js`
         To be used for GETTING posts
     */
+
     getManyPosts: async function (req, res) {
         // find post via title
         //var query = {postTitle: req.params.postTitle};
@@ -96,8 +97,6 @@ const postController = {
         let limit = 0;
         var results = await db.limitedFind(Post, query, projection, limit); //limiting works
         //limit = limit + 5;
-
-        console.log('Limit variable testing: ' + limit);
 
         //find the comments connected to it, can be empty
         query = {CommentPostId: req.params._id};
@@ -348,15 +347,16 @@ const postController = {
     //for posting comment, not sure how it's gonna get called
     postComment: async function (req, res) {
         //assuming this is coming from /post/:_id
-        var CommentPostId = req.params._id;
+        var text = req.body.Body;
+        var postID = req.body.postID;
 
         var comment = {
             // commentUserId: req.session._id
-            CommentPostId: CommentPostId,
-            Body: req.body.addcommenttextarea,
+            CommentPostId: postID,
+            Body: text,
         };
 
-        console.log(Comment);
+        console.log(comment);
 
         var response = await db.insertOne(Comment, comment);
 

@@ -30,7 +30,7 @@ $(document).ready(function(){
         const confirmpassword = $('#confirm_passowrd').val();
 
         if (password !== confirm_password) {
-            password_error.innerHTML = "Passwords do not match.";
+            password_error.sinnerHTML = "Passwords do not match.";
             return;
         } 
 
@@ -51,8 +51,21 @@ $(document).ready(function(){
         }
     });
 
-    $('#btn_comment_send').click(function () {
+    $('#btn_comment_send').click(function (req, res) {
         console.log("Commenting......")
-        $.post('/addcomment');
+        console.log('Text Area data: ' + $('#addcommenttextarea').val());
+        console.log('Current Page url' + $(location).attr('href'));
+        var url = $(location).attr('href');
+
+        //parse the URL
+        var parsedURL = url.split('/');
+        console.log(parsedURL);
+        var comment = $('#addcommenttextarea').val();
+        var passdata = {
+            Body: comment,
+            postID: parsedURL[4]
+        };
+
+        $.post('/post/postComment', passdata);
     });
 });
