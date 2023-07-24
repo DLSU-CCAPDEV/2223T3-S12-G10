@@ -13,6 +13,7 @@ router.post('/post/replyComment', postController.postReply);
 // router.get('/posting', postController.getPosting);
 
 router.post('/', postController.postPost)
+router.post('/questions', postController.getManyPosts);
 
 // router.post('/post', postController.postPost);
 
