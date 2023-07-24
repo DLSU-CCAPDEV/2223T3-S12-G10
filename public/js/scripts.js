@@ -82,6 +82,8 @@ $(document).ready(function() {
     $('.post-vote-down, .comment-vote-down').click(handleVoteButtonsDown);
 
     $('#btn-ask').click(function() {
+        $('#modal-question .modal-title').text("Ask Question");
+
         $('#post-title-form').val('');
         $('#post-content-form').val('');
         $('#post-tags-form').val('');
@@ -92,6 +94,9 @@ $(document).ready(function() {
     });
 
     $('#btn-post-form').click(function() {
+        let modal_title = $('#modal-question .modal-title');
+        if (modal_title.text() != "Ask Question") return;
+
         const post_title = $('#post-title-form').val();
         const post_content = $('#post-content-form').val();
         const post_tags_form = $('#post-tags-form').val();
@@ -244,6 +249,57 @@ $(document).ready(function() {
        }
 
        this.appendChild(day_night_icon);
+    });
+
+    $('.edit-post').click(function() {
+        let modal_title = $('#modal-question .modal-title');
+        modal_title.text('Edit Question');
+
+        let post_title = $(this).parents('.post-controls-container').siblings('.post-title');
+        let post_content = $(this).parents('.post-controls-container').siblings('.post-content');
+        let post_tags = [];
+        $(this).parents('.post-controls-container').siblings('.footer-container').children('.tags-container').children().each((index, value) => post_tags.push(value.innerText));
+
+        let post_title_form = $('#post-title-form');
+        let post_content_form = $('#post-content-form');
+        let post_tags_form = $('#post-tags-form');
+
+        post_title_form.val(post_title.text());
+        post_content_form.val(new TurndownService().turndown(post_content.html()));
+        post_tags_form.val(post_tags.join(', '));
+
+        let post_title_preview = $('#post-preview-container > #post-title-preview');
+        let post_content_preview = $('#post-preview-container > #post-content-preview');
+        let post_tags_preview = $('#post-preview-container > #tags-preview');
+
+        post_title_preview.text(post_title.text());
+        post_content_preview.html(post_content.html());
+        addTags(post_tags, post_tags_preview);
+
+        const question_modal = new bootstrap.Modal('#modal-question');
+        question_modal.show();
+    });
+
+    $('#btn-post-form').click(function() {
+        let modal_title = $('#modal-question .modal-title');
+        if (modal_title.text() != "Edit Question") return;
+
+        let post_title_form = $('#post-title-form');
+        let post_content_form = $('#post-content-form');
+        let post_tags_form = $('#post-tags-form');
+
+        if (!validateForm(post_title_form.val(), post_content_form.val(), post_tags_form.val())) return;
+
+        let post_title = $('.post-title');
+        let post_content = $('.post-content');
+        let post_tags = post_tags_form.val().trim().split(',')
+
+        post_title.text(post_title_form.val());
+        post_content.html(DOMPurify.sanitize(marked.parse(post_content_form.val())));
+        $('.tags-container').html('');
+        addTags(post_tags_form.val().trim().split(','), $('.tags-container'));
+
+        $('#modal-question').modal('hide');
     });
 });
 
