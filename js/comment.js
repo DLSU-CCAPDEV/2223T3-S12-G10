@@ -97,10 +97,13 @@ function handleReplies(e) {
 
 function handleEditbutton(e) {
     let comment_content;
+    let isPost;
     if (e.target.classList.contains('edit-post')) {
         comment_content = $(e.target).parents('.post-controls-container').siblings('.post-content');
+        isPost = true;
     } else if (e.target.classList.contains('edit-reply')) {
         comment_content = $(e.target).parents('.comment-footer-container').siblings('.comment-content');
+        isPost = false;
     }
 
     if (!comment_content.attr('contenteditable') || comment_content.attr('contenteditable') == 'false') {
@@ -109,6 +112,13 @@ function handleEditbutton(e) {
         e.target.childNodes[0].classList.remove("fa-pen");
         e.target.childNodes[0].classList.add("fa-check");
         e.target.childNodes[1].textContent = "Save";
+
+        /*comment_original = comment_content.html();
+
+        if (isPost) {
+            comment_content.html('');
+            comment_content.text(new TurndownService().turndown(comment_original));
+        }*/
     } else {
         if (comment_content.text() == '') {
             snackbar({
@@ -117,6 +127,9 @@ function handleEditbutton(e) {
             });
             return;
         }
+
+        console.log(comment_content.text());
+        if (isPost) comment_content.html(DOMPurify.sanitize(marked.parse(comment_content.html())));
 
         comment_content.attr('contenteditable', 'false');
         e.target.childNodes[0].classList.remove("fa-check");
@@ -453,7 +466,7 @@ $(document).ready(function () {
     $('.edit-reply').click(handleEditbutton);
     $('.delete-reply').click(handleDelete);
 
-    $('.edit-post').click(handleEditbutton);
+    //$('.edit-post').click(handleEditbutton);
     $('.delete-post').click(handleDelete);
     $('.post-reply').click(handlePostReplies)
 });
