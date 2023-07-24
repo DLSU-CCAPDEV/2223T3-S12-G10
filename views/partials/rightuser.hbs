@@ -1,0 +1,18 @@
+<div class="bg-secondary m-4 ms-0 p-5 radius">
+            <div class="d-flex mb-3">
+                <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="Profile picture" id="profile-img">
+                <div class="d-flex flex-column ms-3">
+                        <a href="/profile/{{username}}/userposts" class="text-decoration-none"><h4 id="profile-name">{{username}}<i class="fa fa-badge-check ms-3 text-accent"></i></h4></a>
+                    <p id="profile-username">@{{username}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p class="color-text"><i class="fa fa-user-plus me-3"></i>{{following.length}}</p>
+                </div>
+                <div class="col-6">
+                    <p class="color-text"><i class="fa fa-users me-3"></i>{{followers.length}}</p>
+                </div>
+            </div>
+            <p class="color-text mb-0 text-muted fw-semibold"><i class="fa fa-calendar me-3"></i>{{joindate}}</p>
+    </div>
