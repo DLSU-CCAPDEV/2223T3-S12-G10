@@ -26,7 +26,7 @@ const postController = {
         //var query = {postTitle: req.params.postTitle};
         //empty query
         var query = {}; //empty for testing
-        //console.log(req.params);
+        console.log(req.params);
         // fields to be returned
         //get the entire thing
         var projection = '';
@@ -123,7 +123,7 @@ const postController = {
                 comments: comments,
                 replies: replies
             }
-            console.log('Comments that are replies: ' + replies);
+            console.log(comments);
             //console.log(details;
             //pass the entire thing
             // render `../views/profile.hbs`
@@ -218,8 +218,7 @@ const postController = {
             // };
 
             console.log('Redirect URL: '+'/search?postSearch=' + postSearch );
-            res.redirect('/search/searchedPosts?postSearch=' + postSearch); //
-            
+            res.redirect('/search?postSearch=' + postSearch); //
             // res.render('searched_posts', details);
         }
         else {
@@ -243,11 +242,11 @@ const postController = {
                 post: results
             };
             res.render('searched_posts', details);
+            console.log(details);
         }
         else {
             console.log('There are no posts with similar names')
         }
-
     },
 
     //For Editing the post
@@ -363,12 +362,12 @@ const postController = {
             Body: text,
         };
 
-        //console.log(comment);
+        console.log(comment);
 
         var response = await db.insertOne(Comment, comment);
 
         if (response != null) {
-            //console.log('Comment: ' + response);
+            console.log('Comment: ' + response);
             await res.redirect('/post/' + postID);
         }
     },
@@ -376,21 +375,11 @@ const postController = {
     postReply: async function (req, res) {
         //
         var parentID = req.body.parentID;
-        var postID = req.body.postID;
-        var replyText = req.body.Body;
 
         var reply = {
-            CommentPostId: postID,
             ParentComment: parentID,
-            Body: replyText
+            Body: text,
         };
-
-        var response = await db.insertOne(Comment, reply);
-
-        if (response != null) {
-            // console.log('Comment: ' + response);
-            res.redirect('/post/' + postID);
-        }
     },
 
     //deleting stuff

@@ -30,6 +30,7 @@ hbs.registerHelper('isEqual', function (val1, val2, options) {
     }
     return options.inverse(this);
 });
+
 // parses incoming requests with urlencoded payloads
 app.use(express.urlencoded({extended: true}));
 
