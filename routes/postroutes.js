@@ -12,7 +12,7 @@ router.post('/post/replyComment', postController.postReply);
 
 // router.get('/posting', postController.getPosting);
 
-router.post('/posting', postController.postPost)
+router.post('/', postController.postPost)
 
 // router.post('/post', postController.postPost);
 
