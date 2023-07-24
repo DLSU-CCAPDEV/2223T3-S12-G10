@@ -7,6 +7,95 @@ function validateForm(...forms) {
     });
     return valid;
 }
+
+function handleReplies(e) {
+    console.log("Reply Test");
+
+    //let replybtn = $(e.currentTarget).parent();
+    let replybtn = e.target.closest('.comment-container');
+    console.log(replybtn);
+    //check if it has a certain class that appears iff reply has been pressed once
+    if (replybtn.classList.contains('active-reply')) {
+        //do nothing
+        console.log("Active reply")
+    } else {
+        //reply is active, makes it so that clicking reply doesn't create
+        //another textbox
+        replybtn.classList.add('active-reply');
+        //create the textbox
+        let inputbox_container = document.createElement("div");
+        inputbox_container.classList.add("inputbox-container");
+        inputbox_container.classList.add("mt-3");
+
+        let inputbox = document.createElement("input");
+        inputbox.classList.add("form-control", "replybox");
+        inputbox.setAttribute("type", "text");
+        inputbox.setAttribute("placeholder", "Type here …");
+        
+        //get unique reply id
+        let replyid = Date.now();
+        inputbox.setAttribute("id", replyid)
+        //create a container for the reply controls
+        let inputbox_controls = document.createElement('div');
+        inputbox_controls.classList.add('inputbox-controls');
+
+        //add a save and cancel button
+        let inputbox_save = document.createElement("button");
+        inputbox_save.classList.add("save", "btn", "btn-success");
+        inputbox_save.classList.add("save-button");
+        inputbox_save.addEventListener("click", function (e) {
+            let parentCommentID = $(e.currentTarget).parents('.inputbox-container').siblings('.comment-header-container').children('.comment_ID').html();
+            console.log(parentCommentID);
+            //get the inputted value so far then call the post building function
+            //pass the replyid
+            // let parentComment = $(e.currentTarget).parents('.inputbox-container').siblings('.comment-header-container').children('.comment_ID').innerHTML;
+            // console.log('Parent Comment ID: ' + parentComment);
+
+            let replytext = 
+            $(e.currentTarget).parents('.inputbox-container').remove(); 
+            replybtn.classList.remove('active-reply');
+
+            //send a http post request
+            var details = {
+                parentID: parentCommentID,
+            };
+            $.post('/post/replyComment', details);
+        })
+        //add an internal symbol style
+        let save_symbol = document.createElement('i');
+        save_symbol.classList.add('fa-solid', 'fa-floppy-disk', "me-2");
+        
+        inputbox_save.innerHTML = "Save";
+        inputbox_save.prepend(save_symbol);
+        
+
+        //
+        let inputbox_cancel = document.createElement("button");
+        inputbox_cancel.classList.add("cancel-button", 'btn', 'btn-danger');
+        inputbox_cancel.addEventListener("click", function (e) {
+            replybtn.classList.remove('active-reply');
+            $(e.currentTarget).parents('.inputbox-container').remove();            
+        })
+        //internal discard symbol
+        let cancel_symbol = document.createElement('i');
+        cancel_symbol.classList.add('fa', 'fa-times', 'me-2');
+
+        inputbox_cancel.innerHTML = "Cancel";
+        inputbox_cancel.prepend(cancel_symbol);
+
+        //inputbox.classList.add("opened");
+        //format box
+        //inputbox_container.classList.add('post-content');
+        //build the box
+        inputbox_container.append(inputbox);
+        inputbox_controls.append(inputbox_save, inputbox_cancel)
+        inputbox_container.append(inputbox_controls);
+        
+        replybtn.append(inputbox_container);
+    }
+    
+}
+
 //This file will largely be for backend purposes, most $.get will be here
 $(document).ready(function(){
     //empty for now
@@ -61,6 +150,8 @@ $(document).ready(function(){
         var parsedURL = url.split('/');
         console.log(parsedURL);
         var comment = $('#addcommenttextarea').val();
+        $('#addcommenttextarea').val('');
+        $('#add-comment-controls-container').addClass('d-none');
         var passdata = {
             Body: comment,
             postID: parsedURL[4]
@@ -68,4 +159,7 @@ $(document).ready(function(){
 
         $.post('/post/postComment', passdata);
     });
+
+    $('.create-reply').click(handleReplies);
+    
 });

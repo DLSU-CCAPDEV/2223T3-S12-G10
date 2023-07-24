@@ -24,6 +24,13 @@ hbs.registerHelper('isNull', function (value) {
     return value !== undefined;
 });
 
+hbs.registerHelper('isEqual', function (val1, val2, options) {
+    if (val1 == val2) {
+        return options.fn(this);
+    }
+    return options.inverse(this);
+});
+
 // parses incoming requests with urlencoded payloads
 app.use(express.urlencoded({extended: true}));
 

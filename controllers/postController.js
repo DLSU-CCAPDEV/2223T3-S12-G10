@@ -98,10 +98,15 @@ const postController = {
         var results = await db.limitedFind(Post, query, projection, limit); //limiting works
         //limit = limit + 5;
 
-        //find the comments connected to it, can be empty
-        query = {CommentPostId: req.params._id};
+        //find the parent comments
+        query = {ParentComment:{ $eq: null}, CommentPostId: req.params._id };
         projection = '';
         var comments = await db.findMany(Comment, query, projection);
+
+        //find the replies
+        query = {ParentComment: {$ne: null}, CommentPostId: req.params._id};
+        projection = '';
+        var replies = await db.findMany(Comment, query, projection);
 
 
         /*
@@ -115,8 +120,10 @@ const postController = {
             
             var details = {
                 post: results,
-                comments: comments
+                comments: comments,
+                replies: replies
             }
+            console.log(comments);
             //console.log(details;
             //pass the entire thing
             // render `../views/profile.hbs`
@@ -362,7 +369,18 @@ const postController = {
 
         if (response != null) {
             console.log('Comment: ' + response);
+            await res.redirect('/post/' + postID);
         }
+    },
+
+    postReply: async function (req, res) {
+        //
+        var parentID = req.body.parentID;
+
+        var reply = {
+            ParentComment: parentID,
+            Body: ,
+        };
     },
 
     //deleting stuff
