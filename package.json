@@ -1,0 +1,17 @@
+{
+  "name": "2223t3-s12-g10-main",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "handlebars": "^4.7.7",
+    "hbs": "^4.2.0",
+    "mongoose": "^7.4.0"
+  }
+}

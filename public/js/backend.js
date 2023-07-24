@@ -46,30 +46,19 @@ function handleReplies(e) {
         inputbox_save.addEventListener("click", function (e) {
             let parentCommentID = $(e.currentTarget).parents('.inputbox-container').siblings('.comment-header-container').children('.comment_ID').html();
             console.log(parentCommentID);
-            let replyText = $(e.currentTarget).parents('.inputbox-controls').siblings('.replybox').val();
-            console.log('Reply Text: ' + replyText);
             //get the inputted value so far then call the post building function
             //pass the replyid
             // let parentComment = $(e.currentTarget).parents('.inputbox-container').siblings('.comment-header-container').children('.comment_ID').innerHTML;
             // console.log('Parent Comment ID: ' + parentComment);
 
-            var url = $(location).attr('href');
-
-            //parse the URL
-            var parsedURL = url.split('/');
-            console.log(parsedURL);
-
-            
+            let replytext = 
             $(e.currentTarget).parents('.inputbox-container').remove(); 
             replybtn.classList.remove('active-reply');
 
             //send a http post request
             var details = {
                 parentID: parentCommentID,
-                Body: replyText, 
-                postID: parsedURL[4]
             };
-            
             $.post('/post/replyComment', details);
         })
         //add an internal symbol style
@@ -144,10 +133,12 @@ $(document).ready(function(){
         $('#confirm_password').val('');
     });
 
-    $('#postSearch').keydown(function (event) {
-        if(event.key == "Enter") {
+    $('#post_search').keydown(function (event) {
+        console.log('rawr');
+        if(event.key == 'Enter') {
             // $.get('/search/' + $('#postSearch').val());
-            $.post('/search/' + $('#postSearch').val());
+            console.log('whats up');
+            $.post('/search/' + $('#post_search').val());
         }
     });
 

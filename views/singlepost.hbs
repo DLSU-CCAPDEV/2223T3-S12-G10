@@ -35,7 +35,7 @@
         <div id="main-controls">
             <div id="post-search-group">
                 <span class="fa fa-search" id="post-search-icon"></span>
-                <input type="search" placeholder="Search" name="post-search" id="post-search">
+                <input type="search" placeholder="Search" name="post_search" id="post_search">
             </div>
             <button id="btn-ask" data-bs-toggle="modal" data-bs-target="#modal-question">Ask Question</button>
             <button id="btn-mode-toggle"><i class="fa fa-moon"></i></button>
@@ -139,17 +139,19 @@
                     </div>
                 </div>
                 {{!-- Replies part --}}
+                
                 {{#each replies}}
+                {{#isEqual _id ParentComment}}
                 <div class="comment-container">
                     <div class="comment-header-container">
                         <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
-                        <div class="comment-author">@{{replies.CommentUserId}}</div>
+                        <div class="comment-author">@{{CommentUserId}}</div>
                         <div class="comment-header-separator">•</div>
-                        <div class="comment-timestamp">{{replies.Date}}</div>
-                        <div class="reply_ID d-none">{{replies._id}}</div>
+                        <div class="comment-timestamp">{{Date}}</div>
+                        <div class="reply_ID d-none">{{_id}}</div>
                     </div>
                     <div class="comment-content">
-                        {{replies.Body}}
+                        {{Body}}
                     </div>
                     <div class="comment-footer-container">
                         <div class="comment-votes-container">
@@ -176,6 +178,7 @@
                         </div>
                     </div>
                 </div>
+                {{/isEqual}}
                 {{/each}}
             {{/each}}
             </div>

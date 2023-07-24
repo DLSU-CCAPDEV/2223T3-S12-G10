@@ -49,13 +49,7 @@ const profileController = {
             };
 
             // render `../views/profile.hbs`
-          if (req.path.includes('/usercomments')) {
-                // If '/usercomments' is present in the route, render 'profile_comments' template
-                res.render('profile_comments', details);
-            } else {
-                // If '/usercomments' is not present in the route, render 'profile' template
-                res.render('profile', details);
-            }
+            res.render('profile', details);
         }
 
         /*
@@ -66,9 +60,6 @@ const profileController = {
             res.render('error');
         }
     }
-
-    
-
 }
 
 /*

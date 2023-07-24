@@ -12,14 +12,13 @@ router.post('/post/replyComment', postController.postReply);
 
 // router.get('/posting', postController.getPosting);
 
-router.post('/', postController.postPost)
-router.post('/questions', postController.getManyPosts);
+router.post('/posting', postController.postPost)
 
 // router.post('/post', postController.postPost);
 
 // router.get('/post/:_id', postController.getOnePost);
 
-router.get('/search/:postSearch', postController.searchPost);
+router.get('/search?:postSearch', postController.getSearchedPosts);
 
 
 

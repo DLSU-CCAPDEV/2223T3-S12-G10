@@ -119,7 +119,7 @@ p { font-family: var(--font-body); }
     color: var(--color-text-muted);
 }
 
-#post-search {
+#post_search {
     width: 100%;
     border-radius: var(--radius);
     border: 0;
@@ -132,17 +132,17 @@ p { font-family: var(--font-body); }
     border: 3px solid transparent;
 }
 
-#post-search::before {
+#post_search::before {
     content: '\uf002';
     font-family: "FontAwesome", sans-serif;
 }
 
-#post-search::placeholder {
+#post_search::placeholder {
     color: var(--color-text-muted);
     font-weight: 700;
 }
 
-#post-search:focus {
+#post_search:focus {
     outline: 0;
     border-color: var(--color-accent);
     color: var(--color-accent);
