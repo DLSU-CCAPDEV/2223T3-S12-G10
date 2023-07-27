@@ -54,7 +54,8 @@ const postController = {
             console.log("Nonnull result");
             //console.log(results);
             //console.log(results.postTags);
-            
+            // var postText = DOMPurify.sanitize(marked.parse(results.postText));
+            // results.postText = postText;
             var details = {
                 post: results
             }
@@ -186,7 +187,6 @@ const postController = {
         };
 
         var response = await db.insertOne(Post, post);
-        console.log(req.body);
         if(response != null) {
             console.log('Posting SUCCCESSFUL!');
             console.log('Data Confirmation');

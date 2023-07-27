@@ -241,7 +241,7 @@ function handlePostReplies(e) {
     // let reply_data = $(e.target).parents('#add-comment-wrapper').children('#add-comment-container').children('#addcomment-textarea');
     // console.log(reply_data);
     // createPostReply(travel_path, reply_data.val()); //parent is the comment section
-    $('#addcommenttextarea').val('');
+    $('#add_comment_textarea').val('');
     $('#add-comment-controls-container').addClass('d-none');
 
 }

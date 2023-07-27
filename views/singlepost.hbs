@@ -19,6 +19,7 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/cure53/DOMPurify/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turndown/7.1.1/turndown.min.js"></script>
     <script src="../js/backend.js"></script>
     <script src="../js/snackbar.js"></script>
     <script src="../js/nFormatter.js"></script>
@@ -64,6 +65,7 @@
                     <div class="post-author-container">
                         <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
                         <div class="post-author">@{{postUserId}}</div>
+                        <div class="d-none post_id">{{_id}}</div>
                     </div>
                     <div class="post-content">
                         <p>{{postText}}</p>
@@ -90,7 +92,7 @@
         <div id="add-comment-wrapper">
             <div id="add-comment-container">
                 <img class="profile-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
-                <textarea id="addcommenttextarea" class="form-control" name="add-comment" placeholder="Write a comment …"></textarea>
+                <textarea id="add_comment_textarea" class="form-control" name="add-comment" placeholder="Write a comment …"></textarea>
             </div>
             <div id="add-comment-controls-container" class="d-none">
                 <button type="button" class="btn btn-danger" id="btn-comment-discard">
@@ -231,16 +233,16 @@
                         <form action="" id="form-post">
                             <div class="mb-3">
                                 <label for="post-title-form" class="form-label">Title</label>
-                                <input type="text" class="form-control" name="post-title" id="post-title-form" required="">
+                                <input type="text" class="form-control" name="post-title" id="post_title_form" required="">
                             </div>
                             <div class="mb-3">
                                 <label for="post-content-form" class="form-label">Content</label>
-                                <textarea class="form-control" name="post-content" id="post-content-form" required="" rows="10"></textarea>
+                                <textarea class="form-control" name="post-content" id="post_content_form" required="" rows="10"></textarea>
                                 <p class="fs-6 fw-semibold text-muted"><a href="https://commonmark.org/help/">CommonMark Markdown</a> formatting is supported.</p>
                             </div>
                             <div class="mb-3">
                                 <label for="post-tags-form" class="form-label">Tags</label>
-                                <input type="text" class="form-control" name="post-tags-form" id="post-tags-form" required="">
+                                <input type="text" class="form-control" name="post_tags_form" id="post_tags_form" required="">
                                 <p class="fs-6 fw-semibold text-muted">Separate tags with a comma. Maximum of 5 tags allowed.</p>
                             </div>
                         </form>
@@ -256,7 +258,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                     <i class="fa fa-trash me-2"></i>Discard</button>
-                <button type="button" form="form-post" class="btn btn-success" id="btn-post-form">
+                <button type="button" form="form-post" class="btn btn-success" id="btn-edit-post-form">
                     <i class="fa fa-check me-2"></i>Publish</button>
             </div>
         </div>

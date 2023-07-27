@@ -111,9 +111,9 @@ function handleReplies(e) {
 $(document).ready(function(){
     //empty for now
     $('#btn-post-form').click(function () {
-        const post_title = $('#postTitle').val();
-        const post_content = $('#postContent').val();
-        const post_tags_form = $('#postTags').val();
+        const post_title = $('#post_title_form').val();
+        const post_content = $('#post_content_form').val();
+        const post_tags_form = $('#post_tags_form').val();
 
         console.log('Backend postTitle:' + post_title);
 
@@ -123,11 +123,15 @@ $(document).ready(function(){
         //$.get('/');
     });
 
+    $('#btn-edit-post-form').click(function () {
+
+    });
+
     $('#submit-register').click(function () {
         //for signing up and creating users
         const username = $('#username').val();
         const password = $('#password').val();
-        const confirmpassword = $('#confirm_passowrd').val();
+        const confirmpassword = $('#confirm_password').val();
 
         if (password !== confirm_password) {
             password_error.sinnerHTML = "Passwords do not match.";
@@ -153,15 +157,15 @@ $(document).ready(function(){
 
     $('#btn_comment_send').click(function (req, res) {
         console.log("Commenting......")
-        console.log('Text Area data: ' + $('#addcommenttextarea').val());
+        console.log('Text Area data: ' + $('#add_comment_textarea').val());
         console.log('Current Page url' + $(location).attr('href'));
         var url = $(location).attr('href');
 
         //parse the URL
         var parsedURL = url.split('/');
         console.log(parsedURL);
-        var comment = $('#addcommenttextarea').val();
-        $('#addcommenttextarea').val('');
+        var comment = $('#add_comment_textarea').val();
+        $('#add_comment_textarea').val('');
         $('#add-comment-controls-container').addClass('d-none');
         var passdata = {
             Body: comment,
