@@ -36,7 +36,7 @@
         <div id="main-controls">
             <div id="post-search-group">
                 <span class="fa fa-search" id="post-search-icon"></span>
-                <input type="search" placeholder="Search" name="post-search" id="post-search">
+                <input type="search" placeholder="Search" name="post-search" id="post_search">
             </div>
             <button id="btn-ask" data-bs-toggle="modal" data-bs-target="#modal-question">Ask Question</button>
             <button id="btn-mode-toggle"><i class="fa fa-moon"></i></button>
@@ -68,7 +68,7 @@
                         <div class="d-none post_id">{{_id}}</div>
                     </div>
                     <div class="post-content">
-                        <p>{{postText}}</p>
+                        {{{postText}}}
                     </div>
                     <div class="footer-container">
                         <div class="tags-container">
@@ -233,16 +233,16 @@
                         <form action="" id="form-post">
                             <div class="mb-3">
                                 <label for="post-title-form" class="form-label">Title</label>
-                                <input type="text" class="form-control" name="post-title" id="post_title_form" required="">
+                                <input type="text" class="form-control" name="post-title" id="edit_post_title_form" required="">
                             </div>
                             <div class="mb-3">
                                 <label for="post-content-form" class="form-label">Content</label>
-                                <textarea class="form-control" name="post-content" id="post_content_form" required="" rows="10"></textarea>
+                                <textarea class="form-control" name="post-content" id="edit_post_content_form" required="" rows="10"></textarea>
                                 <p class="fs-6 fw-semibold text-muted"><a href="https://commonmark.org/help/">CommonMark Markdown</a> formatting is supported.</p>
                             </div>
                             <div class="mb-3">
                                 <label for="post-tags-form" class="form-label">Tags</label>
-                                <input type="text" class="form-control" name="post_tags_form" id="post_tags_form" required="">
+                                <input type="text" class="form-control" name="post_tags_form" id="edit_post_tags_form" required="">
                                 <p class="fs-6 fw-semibold text-muted">Separate tags with a comma. Maximum of 5 tags allowed.</p>
                             </div>
                         </form>

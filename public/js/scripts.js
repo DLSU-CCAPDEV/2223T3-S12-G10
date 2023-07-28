@@ -260,9 +260,9 @@ $(document).ready(function() {
         let post_tags = [];
         $(this).parents('.post-controls-container').siblings('.footer-container').children('.tags-container').children().each((index, value) => post_tags.push(value.innerText));
 
-        let post_title_form = $('#post-title-form');
-        let post_content_form = $('#post-content-form');
-        let post_tags_form = $('#post-tags-form');
+        let post_title_form = $('#edit_post_title_form');
+        let post_content_form = $('#edit_post_content_form');
+        let post_tags_form = $('#edit_post_tags_form');
 
         post_title_form.val(post_title.text());
         post_content_form.val(new TurndownService().turndown(post_content.html()));
@@ -297,7 +297,7 @@ $(document).ready(function() {
         post_title.text(post_title_form.val());
         post_content.html(DOMPurify.sanitize(marked.parse(post_content_form.val())));
         $('.tags-container').html('');
-        addTags(post_tags_form.val().trim().split(','), $('.tags-container'));
+        addTags(post_tags, $('.tags-container'));
 
         $('#modal-question').modal('hide');
     });

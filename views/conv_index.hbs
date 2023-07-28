@@ -34,7 +34,7 @@
         <div id="main-controls">
             <div id="post-search-group">
                 <span class="fa fa-search" id="post-search-icon"></span>
-                <input type="search" placeholder="Search" name="postSearch" id="post-search">
+                <input type="search" placeholder="Search" name="postSearch" id="post_search">
             </div>
             <button id="btn-ask" data-bs-toggle="modal" data-bs-target="#modal-question">Ask Question</button>
             <button id="btn-alerts"><i class="fa fa-bell"></i></button>
@@ -68,8 +68,7 @@
                             <div class="post-author">@{{postUserId}}</div>
                         </a>
                     </div>
-                    <p class="post-content">{{postText}}
-                    </p>
+                    <p class="post-content">{{{postText}}}</p>
                     <div class="footer-container">
                         <div class="tags-container">
                             {{#each postTags}}

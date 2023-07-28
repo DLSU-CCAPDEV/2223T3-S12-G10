@@ -7,8 +7,10 @@ const router = express.Router();
 
 router.get('/questions', postController.getManyPosts);
 router.get('/post/:_id', postController.getOnePost);
+router.get('/post/:_id', postController.getOnePost);
 router.post('/post/postComment', postController.postComment);
 router.post('/post/replyComment', postController.postReply);
+router.post('/post/editPost', postController.updatePost);
 
 // router.get('/posting', postController.getPosting);
 

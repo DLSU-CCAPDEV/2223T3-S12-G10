@@ -9,6 +9,8 @@ const User = require('../models/usermodel.js');
 
 const Comment = require('../models/commentmodel.js');
 
+const marked = require('../node_modules/marked');
+
 //let limit = 0;
 /*
     defines an object which contains functions executed as callback
@@ -44,7 +46,8 @@ const postController = {
         var results = await db.limitedFind(Post, query, projection, limit); //limiting works
         //limit = limit + 5;
 
-        console.log('Limit variable testing: ' + limit);
+        console.log('Limit variable testing: ' + limit);   
+        console.log('Results lenght: ' + results.length);
 
         /*
             if the user exists in the database
@@ -54,8 +57,13 @@ const postController = {
             console.log("Nonnull result");
             //console.log(results);
             //console.log(results.postTags);
-            // var postText = DOMPurify.sanitize(marked.parse(results.postText));
+            // results.postText = DOMPurify.sanitize(marked.parse(results.postText));
             // results.postText = postText;
+            for(let i = 0; i < results.length; i++) {
+                if (results[i]._doc.postText != null || results[i]._doc.postText != undefined) {
+                    results[i]._doc.postText = marked.parse(results[i]._doc.postText);
+                }
+            }
             var details = {
                 post: results
             }
@@ -118,7 +126,13 @@ const postController = {
             console.log("Nonnull result");
             //console.log(results);
             //console.log(results.postTags);
+
+            //sconsole.log(results[0]._doc.postText);
+
+            results[0]._doc.postText = marked.parse(results[0]._doc.postText);
             
+            // results.postText = DOMPurify.sanitize(marked.parse(results.postText))
+
             var details = {
                 post: results,
                 comments: comments,
@@ -177,7 +191,12 @@ const postController = {
         var postTitle = req.body.postTitle;
         var postDate = date.getUTCDate();
         var postText = req.body.postContent;
-        var postTags = req.body.postTags;
+        //process the tags
+        var parsedTags = req.body.postTags.trim().split(',');
+        
+        var postTags = parsedTags;
+
+        console.log("postTags content is: " + postTags);
         //upvotes and downvotes are defaulted to 0;
         var post = {
             postTitle: postTitle,
@@ -253,10 +272,8 @@ const postController = {
     //For Editing the post
     updatePost: async function (req, res) {
         //req.body
-        var query = {_id: req.body._id};
-
+        var filter = {_id: req.body.postID};
         
-        //these aren't the real variable names yet
         var editedTitle = req.body.editedTitle;
         var editedText = req.body.editedText;
         var editedTags = req.body.editedTags;
@@ -266,8 +283,9 @@ const postController = {
             postText: editedText,
             postTags: editedTags
         }
-
-        var response = await db.updateOne(Post, query, update);
+        
+        //find the specific post and update it
+        var response = await db.updateOne(Post, filter, update);
 
         if (response != null) {
             //stuff, re-render the post with the changes basically
@@ -385,10 +403,12 @@ const postController = {
             Body: replyText
         };
 
+        console.log('Reply: ' + reply);
+
         var response = await db.insertOne(Comment, reply);
 
         if (response != null) {
-            // console.log('Comment: ' + response);
+            console.log('Reply: ' + reply);
             res.redirect('/post/' + postID);
         }
     },

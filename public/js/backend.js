@@ -115,6 +115,10 @@ $(document).ready(function(){
         const post_content = $('#post_content_form').val();
         const post_tags_form = $('#post_tags_form').val();
 
+        var post_tags = post_tags_form.trim().split(',');
+
+        console.log("The tags are: " + post_tags);
+
         console.log('Backend postTitle:' + post_title);
 
         if (!validateForm(post_title, post_content, post_tags_form)) return;
@@ -123,8 +127,52 @@ $(document).ready(function(){
         //$.get('/');
     });
 
-    $('#btn-edit-post-form').click(function () {
+    /*
+        Portion for Updates
 
+    */
+
+    $('#edit_post_title_form').on("input", function() {
+        $('#post-title-preview').text($(this).val());
+    });
+
+    $('#edit_post_content_form').on("input", function() {
+        $('#post-content-preview').html(
+            DOMPurify.sanitize(marked.parse($(this).val()))
+        );
+    })
+
+    $('#edit_post_tags_form').on("input", function() {
+        let post_tags = $(this).val().trim().split(',');
+        let tags_container = document.getElementById('tags-preview');
+        tags_container.innerHTML = "";
+        addTags(post_tags, tags_container);
+    });
+
+    $('#btn-edit-post-form').click(function () {
+        //this is the updateform
+        //get the posts's id
+        var postID = $('.post_id').html();
+
+        console.log("The post ID is: " + postID);
+
+        //get the data
+        var editedTitle = $('#edit_post_title_form').val();
+        var editedText = $('#edit_post_content_form').val();
+        var editedTags = $('#edit_post_tags_form').val();
+        $('#modal-question').modal('hide');
+
+        //after getting the data put it into a variable
+        var editeddata = {
+            postID: postID,
+            editedTitle: editedTitle,
+            editedText: editedText,
+            editedTags: editedTags,
+        }
+
+        //pass the data, we'll use it
+        $.post('/post/editPost', editeddata);
+   
     });
 
     $('#submit-register').click(function () {
@@ -148,7 +196,7 @@ $(document).ready(function(){
         $('#confirm_password').val('');
     });
 
-    $('#postSearch').keydown(function (event) {
+    $('#post_search').keydown(function (event) {
         if(event.key == "Enter") {
             // $.get('/search/' + $('#postSearch').val());
             $.post('/search/' + $('#postSearch').val());
