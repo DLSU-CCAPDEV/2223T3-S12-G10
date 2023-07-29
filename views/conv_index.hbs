@@ -10,19 +10,19 @@
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 <!--    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css">
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="../css/markdown.css">
-    <link rel="stylesheet" href="../css/post.css">
-    <link rel="stylesheet" href="../css/snackbar.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/markdown.css">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/snackbar.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/cure53/DOMPurify/dist/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="../js/backend.js"></script>
-    <script src="../js/nFormatter.js"></script>
-    <script src="../js/scripts.js"></script>
+    <script src="/js/backend.js"></script>
+    <script src="/js/nFormatter.js"></script>
+    <script src="/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/turndown/7.1.1/turndown.min.js"></script>
     {{!-- <script src="../js/comment.js"></script> --}}
-    <script src="../js/snackbar.js"></script>
+    <script src="/js/snackbar.js"></script>
 </head>
 <body>
 <div class="row g-0">
@@ -149,7 +149,8 @@
                                 <label for="post-tags-form" class="form-label">Tags</label>
                                 <input type="text" class="form-control" name="postTags" id="post_tags_form" required>
                                 <p class="fs-6 fw-semibold text-muted">Separate tags with a comma. Maximum of 5 tags allowed.</p>
-                            </div>    
+                            </div>
+                        </form>
                     </div>
                     <div class="col-6" id="post-preview-container">
                         <h2 class="post-title" id="post-title-preview"></h2>
@@ -164,7 +165,6 @@
                 <button type="submit" form="form-post" class="btn btn-success" id="btn-post-form">
                     <i class="fa fa-check me-2"></i>Publish</button>
             </div>
-                        </form>
         </div>
     </div>
 </div>
