@@ -37,7 +37,7 @@
                 <input type="search" placeholder="Search" name="postSearch" id="post_search">
             </div>
             <button id="btn-ask" data-bs-toggle="modal" data-bs-target="#modal-question">Ask Question</button>
-            <button id="btn-alerts"><i class="fa fa-bell"></i></button>
+            <button id="btn-mode-toggle"><i class="fa fa-bell"></i></button>
         </div>
         <div id="posts-container">
             {{#each post}}
@@ -161,8 +161,8 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                     <i class="fa fa-trash me-2"></i>Discard</button>
-                <button type="button" form="form-post" class="btn btn-success" id="btn-post-form">
-                    <i class="fa fa-check me-2"></i><input type="submit" class="btn btn-success" form='form-post' id="submit" value="Publish"></button>
+                <button type="submit" form="form-post" class="btn btn-success" id="btn-post-form">
+                    <i class="fa fa-check me-2"></i>Publish</button>
             </div>
                         </form>
         </div>
