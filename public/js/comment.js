@@ -25,6 +25,7 @@ function handleEditbutton(e) {
         isPost = true;
     } else if (e.target.classList.contains('edit-reply')) {
         comment_content = $(e.target).parents('.comment-footer-container').siblings('.comment-content');
+        console.log(comment_content);
         isPost = false;
     }
 
@@ -51,12 +52,33 @@ function handleEditbutton(e) {
         }
 
         console.log(comment_content.text());
-        if (isPost) comment_content.html(DOMPurify.sanitize(marked.parse(comment_content.html())));
+        if (isPost) {
+            comment_content.html(DOMPurify.sanitize(marked.parse(comment_content.html())));
+        }
+        else {
+            //a comment/reply
+            var text = comment_content.html();
+            console.log('Text is: ' + text);
 
-        comment_content.attr('contenteditable', 'false');
-        e.target.childNodes[0].classList.remove("fa-check");
-        e.target.childNodes[0].classList.add("fa-pen");
-        e.target.childNodes[1].textContent = "Edit";
+            //get the comment's ID
+            var commentID = $(e.target).parents('.post-controls-container').siblings('.comment-header-container').children('.comment_ID');
+
+            console.log('Editing this comment: ' + commentID);
+            comment_content.attr('contenteditable', 'false');
+            e.target.childNodes[0].classList.remove("fa-check");
+            e.target.childNodes[0].classList.add("fa-pen");
+            e.target.childNodes[1].textContent = "Edit";
+            //send a post request to update
+            var data = {
+                commentID: commentID,
+                editedText: text,
+            };
+            console.log("Sending data now...")
+            $.post('/post/editReply', data);
+
+        }
+
+        
     }
 }
 

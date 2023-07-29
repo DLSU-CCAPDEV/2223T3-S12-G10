@@ -292,6 +292,25 @@ const postController = {
         }
     },
 
+    updateReply: async function (req, res) {
+        //req.body
+        var filter = {_id: req.body.commentID};
+        var editedText = req.body.editedText;
+        console.log('Comment ID is: ' + filter);
+        var update = {
+            Body: editedText,
+        }
+        
+        //find the specific post and update it
+        var response = await db.updateOne(Post, filter, update);
+
+        if (response != null) {
+            //stuff, re-render the post with the changes basically
+            //test
+            res.redirect('back');
+        }
+    },
+
     //for voting
     postVote: async function (req, res) {
         //check if the user has already upvoted/downvoted the post before
