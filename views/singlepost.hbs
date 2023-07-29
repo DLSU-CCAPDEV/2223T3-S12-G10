@@ -140,45 +140,6 @@
                         </div>
                     </div>
                 </div>
-                {{!-- Replies part --}}
-                {{#each replies}}
-                <div class="comment-container">
-                    <div class="comment-header-container">
-                        <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
-                        <div class="comment-author">@{{replies.CommentUserId}}</div>
-                        <div class="comment-header-separator">•</div>
-                        <div class="comment-timestamp">{{replies.Date}}</div>
-                        <div class="reply_ID d-none">{{replies._id}}</div>
-                    </div>
-                    <div class="comment-content">
-                        {{replies.Body}}
-                    </div>
-                    <div class="comment-footer-container">
-                        <div class="comment-votes-container">
-                            <div class="comment-vote-up">
-                                <i class="fa fa-arrow-up"></i>
-                            </div>
-                            <div class="comment-vote-count">
-                    {{#if (isNull upvotes) }}
-                        {{#if (isNull downvotes) }}
-                            0
-                        {{/if}}
-                    {{else}}
-                        {{upvotes.length-downvotes.length}}
-                    {{/if}}</div>
-                            <div class="comment-vote-down">
-                                <i class="fa fa-arrow-down"></i>
-                            </div>
-                        </div>
-                        <div class="comment-controls-container">
-                            <div class="create-reply"><i class="fa fa-reply me-2"></i>Reply</div>
-                            <div class="edit-reply"><i class="fa fa-pen me-2"></i>Edit</div>
-                            <div class="delete-reply"><i class="fa fa-trash me-2"></i>Delete</div>
-                            <div class="show-replies"><i class="fa fa-caret-down me-2"></i>Show More</div>
-                        </div>
-                    </div>
-                </div>
-                {{/each}}
             {{/each}}
             </div>
         </div>

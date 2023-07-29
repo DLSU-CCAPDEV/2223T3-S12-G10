@@ -4,7 +4,10 @@ var mongoose = require('mongoose');
 
 // defines the schema for collection `users`
 var UserSchema = new mongoose.Schema({
-    _userid: {type: mongoose.ObjectId},
+    true_name: {
+        type: mongoose.ObjectId,
+        unique: true,
+    },
     username: {
         type: String,
         required: true
