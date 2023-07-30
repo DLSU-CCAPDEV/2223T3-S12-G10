@@ -433,14 +433,22 @@ const postController = {
     },
 
     //deleting stuff
-    deletePost: async function(req, res) {
+    postDelete: async function(req, res) {
         //not a true delete
         //id somehow
-        var filter = {_id: req.params._id};
+        var filter = {_id: req.body.postID};
+       // console.log(filter);
+   
+        //console.log(postID);
 
-        var condition = {$set: {postTitle: 'Deleted Post', postText: "Post has been deleted"}};
+        var condition = {$set: 
+            {
+                postTitle: 'Deleted Post', 
+                postText: "Post has been deleted"
+            }
+        };
         
-        var response = await db.updateOne(Comment, filter, condition);
+        var response = await db.updateOne(Post, filter, condition);
 
         if (response != null) {
             console.log("A post has been deleted.")
