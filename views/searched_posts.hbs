@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" dark>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Forum</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<!--    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/markdown.css">
+    <link rel="stylesheet" href="../css/post.css">
+    <link rel="stylesheet" href="../css/snackbar.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/cure53/DOMPurify/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../js/backend.js"></script>
+    <script src="../js/nFormatter.js"></script>
+    <script src="../js/scripts.js"></script>
+    <script src="../js/comment.js"></script>
+    <script src="../js/snackbar.js"></script>
+</head>
+<body>
+<div class="row g-0">
+    <div class="col-2">
+        <nav class="d-flex flex-column flex-shrink-0" id="navbar">
+            <a href="../html/"
+               class="d-flex align-items-center p-4 mb-3 mb-md-0 me-md-auto text-decoration-none fs-2 color-text"
+               id="navbar-brand">forum.</a>
+            <ul class="nav flex-column mb-auto" id="sidenav-nav">
+                <li class="nav-item ps-2">
+                    <a class="nav-link active p-4" href="../html/">
+                        <i class="fa fa-home pe-4"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item ps-2">
+                    <a class="nav-link p-4" href="/questions">
+                        <i class="fa fa-question pe-4"></i>
+                        Questions
+                    </a>
+                </li>
+                <li class="nav-item ps-2">
+                    <a class="nav-link p-4" href="/starred">
+                        <i class="fa fa-star pe-4"></i>
+                        Starred
+                    </a>
+                </li>
+                <li class="nav-item ps-2">
+                    <a class="nav-link p-4" href="/users">
+                        <i class="fa fa-users pe-4"></i>
+                        Users
+                    </a>
+                </li>
+                <hr class="m-4"/>
+                <li class="nav-item ps-2">
+                    <a class="nav-link p-4" href="../html/profile.html">
+                        <i class="fa fa-user pe-4"></i>
+                        Profile
+                    </a>
+                </li>
+                <li class="nav-item ps-2">
+                    <a class="nav-link p-4" href="/settings">
+                        <i class="fa fa-cog pe-4"></i>
+                        Settings
+                    </a>
+                </li>
+                <li class="nav-item ps-2">
+                    <a class="nav-link p-4" href="../html/login.html">
+                        <i class="fa fa-sign-out pe-4"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-7 px-5 mb-4">
+        <div id="main-controls">
+            <div id="post-search-group">
+                <span class="fa fa-search" id="post-search-icon"></span>
+                <input type="search" placeholder="Search" name="post_search" id="post_search">
+            </div>
+            <button id="btn-ask" data-bs-toggle="modal" data-bs-target="#modal-question">Ask Question</button>
+            <button id="btn-mode-toggle"><i class="fa fa-bell"></i></button>
+        </div>
+        <div id="posts-container">
+            {{#each post}}
+            <div class="post-wrapper">
+                <div class="post-vote-container">
+                    <div class="post-vote-up">
+                        <i class="fa fa-caret-up"></i>
+                    </div>
+                    <div class="post-vote-count" data-vote-count="120">
+                    {{#if (isNull upvotes) }}
+                        {{#if (isNull downvotes) }}
+                            0
+                        {{/if}}
+                    {{else}}
+                        {{upvotes.length-downvotes.length}}
+                    {{/if}}</div>
+                    <div class="post-vote-down">
+                        <i class="fa fa-caret-down"></i>
+                    </div>
+                </div>
+                <div class="post-container">
+                    <a href="/post/{{_id}}" class="text-decoration-none">
+                        <h2 class="post-title">{{postTitle}}</h2>
+                    </a>
+                    <div class="post-author-container">
+                        <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
+                        <a href="../html/profile.html" class="text-decoration-none">
+                            <div class="post-author">@{{postUserId}}</div>
+                        </a>
+                    </div>
+                    <p class="post-content">{{postText}}
+                    </p>
+                    <div class="footer-container">
+                        <div class="tags-container">
+                            {{#each postTags}}
+                            <div class="tags">{{this}}</div>
+                            {{/each}}                            
+                        </div>
+                        <div class="post-answers-count-container">
+                            <i class="fa fa-comment-dots"></i>
+                            <a href="../html/post.html" class="text-decoration-none">
+                                <div class="post-answers-count">{{commentCount}}</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="col-3">
+        <div class="bg-secondary m-4 ms-0 p-5 radius">
+            <div class="d-flex mb-3">
+                <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="Profile picture" id="profile-img">
+                <div class="d-flex flex-column ms-3">
+                        <a href="../html/profile.html" class="text-decoration-none"><h4 id="profile-name">{{username}}<i class="fa fa-badge-check ms-3 text-accent"></i></h4></a>
+                    <p id="profile-username">@{{username}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <p class="color-text"><i class="fa fa-user-plus me-3"></i>{{following.length}}</p>
+                </div>
+                <div class="col-6">
+                    <p class="color-text"><i class="fa fa-users me-3"></i>{{followers.length}}</p>
+                </div>
+            </div>
+            <p class="color-text mb-0 text-muted fw-semibold"><i class="fa fa-calendar me-3"></i>{{joindate}}</p>
+        </div>
+        <div class="p-5" id="right-container">
+            <h3 class="mb-5">Trends for you</h3>
+            <div class="d-flex flex-column" id="trends-container">
+                <a href="#" class="mb-2">
+                    <h6>Tech</h6>
+                    <p class="text-muted fw-semibold">20.8k questions</p>
+                </a>
+                <a href="#" class="mb-2">
+                    <h6>AR</h6>
+                    <p class="text-muted fw-semibold">1.3k questions</p>
+                </a>
+                <a href="#" class="mb-2">
+                    <h6>Cinema</h6>
+                    <p class="text-muted fw-semibold">65k questions</p>
+                </a>
+            </div>
+            <hr class="mb-4" />
+            <div class="row" id="footer-container">
+                <div class="col-6">
+                    <div class="d-flex flex-column">
+                        <a href="/about" class="fw-semibold">About</a>
+                        <a href="/privacy" class="fw-semibold">Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex flex-column">
+                        <a href="/about" class="fw-semibold">Terms of Service</a>
+                        <a href="/privacy" class="fw-semibold">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-xl" id="modal-question" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 m-0">Ask Question</h1>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <form id="form-post" method="post">
+                            <div class="mb-3">
+                                <label for="post-title-form" class="form-label">Title</label>
+                                <input type="text" class="form-control" name="postTitle" id="postTitle" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="post-content-form" class="form-label">Content</label>
+                                <textarea class="form-control" name="postContent" id="postContent" required rows="10"></textarea>
+                                <p class="fs-6 fw-semibold text-muted"><a href="https://commonmark.org/help/">CommonMark Markdown</a> formatting is supported.</p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="post-tags-form" class="form-label">Tags</label>
+                                <input type="text" class="form-control" name="postTags" id="postTags" required>
+                                <p class="fs-6 fw-semibold text-muted">Separate tags with a comma. Maximum of 5 tags allowed.</p>
+                            </div>
+                            
+                        
+                    </div>
+                    <div class="col-6" id="post-preview-container">
+                        <h2 class="post-title" id="post-title-preview"></h2>
+                        <div class="post-content" id="post-content-preview"></div>
+                        <div class="tags-container" id="tags-preview"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    <i class="fa fa-trash me-2"></i>Discard</button>
+                <button type="button" form="form-post" class="btn btn-success" id="btn-post-form">
+                    <i class="fa fa-check me-2"></i><input type="submit" class="btn btn-success" form='form-post' id="submit" value="Publish"></button>
+            </div>
+                        </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

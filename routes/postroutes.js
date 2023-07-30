@@ -24,9 +24,7 @@ router.post('/questions', postController.getManyPosts);
 
 // router.get('/post/:_id', postController.getOnePost);
 
-router.get('/search/:postSearch', postController.searchPost);
-
-
+router.get('/search?:postSearch', postController.getSearchedPosts);
 
 // router.get('/successPost', postController.getSuccessPost)
 

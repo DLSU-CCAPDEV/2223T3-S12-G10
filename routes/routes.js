@@ -67,9 +67,9 @@ app.get('/profile/:username', profileController.getProfile);
 app.get('/profile/:username/userposts', profileController.getProfile);
 app.get('/profile/:username/usercomments', profileController.getProfile);
 
-app.post('/search/:postSearch', postController.searchPost);
+//app.post('/search/:postSearch', postController.searchPost);
 
-app.get('/search/searchedPosts', postController.getSearchedPosts);
+//app.get('/search/searchedPosts', postController.getSearchedPosts);
 /*
     these ones will be used specifically to get posts in the main index page
 */
