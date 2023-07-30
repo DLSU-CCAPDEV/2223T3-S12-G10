@@ -223,6 +223,24 @@ $(document).ready(function(){
         $.post('/post/postComment', passdata);
     });
 
-    $('.create-reply').click(handleReplies);
+     $('.delete-post').click(function (req, res) {
+        console.log("Soft-deleting");
+
+        var url = $(location).attr('href');
+
+        //parse the URL
+        var parsedURL = url.split('/');
+        var passdata = {
+            postID: parsedURL[4]
+        };
+
+        $.post('/post/postDelete', passdata);
+
+    });
+
     
+
+    $('.create-reply').click(handleReplies);
+
+
 });
