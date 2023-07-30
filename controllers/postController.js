@@ -222,9 +222,9 @@ const postController = {
     },
 
     searchPost: async function (req, res) {
-        let postSearch = req.params.postSearch
+        let postSearch = req.params.postSearch;
         var query = {postTitle: {$regex: '.*' + postSearch + '.*'} };
-
+        console.log('The postSearch is: ' + postSearch);
         var projection = '';
 
         //await MyModel.find({ name: /john/i }, 'name friends').exec();0
@@ -250,7 +250,7 @@ const postController = {
     getSearchedPosts: async function (req, res) {
         console.log('Secondary Search Accessed...');
         var query = {postTitle: {$regex: '.*' + req.query.postSearch + '.*'} };
-
+        console.log("postSearch is: " + req.query.postSearch);
         var projection = '';
 
         //await MyModel.find({ name: /john/i }, 'name friends').exec();0
@@ -258,10 +258,12 @@ const postController = {
 
         if (results != null) {
             //there are posts similar in name to the search query
+            console.log("query: "+ query.postTitle);
             var details = {
                 post: results
             };
             res.render('searched_posts', details);
+            console.log(details);
         }
         else {
             console.log('There are no posts with similar names')

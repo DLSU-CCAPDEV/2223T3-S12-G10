@@ -199,7 +199,7 @@ $(document).ready(function(){
     $('#post_search').keydown(function (event) {
         if(event.key == "Enter") {
             // $.get('/search/' + $('#postSearch').val());
-            $.post('/search/' + $('#postSearch').val());
+            window.location.replace('/search?postSearch=' + $('#post_search').val());
         }
     });
 
