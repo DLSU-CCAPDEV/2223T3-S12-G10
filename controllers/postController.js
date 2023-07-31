@@ -360,17 +360,18 @@ const postController = {
 
     //for generating replies
     getReplies: async function (req, res) {
-        var commentID = req.query.commentID;
+        var commentID = req.params.commentID;
 
         //find the replies whose parent are these comments
         var query = {ParentComment: commentID};
         var projection = '';
 
-        var response = await db.findMany(query, projection);
+        var response = await db.findMany(Comment ,query, projection);
 
         if (response != null) {
             //if they have replies then return that data 
             //it will be rendered via javascript
+
             return response;
         }
         else {

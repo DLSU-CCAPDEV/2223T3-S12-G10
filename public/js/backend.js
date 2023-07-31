@@ -154,7 +154,7 @@ $(document).ready(function(){
         //get the posts's id
         var postID = $('.post_id').html();
 
-        console.log("The post ID is: " + postID);
+        console.log("Thes post ID is: " + postID);
 
         //get the data
         var editedTitle = $('#edit_post_title_form').val();

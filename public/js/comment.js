@@ -89,15 +89,27 @@ function handleShowbutton (e) {
     $(parentContainer).children().toggleClass('opened');
 
     //get the comment's ID
-    var commentID = parentContainer.children('.comment_ID').html();
+    var commentID = $(e.target).parents('.comment-footer-container').siblings('.comment-header-container').children('.comment_ID').html();
 
     console.log('Reply getting ID: ' + commentID);
     
-    //pass it along the query
-    let comments = $.get('/getReplies/' + commentID);
+    // function(data) {
+    //     //append the comments to the parent
+    //     let parentComment = e.target.closest('.comment-wrapper');
 
-    //generate the comments 
+    //     console.log("Data: " + data);
+
+    //     createReply(parentComment, data)
+
+    // }
+
+    //pass it along the query
+    $.get('/getReplies/' + commentID, function (data) {
+        console.log("Data: " + data);
+    });
     
+    //generate the comments 
+    //try accessing
 }
 
 function handleDelete (e) {
@@ -116,9 +128,10 @@ function handleDelete (e) {
     }
 }
 
-function createReply(parentComment, replyid) {
+function createReply(parentComment, data) {
     //create the entire format for a reply/comment
-    let inputtedtext = document.getElementById(replyid).value;
+    //this is an updated version
+    let inputtedtext = data.postText;
     if (inputtedtext == '' || inputtedtext  ==' ') {
         snackbar({
             text: "Error: You may not leave an empty comment/reply!",
@@ -157,7 +170,7 @@ function createReply(parentComment, replyid) {
 
     let comment_timestamp = document.createElement("div");
     comment_timestamp.classList.add("comment-timestamp");
-    comment_timestamp.innerHTML = "06/23/2023";
+    comment_timestamp.innerHTML = date.date;
 
     let comment_content = document.createElement("p");
     comment_content.innerHTML = inputtedtext; //this is the reply
@@ -276,7 +289,6 @@ function handlePostReplies(e) {
     // createPostReply(travel_path, reply_data.val()); //parent is the comment section
     $('#add_comment_textarea').val('');
     $('#add-comment-controls-container').addClass('d-none');
-
 }
 
 function createPostReply(parentComment, inputtedtext) {
