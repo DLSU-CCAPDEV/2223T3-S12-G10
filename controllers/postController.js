@@ -249,14 +249,13 @@ const postController = {
 
     getSearchedPosts: async function (req, res) {
         console.log('Secondary Search Accessed...');
-        var query = {postTitle: {$regex: '.*' + req.query.postSearch + '.*'} };
+        var query = {postTitle: {$regex: new RegExp('.*' + req.query.postSearch + '.*', 'i') } };
         console.log("postSearch is: " + req.query.postSearch);
         var projection = '';
 
-        //await MyModel.find({ name: /john/i }, 'name friends').exec();0
         var results = await db.findMany(Post, query, projection);
 
-        if (results != null) {
+        if (results.length != 0 ) {
             //there are posts similar in name to the search query
             console.log("query: "+ query.postTitle);
             var details = {
@@ -266,7 +265,10 @@ const postController = {
             console.log(details);
         }
         else {
-            console.log('There are no posts with similar names')
+            var details = {};
+            console.log('There are no posts with similar names');
+            console.log(details);
+            res.render('searched_posts', details);
         }
 
     },
@@ -299,82 +301,17 @@ const postController = {
         var filter = {_id: req.body.commentID};
         var editedText = req.body.editedText;
         console.log('Comment ID is: ' + filter);
-        console.log('The edited text is: ' + filter);
         var update = {
             Body: editedText,
         }
         
         //find the specific post and update it
-        var response = await db.updateOne(Comment, filter, update);
+        var response = await db.updateOne(Post, filter, update);
 
         if (response != null) {
             //stuff, re-render the post with the changes basically
             //test
             res.redirect('back');
-        }
-    },
-
-    //for posting comment, not sure how it's gonna get called
-    postComment: async function (req, res) {
-        //assuming this is coming from /post/:_id
-        var text = req.body.Body;
-        var postID = req.body.postID;
-
-        var comment = {
-            // commentUserId: req.session._id
-            CommentPostId: postID,
-            Body: text,
-        };
-
-        //console.log(comment);
-
-        var response = await db.insertOne(Comment, comment);
-
-        if (response != null) {
-            //console.log('Comment: ' + response);
-            await res.redirect('/post/' + postID);
-        }
-    },
-
-    postReply: async function (req, res) {
-        //
-        var parentID = req.body.parentID;
-        var postID = req.body.postID;
-        var replyText = req.body.Body;
-
-        var reply = {
-            CommentPostId: postID,
-            ParentComment: parentID,
-            Body: replyText
-        };
-
-        console.log('Reply: ' + reply);
-
-        var response = await db.insertOne(Comment, reply);
-
-        if (response != null) {
-            console.log('Reply: ' + reply);
-            res.redirect('/post/' + postID);
-        }
-    },
-
-    //for generating replies
-    getReplies: async function (req, res) {
-        var commentID = req.query.commentID;
-
-        //find the replies whose parent are these comments
-        var query = {ParentComment: commentID};
-        var projection = '';
-
-        var response = await db.findMany(query, projection);
-
-        if (response != null) {
-            //if they have replies then return that data 
-            //it will be rendered via javascript
-            return response;
-        }
-        else {
-            console.log('Comment has no replies;')
         }
     },
 
@@ -451,6 +388,54 @@ const postController = {
                 var condition = {$push:{downvotes: {_id: userID} }};
                 var downvote = await db.updateOne(Post, addquery, condition);
             }
+        }
+    },
+
+
+    //for posting comment, not sure how it's gonna get called
+    postComment: async function (req, res) {
+        //assuming this is coming from /post/:_id
+        var text = req.body.Body;
+        var postID = req.body.postID;
+        
+        var date = Date();
+
+        var comment = {
+            // commentUserId: req.session._id
+            CommentPostId: postID,
+            Body: text,
+            Date: date,
+        };
+
+        //console.log(comment);
+
+        var response = await db.insertOne(Comment, comment);
+
+        if (response != null) {
+            //console.log('Comment: ' + response);
+            await res.redirect('/post/' + postID);
+        }
+    },
+
+    postReply: async function (req, res) {
+        //
+        var parentID = req.body.parentID;
+        var postID = req.body.postID;
+        var replyText = req.body.Body;
+
+        var reply = {
+            CommentPostId: postID,
+            ParentComment: parentID,
+            Body: replyText
+        };
+
+        console.log('Reply: ' + reply);
+
+        var response = await db.insertOne(Comment, reply);
+
+        if (response != null) {
+            console.log('Reply: ' + reply);
+            res.redirect('/post/' + postID);
         }
     },
 

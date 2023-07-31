@@ -55,29 +55,28 @@ function handleEditbutton(e) {
         if (isPost) {
             comment_content.html(DOMPurify.sanitize(marked.parse(comment_content.html())));
         }
-        //a comment/reply
-        var text = comment_content.html();
-        // var text = DOMPurify.sanitize(marked.parse(comment_content.html()));
-        console.log('Text is: ' + text);
+        else {
+            //a comment/reply
+            var text = comment_content.html();
+            console.log('Text is: ' + text);
 
-        // //get the comment's ID
-        var commentID = $(e.target).parents('.comment-footer-container').siblings('.comment-header-container').children('.comment_ID').html();
+            //get the comment's ID
+            var commentID = $(e.target).parents('.post-controls-container').siblings('.comment-header-container').children('.comment_ID');
 
-        console.log('Editing this comment: ' + commentID);
-           
-        //send a post request to update
-        var data = {
-            commentID: commentID,
-            editedText: text,
-        };
-        console.log("Sending data now...");
-        
+            console.log('Editing this comment: ' + commentID);
+            comment_content.attr('contenteditable', 'false');
+            e.target.childNodes[0].classList.remove("fa-check");
+            e.target.childNodes[0].classList.add("fa-pen");
+            e.target.childNodes[1].textContent = "Edit";
+            //send a post request to update
+            var data = {
+                commentID: commentID,
+                editedText: text,
+            };
+            console.log("Sending data now...")
+            $.post('/post/editReply', data);
 
-        comment_content.attr('contenteditable', 'false');
-        e.target.childNodes[0].classList.remove("fa-check");
-        e.target.childNodes[0].classList.add("fa-pen");
-        e.target.childNodes[1].textContent = "Edit";
-        $.post('/post/editReply', data);
+        }
 
         
     }
@@ -85,19 +84,9 @@ function handleEditbutton(e) {
 
 function handleShowbutton (e) {
     let parentContainer= e.target.closest('.comment-wrapper');
-    //console.log(parentContainer);
+    
+    console.log(parentContainer);
     $(parentContainer).children().toggleClass('opened');
-
-    //get the comment's ID
-    var commentID = parentContainer.children('.comment_ID').html();
-
-    console.log('Reply getting ID: ' + commentID);
-    
-    //pass it along the query
-    let comments = $.get('/getReplies/' + commentID);
-
-    //generate the comments 
-    
 }
 
 function handleDelete (e) {
