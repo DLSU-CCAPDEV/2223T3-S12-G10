@@ -15,7 +15,7 @@ const app = express();
 const port = 9090;
 
 // set `hbs` as view engine
-app.set('view engine', 'hbs')
+app.set('view engine', 'hbs');
 
 // sets `/views/partials` as folder containing partial hbs files
 hbs.registerPartials(__dirname + '/views/partials');
