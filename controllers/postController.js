@@ -361,22 +361,22 @@ const postController = {
 
     //for generating replies
     getReplies: async function (req, res) {
-        var commentID = req.params.commentID;
+        var commentID = req.query.commentID;
+        console.log('CommentID is: ' + commentID);
 
         //find the replies whose parent are these comments
         var query = {ParentComment: commentID};
         var projection = '';
 
-        var response = await db.findMany(Comment ,query, projection);
+        var response = await db.findMany(Comment , query, projection);
 
         if (response != null) {
             //if they have replies then return that data 
             //it will be rendered via javascript
-
-            return response;
+            return res.status(200).send(response);
         }
         else {
-            console.log('Comment has no replies;')
+            console.log('Comment has no replies.')
         }
     },
 

@@ -86,10 +86,10 @@ function handleEditbutton(e) {
 function handleShowbutton (e) {
     let parentContainer= e.target.closest('.comment-wrapper');
     //console.log(parentContainer);
-    $(parentContainer).children().toggleClass('opened');
+    $(parentContainer).children('.comment-container').toggleClass('opened');
 
     //get the comment's ID
-    var commentID = $(e.target).parents('.comment-footer-container').siblings('.comment-header-container').children('.comment_ID').html();
+    let commentID = $(e.target).parents('.comment-footer-container').siblings('.comment-header-container').children('.comment_ID').html();
 
     console.log('Reply getting ID: ' + commentID);
     
@@ -103,13 +103,34 @@ function handleShowbutton (e) {
 
     // }
 
+    const commentReplies = function(commID, res) {
+        let parentcomment = $(".comment_ID:contains(" + commID +")").parents('.comment-container');
+        console.log("Parent Comment: " + parentcomment);
+
+        console.log(res);
+        //iterate through it
+        for(let i = 0; i < res.length; i++) {
+            createReply(parentcomment, res[i])
+        }
+
+        // let testdiv = document.createElement('div');
+        // testdiv.innerHTML = 'TESTING TESTING TESTING WEE WOO WEE WOO';
+        // parentcomment.append(testdiv);
+    };
+
     //pass it along the query
-    $.get('/getReplies/' + commentID, function (data) {
-        console.log("Data: " + data);
-    });
-    
-    //generate the comments 
-    //try accessing
+    function ajaxcall(commID) {
+        //do the ajax call
+        $.ajax({
+            url: '/getReplies',
+            type: "GET",
+            dataType: "json",
+            data: {commentID: commID},
+            success: function (response) {commentReplies(commID, response)}
+        });
+    }
+
+    ajaxcall(commentID);
 }
 
 function handleDelete (e) {
@@ -128,17 +149,8 @@ function handleDelete (e) {
     }
 }
 
-function createReply(parentComment, data) {
-    //create the entire format for a reply/comment
-    //this is an updated version
-    let inputtedtext = data.postText;
-    if (inputtedtext == '' || inputtedtext  ==' ') {
-        snackbar({
-            text: "Error: You may not leave an empty comment/reply!",
-            status: 'error'
-        });
-        return;
-    }
+function createReply(parentComment, reply) {
+    //final version taking into account database shenanigans
 
     /**************************************/
     //this creates another wrapper so that we can nest succeeding comments
@@ -156,13 +168,14 @@ function createReply(parentComment, data) {
     let author_container = document.createElement("div");
     author_container.classList.add("comment-header-container");
 
+    //***************** IMPORTANT NOTE: CHANGE THIS IN THE FUTURE TO ACCOMODATE REAL IMAGES */
     let author_img = document.createElement("img");
     author_img.classList.add("comment-author-img");
     author_img.setAttribute("src", "https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall")
     
     let author_username = document.createElement("div");
     author_username.classList.add("comment-author");
-    author_username.innerHTML = "@aaronhall";
+    author_username.innerHTML = reply.CommentUserId;
 
     let comment_header_separator = document.createElement("div");
     comment_header_separator.classList.add("comment-header-separator");
@@ -170,10 +183,14 @@ function createReply(parentComment, data) {
 
     let comment_timestamp = document.createElement("div");
     comment_timestamp.classList.add("comment-timestamp");
-    comment_timestamp.innerHTML = date.date;
+    comment_timestamp.innerHTML = reply.Date;
+
+    let comment_ID = document.createElement('div');
+    comment_ID.classList.add("comment_ID", "d-none");
+    comment_ID.classList.innerHTML = reply._id;
 
     let comment_content = document.createElement("p");
-    comment_content.innerHTML = inputtedtext; //this is the reply
+    comment_content.innerHTML = reply.Body; //this is the reply
     comment_content.classList.add("comment-content");
 
     let footer_container = document.createElement("div");
@@ -261,7 +278,7 @@ function createReply(parentComment, data) {
     footer_container.append(comment_votes_container, comment_controls_container);
 
     //make the header container
-    author_container.append(author_img, author_username, comment_header_separator, comment_timestamp);
+    author_container.append(author_img, author_username, comment_header_separator, comment_timestamp, comment_ID);
 
     //create the reply itself
     reply_card.append(author_container, comment_content, footer_container);
