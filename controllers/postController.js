@@ -11,6 +11,11 @@ const Comment = require('../models/commentmodel.js');
 
 const marked = require('../node_modules/marked');
 
+marked.use({
+    mangle: false,
+    headerIds: false
+});
+
 //let limit = 0;
 /*
     defines an object which contains functions executed as callback
