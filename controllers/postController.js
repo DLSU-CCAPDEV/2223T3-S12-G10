@@ -364,16 +364,32 @@ const postController = {
         var commentID = req.query.commentID;
         console.log('CommentID is: ' + commentID);
 
-        //find the replies whose parent are these comments
+        //find the replies whose parent are the comment's
         var query = {ParentComment: commentID};
-        var projection = '';
-
+        var projection = '-CommentPostId';
         var response = await db.findMany(Comment , query, projection);
+
+        var usernames = [];
+        //get their usernames
+        for(let i = 0; i < response.length; i++) {
+            //search for the username and push it into an array
+            var namequery = {_id: response[i].CommentUserId};
+            var want = 'username';
+
+            var username = await db.findOne(User, namequery, want);
+
+            usernames.push(username);
+        }
+
+        var details = {
+            replies: response,
+            usernames: usernames
+        };
 
         if (response != null) {
             //if they have replies then return that data 
             //it will be rendered via javascript
-            return res.status(200).send(response);
+            return res.status(200).send(details);
         }
         else {
             console.log('Comment has no replies.')

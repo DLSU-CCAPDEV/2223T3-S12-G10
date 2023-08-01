@@ -92,30 +92,19 @@ function handleShowbutton (e) {
     let commentID = $(e.target).parents('.comment-footer-container').siblings('.comment-header-container').children('.comment_ID').html();
 
     console.log('Reply getting ID: ' + commentID);
-    
-    // function(data) {
-    //     //append the comments to the parent
-    //     let parentComment = e.target.closest('.comment-wrapper');
-
-    //     console.log("Data: " + data);
-
-    //     createReply(parentComment, data)
-
-    // }
-
     const commentReplies = function(commID, res) {
         let parentcomment = $(".comment_ID:contains(" + commID +")").parents('.comment-container');
         console.log("Parent Comment: " + parentcomment);
 
         console.log(res);
+        //access testing
+        // console.log(res.replies[0]);
+        // console.log(res.usernames[0]);
         //iterate through it
-        for(let i = 0; i < res.length; i++) {
-            createReply(parentcomment, res[i])
+        for(let i = 0; i < res.replies.length; i++) {
+            console.log('Currently Processing: ' + res.replies[i]._id);
+            createReply(parentcomment, res.replies[i], res.usernames[i]);
         }
-
-        // let testdiv = document.createElement('div');
-        // testdiv.innerHTML = 'TESTING TESTING TESTING WEE WOO WEE WOO';
-        // parentcomment.append(testdiv);
     };
 
     //pass it along the query
@@ -156,8 +145,10 @@ function handleDelete (e) {
     }
 }
 
-function createReply(parentComment, reply) {
+function createReply(parentComment, reply, username) {
     //final version taking into account database shenanigans
+    console.log('Create reply id: ' + reply._id);
+    console.log(username);
 
     /**************************************/
     //this creates another wrapper so that we can nest succeeding comments
@@ -182,7 +173,7 @@ function createReply(parentComment, reply) {
     
     let author_username = document.createElement("div");
     author_username.classList.add("comment-author");
-    author_username.innerHTML = reply.CommentUserId;
+    author_username.innerHTML = username;
 
     let comment_header_separator = document.createElement("div");
     comment_header_separator.classList.add("comment-header-separator");
@@ -194,7 +185,7 @@ function createReply(parentComment, reply) {
 
     let comment_ID = document.createElement('div');
     comment_ID.classList.add("comment_ID", "d-none");
-    comment_ID.classList.innerHTML = reply._id;
+    comment_ID.innerHTML = reply._id;
 
     let comment_content = document.createElement("p");
     comment_content.innerHTML = reply.Body; //this is the reply
@@ -292,7 +283,7 @@ function createReply(parentComment, reply) {
     reply_container.append(reply_card); //built
 
     //append it to the parent container
-    parentComment.append(reply_container);
+    parentComment.after(reply_container);
 }
 
 //functions exclusive to post-related control
