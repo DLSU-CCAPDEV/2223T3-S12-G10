@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dark>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"> 
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -13,31 +13,38 @@
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="/js/scripts.js"></script>
     <script src="/js/backend.js"></script>
-    <script src="/js/login.js"></script>
-</head>
+    <script src="/js/register.js"></script>
+
+</head> 
 <body>
 <div id="register-wrapper">
     <h1 id="main-branding">forum.</h1>
     <div id="register-container">
         <h3 id="register-heading">REGISTER</h3>
-        <form action="" method="POST" id="form-register">
+
+
+        <form action="/register" method="POST" id="form-register">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" id="username" name="username" class="form-control" >
+                <input type="text" id="username" name="username" class="form-control" required >
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" id="password" name="password" class="form-control">
+                <input type="password" id="password" name="password" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label for="confirm_password" class="form-label">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password" class="form-control">
+                <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
             </div>
             <div class="form-check mb-3 mt-2">
                 <input class="form-check-input" type="checkbox" id="terms" name="terms" required>
                 <label class="form-check-label ms-1" for="terms">I agree to the terms and conditions</label>
             </div>
-            <div id="error-container" data-error-status="normal"></div>
+            <div id="error-container" data-error-status="{{#if errors}}error{{else}}normal{{/if}}">
+                {{#if errors}}
+                    <p>{{errors}}</p>
+                {{/if}}
+            </div>
             <div>
                 <button class="btn" id="btn-register">Register</button>
             </div>

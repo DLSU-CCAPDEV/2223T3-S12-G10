@@ -8,8 +8,6 @@ const controller = require('../controllers/controller.js');
 // import module `signupController` from `../controllers/signupController.js`
 const signupController = require('../controllers/signupController.js');
 
-const loginController = require('../controllers/loginController.js');
-
 // import module `successController` from `../controllers/successController.js`
 const successController = require('../controllers/successController.js');
 
@@ -18,8 +16,11 @@ const profileController = require('../controllers/profileController.js');
 
 const postController = require('../controllers/postController.js');
 
+const validation = require('../helpers/validation.js');
+
 const app = express();
 const postRouter = require('./postroutes.js');
+const loginController = require('../controllers/loginController.js');
 
 
 /*
@@ -48,8 +49,9 @@ app.get('/register', signupController.getSignUp);
     defined in object `signupController` in `../controllers/signupController.js`
     when a client sends an HTTP POST request for `/signup`
 */
-app.post('/register', signupController.postSignUp);
+//app.post('/register', signupController.postSignUp);
 
+app.post('/register', validation.signupValidation(), signupController.postSignUp);
 
 app.get('/login', loginController.getLogin);
 
@@ -60,9 +62,6 @@ app.post('/login', loginController.postLogin);
     when a client sends an HTTP GET request for `/success`
 */
 app.get('/success', successController.getSuccess);
-
-app.get('/login', loginController.getLogin);
-app.post('/login', loginController.postLogin);
 
 /*
     execute function getProfile()

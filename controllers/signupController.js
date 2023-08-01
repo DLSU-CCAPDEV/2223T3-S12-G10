@@ -5,6 +5,8 @@ const db = require('../models/db.js');
 // import module `User` from `../models/UserModel.js`
 const User = require('../models/usermodel.js');
 
+const { validationResult } = require('express-validator');
+
 const bcrypt = require('bcrypt');
 
 /*
@@ -27,53 +29,63 @@ const signupController = {
     */
     postSignUp: async function (req, res) {
 
-        /*
-            when submitting forms using HTTP POST method
-            the values in the input fields are stored in `req.body` object
-            each <input> element is identified using its `name` attribute
-            Example: the value entered in <input type="text" name="fName">
-            can be retrieved using `req.body.fName`
-        */
-        var username = req.body.username;
-        var password = req.body.password;
-        console.log('password is: ' + password);
+        var errors = validationResult(req);
 
-        bcrypt.hash(password, 10, async function (err, hash) {
-            var user = {
-                username: username,
-                password: hash,
-                joindate: new Date(),
-                userdescription: '',
-                following: [],
-                followers: []
-            }
-
+        if (!errors.isEmpty()) {
+            var errorMessages = errors.array().map(error => error.msg);
+            res.render('register', { errors: errorMessages.pop() });
+        } 
+        else{
+            
             /*
-            calls the function insertOne()
-            defined in the `database` object in `../models/db.js`
-            this function adds a document to collection `users`
-        */
-            var response = await db.insertOne(User, user);
-            /*
-                upon adding a user to the database,
-                redirects the client to `/success` using HTTP GET,
-                defined in `../routes/routes.js`
-                passing values using URL
-                which calls getSuccess() method
-                defined in `./successController.js`
+                when submitting forms using HTTP POST method
+                the values in the input fields are stored in `req.body` object
+                each <input> element is identified using its `name` attribute
+                Example: the value entered in <input type="text" name="fName">
+                can be retrieved using `req.body.fName`
             */
-
-            if (response != null) {
-                req.session.username = user.username;
-                req.session.joindate = user.joindate;
-                req.session.following = user.following;
-                req.session.followers = user.followers;
-                req.session.userdescription = user.userdescription;
-                res.redirect('/');
-            } else {
-                res.render('error');
-            }
-        });
+            var username = req.body.username;
+            var password = req.body.password;
+            console.log('password is: ' + password);
+    
+            bcrypt.hash(password, 10, async function (err, hash) {
+                var user = {
+                    username: username,
+                    password: hash,
+                    joindate: new Date(),
+                    userdescription: '',
+                    following: [],
+                    followers: []
+                }
+    
+                /*
+                calls the function insertOne()
+                defined in the `database` object in `../models/db.js`
+                this function adds a document to collection `users`
+            */
+                var response = await db.insertOne(User, user);
+                /*
+                    upon adding a user to the database,
+                    redirects the client to `/success` using HTTP GET,
+                    defined in `../routes/routes.js`
+                    passing values using URL
+                    which calls getSuccess() method
+                    defined in `./successController.js`
+                */
+    
+                if (response != null) {
+                    req.session.username = user.username;
+                    req.session.joindate = user.joindate;
+                    req.session.following = user.following;
+                    req.session.followers = user.followers;
+                    req.session.userdescription = user.userdescription;
+                    res.redirect('/');
+                } else {
+                    res.render('error');
+                }
+           
+            });
+         }
 
 
     }
