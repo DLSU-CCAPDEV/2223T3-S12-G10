@@ -70,7 +70,11 @@ const postController = {
                 }
             }
             var details = {
-                post: results
+                post: results,
+                username: req.session.username,
+                following: req.session.following,
+                followers: req.session.followers,
+                joindate: req.session.joindate
             }
 
             //console.log(details;
