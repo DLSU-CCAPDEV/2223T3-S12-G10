@@ -83,8 +83,9 @@ const signupController = {
                 } else {
                     res.render('error');
                 }
-            }
-        });
+           
+            });
+         }
 
 
     }
