@@ -437,17 +437,19 @@ const postController = {
         //not a true delete
         //id somehow
         var filter = {_id: req.body.postID};
-       // console.log(filter);
+       //console.log(filter);
    
         //console.log(postID);
 
         var condition = {$set: 
             {
                 postTitle: 'Deleted Post', 
-                postText: "Post has been deleted"
+                postText: "Post has been deleted",
+                postTags: []
             }
         };
         
+        console.log(condition);
         var response = await db.updateOne(Post, filter, condition);
 
         if (response != null) {
