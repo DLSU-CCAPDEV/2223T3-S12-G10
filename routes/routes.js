@@ -18,6 +18,7 @@ const postController = require('../controllers/postController.js');
 
 const app = express();
 const postRouter = require('./postroutes.js');
+const loginController = require('../controllers/loginController.js');
 
 
 /*
@@ -34,7 +35,6 @@ app.get('/favicon.ico', controller.getFavicon);
 */
 app.get('/', postController.getManyPosts);
 app.get('/index', postController.getManyPosts);
-
 /*
     execute function getSignUp()
     defined in object `signupController` in `../controllers/signupController.js`
@@ -49,6 +49,10 @@ app.get('/register', signupController.getSignUp);
 */
 app.post('/register', signupController.postSignUp);
 
+
+app.get('/login', loginController.getLogin);
+
+app.post('/login', loginController.postLogin);
 /*
     execute function getSuccess()
     defined in object `successController` in `../controllers/successController.js`
