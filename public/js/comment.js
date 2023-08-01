@@ -138,12 +138,19 @@ function handleDelete (e) {
     if (e.target.classList.contains('delete-reply')) {
         content = $(e.target).parents('.comment-footer-container').siblings('.comment-content');
         $(e.target).siblings('.edit-reply').remove();
+        content.html("This comment has been deleted.");
+        content.addClass('deleted-comment');
     } else if (e.target.classList.contains('delete-post')) {
         content = $('.post-content');
         $(e.target).parents('.post-controls-container').remove();
+        $(e.target).parents('.footer-container').remove();
+        content.html("Post has been deleted");
+        $('.footer-container').remove();
+        title = $('.post-title');
+        title.html("Deleted Post");
+
+    
     }
-    content.html("This comment has been deleted.");
-    content.addClass('deleted-comment');
     if (content.attr('contenteditable') == 'true') {
         content.attr('contenteditable', 'false');
     }
