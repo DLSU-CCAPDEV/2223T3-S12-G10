@@ -8,11 +8,11 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    <p class="color-text"><i class="fa fa-user-plus me-3"></i>{{following.length}}</p>
+                    <p class="color-text"><i class="fa fa-user-plus me-3"></i>{{nFormatter following.length 2}} following</p>
                 </div>
                 <div class="col-6">
-                    <p class="color-text"><i class="fa fa-users me-3"></i>{{followers.length}}</p>
+                    <p class="color-text"><i class="fa fa-users me-3"></i>{{nFormatter followers.length 2}} followers</p>
                 </div>
             </div>
-            <p class="color-text mb-0 text-muted fw-semibold"><i class="fa fa-calendar me-3"></i>{{joindate}}</p>
+            <p class="color-text mb-0 text-muted fw-semibold"><i class="fa fa-calendar me-3"></i>Joined {{formatJoinDate joindate}}</p>
     </div>
