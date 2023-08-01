@@ -5,6 +5,14 @@ const express = require('express');
 // import module `hbs`
 const hbs = require('hbs');
 
+const session = require('express-session');
+
+const MongoStore = require('connect-mongo'); 
+
+// import module `mongoose`
+const mongoose = require('mongoose');
+
+
 // import module `routes` from `./routes/routes.js`
 const routes = require('./routes/routes.js');
 
@@ -41,6 +49,8 @@ app.use(express.static('public'));
 // define the paths contained in `./routes/routes.js`
 app.use('/', routes);
 
+
+
 // if the route is not defined in the server, render `../views/error.hbs`
 // always define this as the last middleware
 app.use(function (req, res) {
@@ -49,6 +59,17 @@ app.use(function (req, res) {
 
 // connects to the database
 db.connect();
+
+// use `express-session`` middleware and set its options
+// use `MongoStore` as server-side session storage
+app.use(session({
+    secret: 'ccapdev-session', 
+    resave: false, 
+    saveUninitialized: false, 
+    store: MongoStore.create({
+      mongoUrl: 'mongodb+srv://raphaeltanai:nTISUPYixEgncCfN@projectnum1.5vkr5zy.mongodb.net/?retryWrites=true&w=majority'
+    })
+  })); 
 
 // binds the server to a specific port
 app.listen(port, function () {

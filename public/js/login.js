@@ -21,25 +21,18 @@ $(document).ready(function() {
     $('#form-login').on("submit", function(e) {
         let username = $('#username').val();
         let password = $('#password').val();
-
-        //let validLogin = validateLogin(username, password);
         let validForm = validateForm(username, password);
-
         if (!validForm) {
             e.preventDefault();
-
-            /*if (!validLogin) {
-                $('#error-container').text('Incorrect username or password!');
-            }*/
-
             if (!validForm) {
                 showError('Please enter a username and password!');
             }
             return;
         }
-
-        /*let formAction = $('#form-login').attr('action');
-        window.location.href = formAction;*/
+        else{
+            console.log('Log: ' + username + ' & '+ password);
+            $.post('/login');
+        }
     });
 
     $('#form-register').on("submit", function(e) {
