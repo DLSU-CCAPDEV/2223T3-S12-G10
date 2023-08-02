@@ -238,6 +238,20 @@ $(document).ready(function(){
 
     });
 
+    $('.delete-reply').click(function (req, res) {
+    console.log("Soft-deleting reply");
+
+    // Assuming replyID is stored as data attribute in the delete button
+    var replyID = $(this).data('reply-id');
+
+    //console.log(replyID);
+    var passdata = {
+        replyID: replyID
+    };
+
+    $.post('/post/replyDelete', passdata);
+    });
+
     
 
     $('.create-reply').click(handleReplies);
