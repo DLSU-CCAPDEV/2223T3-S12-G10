@@ -159,7 +159,7 @@ $(document).ready(function(){
         //get the data
         var editedTitle = $('#edit_post_title_form').val();
         var editedText = $('#edit_post_content_form').val();
-        var editedTags = $('#edit_post_tags_form').val();
+        var editedTags = $('#edit_post_tags_form').val().trim().split(',');
         $('#modal-question').modal('hide');
 
         //after getting the data put it into a variable

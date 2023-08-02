@@ -401,7 +401,7 @@ $(document).ready(function() {
 
         let post_title = $('.post-title');
         let post_content = $('.post-content');
-        let post_tags = post_tags_form.val().trim().split(',')
+        let post_tags = post_tags_form.val().trim().split(',');
 
         post_title.text(post_title_form.val());
         post_content.html(DOMPurify.sanitize(marked.parse(post_content_form.val())));

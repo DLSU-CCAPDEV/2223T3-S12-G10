@@ -84,7 +84,8 @@ const postController = {
                 await db.findOne(User, {_id: results[i]._doc.postUserId}, 'username')
                     .then(function(result) {
                         console.log(result);
-                        results[i]._doc.postUserId = result.username;
+                        // results[i]._doc.postUserId = result.username;
+                        results[i].username = result.username;
                     });
                 await db.findMany(Comment, {CommentPostId: results[i]._doc._id}, '_id')
                     .then(function(result) {
@@ -154,6 +155,8 @@ const postController = {
         // console.log(currentuser._doc._id);
         if (results[0].postUserId == currentuser.id) {
             results[0].editablePost = true;
+        } else {
+            results[0].editablePost = false;
         }
 
         var commentcount = await db.findMany(Comment, {CommentPostId: req.params._id}, '_id');
@@ -168,6 +171,13 @@ const postController = {
         query = {ParentComment:{ $eq: null}, CommentPostId: req.params._id };
         projection = '';
         var comments = await db.findMany(Comment, query, projection);
+        for (let i = 0; i < comments.length; i++) {
+            if(comments[i].CommentUserId == currentuser.id) {
+                comments[i].editableComment = true;
+            } else {
+                comments[i].editableComment = false;
+            }
+        }
 
         // //find the replies
         // query = {ParentComment: {$ne: null}, CommentPostId: req.params._id};
@@ -183,7 +193,7 @@ const postController = {
             await db.findOne(User, {_id: results[0]._doc.postUserId}, 'username')
                     .then(function(result) {
                         console.log(result);
-                        results[0]._doc.postUserId = result.username;
+                        results[0].username = result.username;
                     });
             
             //console.log(results);
@@ -214,6 +224,7 @@ const postController = {
                     .then(function(result) {
                         comments[i]._doc.CommentUserId = result.username;
                     });
+                    
                 }
             }
 
@@ -443,12 +454,9 @@ const postController = {
             Body: replyText
         };
 
-        console.log('Reply: ' + reply);
-
         var response = await db.insertOne(Comment, reply);
 
         if (response != null) {
-            console.log('Reply: ' + reply);
             res.redirect('/post/' + postID);
         }
     },
@@ -768,27 +776,27 @@ const postController = {
         }
     },
 
-    postReply: async function (req, res) {
-        //
-        var parentID = req.body.parentID;
-        var postID = req.body.postID;
-        var replyText = req.body.Body;
+    // postReply: async function (req, res) {
+    //     //
+    //     var parentID = req.body.parentID;
+    //     var postID = req.body.postID;
+    //     var replyText = req.body.Body;
 
-        var reply = {
-            CommentPostId: postID,
-            ParentComment: parentID,
-            Body: replyText
-        };
+    //     var reply = {
+    //         CommentPostId: postID,
+    //         ParentComment: parentID,
+    //         Body: replyText
+    //     };
 
-        console.log('Reply: ' + reply);
+    //     console.log('Reply: ' + reply);
 
-        var response = await db.insertOne(Comment, reply);
+    //     var response = await db.insertOne(Comment, reply);
 
-        if (response != null) {
-            console.log('Reply: ' + reply);
-            res.redirect('/post/' + postID);
-        }
-    },
+    //     if (response != null) {
+    //         console.log('Reply: ' + reply);
+    //         res.redirect('/post/' + postID);
+    //     }
+    // },
 
     //deleting stuff
     postDelete: async function(req, res) {
