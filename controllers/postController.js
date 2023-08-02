@@ -89,6 +89,7 @@ const postController = {
             }
             var details = {
                 post: results,
+                displayName: req.session.displayName,
                 username: req.session.username,
                 following: req.session.following,
                 followers: req.session.followers,
