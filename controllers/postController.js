@@ -9,7 +9,13 @@ const User = require('../models/usermodel.js');
 
 const Comment = require('../models/commentmodel.js');
 
-const marked = require('../node_modules/marked');
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
+
+const marked = require('marked');
 
 marked.use({
     mangle: false,
@@ -67,7 +73,7 @@ const postController = {
             // let votes = [];
             for(let i = 0; i < results.length; i++) {
                 if (results[i]._doc.postText != null || results[i]._doc.postText != undefined) {
-                    results[i]._doc.postText = marked.parse(results[i]._doc.postText);
+                    results[i]._doc.postText = DOMPurify.sanitize(marked.parse(results[i]._doc.postText));
                 }
                 if (results[i]._doc.upvotes.length != 0 || results[i]._doc.downvotes.length != 0) {
                     //calculate the votes
