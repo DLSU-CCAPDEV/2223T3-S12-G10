@@ -48,7 +48,7 @@ const postController = {
        //limit is how many  documents it'll find, use skiplimited when loading MORE documents
          //placeholder\
         let limit = 0;
-        var results = await db.limitedFind(Post, query, projection, limit); //limiting works
+        var results = await db.limitedFindReverse(Post, query, projection, limit); //limiting works
         //limit = limit + 5;
 
         console.log('Limit variable testing: ' + limit);   
@@ -69,25 +69,18 @@ const postController = {
                 if (results[i]._doc.postText != null || results[i]._doc.postText != undefined) {
                     results[i]._doc.postText = marked.parse(results[i]._doc.postText);
                 }
-                if (results[i]._doc.upvotes.length != 0 || results[i]._doc.downvotes.length != 0) {
-                    //calculate the votes
-                    var votecount = results[i]._doc.upvotes.length - results[i]._doc.downvotes.length;
-                    // votes.push(votecount);
-                    results[i]._doc.votes = votecount;
-                } else {
-                    //both are 0
-                    var votecount = 0;
-                    // votes.push (votecount);
-                    results[i]._doc.votes = votecount;
-                }
+                await db.findOne(User, {_id: results[i]._doc.postUserId}, 'username')
+                    .then(function(result) {
+                        results[i]._doc.postUserId = result.username;
+                    });
             }
-            // console.log(votes[0]);
             var details = {
                 post: results,
                 username: req.session.username,
                 following: req.session.following,
                 followers: req.session.followers,
-                joindate: req.session.joindate
+                joindate: req.session.joindate,
+                postUserId: req.session.userId
             }
 
             console.log(details);
@@ -221,6 +214,7 @@ const postController = {
         console.log("postTags content is: " + postTags);
         //upvotes and downvotes are defaulted to 0;
         var post = {
+            postUserId: req.session.userId,
             postTitle: postTitle,
             date: postDate,
             postText: postText,
@@ -767,7 +761,27 @@ const postController = {
         if (response != null) {
             console.log("A post has been deleted.")
         }
+    },
+
+    replyDelete: async function(req, res) {
+        var filter = {_id: req.body.replyID};
+    
+        console.log(filter);
+    
+        var condition = {$set: 
+            {
+                Body: "This comment has been deleted.",
+            }
+        };
+    
+        console.log(condition);
+        var response = await db.updateOne(Comment, filter, condition);
+    
+        if (response != null) {
+            console.log("A comment has been deleted.")
+        }
     }
+    
 
 }
 

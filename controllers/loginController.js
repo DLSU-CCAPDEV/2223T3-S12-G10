@@ -46,6 +46,7 @@ const loginController = {
             console.log(profile);
             bcrypt.compare(password, result.password, function(err, equal) {
                 if(equal) {
+                    req.session.userId = result._id;
                     req.session.username = profile.username;
                     req.session.joindate = profile.joindate;
                     req.session.following = profile.following;
