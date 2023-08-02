@@ -1,41 +1,38 @@
-
-const avatars = document.querySelectorAll('.avatar-selection');
-let lastClickedAvatar = null;
-
-avatars.forEach(avatar => {
-  avatar.addEventListener('click', function handleClick(event) {
-
-    if (lastClickedAvatar) {
-      lastClickedAvatar.style.borderColor = ''; 
-    }
-
-    avatar.style.borderColor = 'var(--color-accent)'; 
-    lastClickedAvatar = avatar; 
-  });
-});
-
-
- function validateForm() {
-      var password = document.getElementById("password").value;
-      var confirm_password = document.getElementById("confirm_password").value;
-      var password_error = document.getElementById("password_error");
-      var avatar_error = document.getElementById("avatar_error");
-
-      if (password !== confirm_password) {
-        password_error.innerHTML = "Passwords do not match.";
-        return false;
-      } 
-      else {
-        
-        password_error.innerHTML = "";
-        if (!lastClickedAvatar) {
-          avatar_error.innerHTML = "Pick an avatar";
-          return false;
-      }
-          return true;
-        
-      }
-
-     
+function showError(error_text) {
+    let error_container = $('#error-container');
+    error_container.attr('data-error-status', 'error');
+    error_container.css('animation', 'shake ease-in-out 0.375s');
+    setTimeout(function() {
+        $('#error-container').css('animation', '');
+    }, 500);
+    error_container.text(error_text);
 }
 
+
+$(document).ready(function() {
+  
+    $('#form-register').on("submit", function(e) {
+        let username = $('#username').val();
+        let password = $('#password').val();
+        let confirm_password = $('#confirm_password').val();
+
+        if (!validateForm(username, password, confirm_password)) {
+            e.preventDefault();
+            showError('Please enter a username and password!1');
+        } else if (password != confirm_password) {
+            e.preventDefault();
+            showError('Passwords do not match!');
+        } else if (password.length < 8) {
+            e.preventDefault();
+            showError('Password should contain at least 8 characters!');
+        }
+    });
+
+    $('#confirm_password').on("keyup", function() {
+        if ($(this).val() != $('#password').val()) {
+            $(this).addClass('form-input-error');
+        } else {
+            $(this).removeClass('form-input-error');
+        }
+    });
+});
