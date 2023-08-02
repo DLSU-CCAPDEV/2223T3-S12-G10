@@ -25,6 +25,11 @@ router.post('/questions', postController.getManyPosts);
 router.get('/search?:postSearch', postController.getSearchedPosts);
 router.get('/getReplies', postController.getReplies);
 
+router.post('/post/upvote', postController.postUpvote);
+router.post('/post/downvote', postController.postDownvote);
+router.post('/comment/upvote', postController.commentUpvote);
+router.post('/comment/downvote', postController.commentDownvote);
+
 // router.get('/successPost', postController.getSuccessPost)
 
 /*

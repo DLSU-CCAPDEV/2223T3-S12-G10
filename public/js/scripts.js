@@ -1,3 +1,4 @@
+
 function handleVoteButtons(e) {
     console.log(e.currentTarget);
     $(e.currentTarget).toggleClass('active');
@@ -14,56 +15,164 @@ function handleVoteButtons(e) {
 
 function handleVoteButtonUp(e) {
     let mode;
+    let ID;
     if (e.currentTarget.classList.contains('post-vote-up') ||
         e.currentTarget.classList.contains('post-vote-down')) {
         mode = '.post';
+        ID = $(e.target).parents('.post-vote-container').siblings('.post-container').children('.post-author-container').children('.post_ID').html();
+        console.log("Vote Post ID: " + ID);
     } else if (e.currentTarget.classList.contains('comment-vote-up') ||
                e.currentTarget.classList.contains('comment-vote-down')) {
         mode = '.comment';
+        ID = $(e.target).parents('.comment-footer-container').siblings('.comment-header-container').children('.comment_ID').html();
+        console.log("Comment Post ID: " + ID);
+    }
+    //Vote button
+    function liveupdate(mode, ID) {
+        //at this point it should have been updated properly
+        //this only does a local change
+        //response will either be true or false
+        if (mode == '.post') {
+                //find the vote container
+            let votes= $(".post_ID:contains(" + ID +")").parents('.post-container').siblings('.post-vote-container');
+            //votes.children('.post-vote-up').toggleClass('active');
+            let upvote = votes.children('.post-vote-count');
+            let upvotecount = parseInt(upvote.html());
+            upvotecount.html() = upvotecount + 1;
+        } else if (mode == '.comment') {
+            let votes= $(".comment_ID:contains(" + ID +")").parents('.comment-header-container').siblings('.comment-footer-container').children('.comment-votes-container');
+            //votes.children('.comment-vote-up').toggleClass('active');
+            let upvote = votes.children('.comment-vote-count');
+            let upvotecount = parseInt(upvote.html());
+            upvote.html() = upvotecount + 1;
+        } else {
+            console.log("This SHOULDN'T even be possible.");
+        }
+        
+    };
+
+    function ajaxcall(mode, ID) {
+        //check if it's a post or comment event 
+        if (mode == '.post') {
+            $.ajax({
+                url: '/post/upvote',
+                type: "POST",
+                dataType: "json",
+                data: {postID: ID},
+                success: function(response) {liveupdate(mode, ID)}
+            });
+        } else if (mode == '.comment') {
+            $.ajax({
+                url: '/comment/upvote',
+                type: "POST",
+                dataType: "json",
+                data: {commentID: ID},
+                success: function(response) {liveupdate(mode, ID)}
+            });
+
+        } else {
+            console.log("What, how????");
+        }
     }
 
-    let parent = $(e.currentTarget).parent();
-    let vote_count = $(e.currentTarget).siblings(mode + '-vote-count');
-    let data_vote_count = vote_count.attr('data-vote-count');
-    if (parent.attr('data-vote-status') != 1) {
-        var diff = 1;
-        if (parent.attr('data-vote-status') == -1) diff = 2;
-        vote_count.text(nFormatter(parseInt(data_vote_count) + diff, 1));
-        vote_count.attr('data-vote-count', parseInt(data_vote_count) + diff);
-        parent.attr('data-vote-status', 1);
-        $(e.currentTarget).siblings(mode + '-vote-down').removeClass('active');
-    } else {
-        parent.attr('data-vote-status', 0);
-        vote_count.text(nFormatter(parseInt(data_vote_count) - 1, 1));
-        vote_count.attr('data-vote-count', parseInt(data_vote_count) - 1);
-    }
+    ajaxcall(mode, ID);
+
+    // let parent = $(e.currentTarget).parent();
+    // let vote_count = $(e.currentTarget).siblings(mode + '-vote-count');
+    // let data_vote_count = vote_count.attr('data-vote-count');
+    // if (parent.attr('data-vote-status') != 1) {
+    //     var diff = 1;
+    //     if (parent.attr('data-vote-status') == -1) diff = 2;
+    //     vote_count.text(nFormatter(parseInt(data_vote_count) + diff, 1));
+    //     vote_count.attr('data-vote-count', parseInt(data_vote_count) + diff);
+    //     parent.attr('data-vote-status', 1);
+    //     $(e.currentTarget).siblings(mode + '-vote-down').removeClass('active');
+    // } else {
+    //     parent.attr('data-vote-status', 0);
+    //     vote_count.text(nFormatter(parseInt(data_vote_count) - 1, 1));
+    //     vote_count.attr('data-vote-count', parseInt(data_vote_count) - 1);
+    // }
 }
 
 function handleVoteButtonsDown(e) {
     let mode;
+    let ID;
     if (e.currentTarget.classList.contains('post-vote-up') ||
         e.currentTarget.classList.contains('post-vote-down')) {
         mode = '.post';
+        ID = $(e.target).parents('.post-vote-container').siblings('post-container').children('.post-author-container').children('post_ID').html();
+        console.log("Vote Post ID: " + ID);
     } else if (e.currentTarget.classList.contains('comment-vote-up') ||
         e.currentTarget.classList.contains('comment-vote-down')) {
         mode = '.comment';
+        ID = $(e.target).parents('.comment-footer-container').siblings('.comment-header-container').children('.comment_ID').html();
+        console.log("Comment Post ID: " + ID);
     }
 
-    let parent = $(e.currentTarget).parent();
-    let vote_count = $(e.currentTarget).siblings(mode + '-vote-count');
-    let data_vote_count = vote_count.attr('data-vote-count');
-    if (parent.attr('data-vote-status') != -1) {
-        var diff = 1;
-        if (parent.attr('data-vote-status') == 1) diff = 2;
-        vote_count.text(nFormatter(parseInt(data_vote_count) - diff, 1));
-        vote_count.attr('data-vote-count', parseInt(data_vote_count) - diff);
-        parent.attr('data-vote-status', -1);
-        $(e.currentTarget).siblings(mode + '-vote-up').removeClass('active');
-    } else {
-        parent.attr('data-vote-status', 0);
-        vote_count.text(nFormatter(parseInt(data_vote_count) + 1, 1));
-        vote_count.attr('data-vote-count', parseInt(data_vote_count) + 1);
+    function liveupdate(mode, ID) {
+        //at this point it should have been updated properly
+        //this only does a local change
+        //response will either be true or false
+        if (mode == '.post') {
+            let votes= $(".post_ID:contains(" + ID +")").parents('.post-container').siblings('.post-vote-container');
+            //votes.children('.post-vote-up').toggleClass('active'); //this is ALREADY handled by Handlevotebuttons
+            let downvote = votes.children('.post-vote-count');
+            let downvotecount = parseInt(downvote.html());
+            downvote.html() = downvotecount - 1;
+        } else if (mode == '.comment') {
+            let votes= $(".comment_ID:contains(" + ID +")").parents('.comment-header-container').siblings('.comment-footer-container').children('.comment-votes-container');
+            //votes.children('.comment-vote-up').toggleClass('active');
+            let downvote = votes.children('.comment-vote-count');
+            let downvotecount = parseInt(downvote.html());
+            downvote.html() = downvotecount - 1;
+        } else {
+            console.log("This SHOULDN'T even be possible.");
+        }
+        
+    };
+
+
+    function ajaxcall(mode, ID) {
+        //check if it's a post or comment event 
+        if (mode == '.post') {
+            $.ajax({
+                url: '/post/downvote',
+                type: "POST",
+                dataType: "json",
+                data: {postID: ID},
+                success: function(response) {liveupdate(mode, ID)}
+            });
+        } else if (mode == '.comment') {
+            $.ajax({
+                url: '/comment/downvote',
+                type: "POST",
+                dataType: "json",
+                data: {commentID: ID},
+                success: function(response) {liveupdate(mode, ID)}
+            });
+
+        } else {
+            console.log("What, how????");
+        }
     }
+
+    ajaxcall(mode, ID);
+
+    // let parent = $(e.currentTarget).parent();
+    // let vote_count = $(e.currentTarget).siblings(mode + '-vote-count');
+    // let data_vote_count = vote_count.attr('data-vote-count');
+    // if (parent.attr('data-vote-status') != -1) {
+    //     var diff = 1;
+    //     if (parent.attr('data-vote-status') == 1) diff = 2;
+    //     vote_count.text(nFormatter(parseInt(data_vote_count) - diff, 1));
+    //     vote_count.attr('data-vote-count', parseInt(data_vote_count) - diff);
+    //     parent.attr('data-vote-status', -1);
+    //     $(e.currentTarget).siblings(mode + '-vote-up').removeClass('active');
+    // } else {
+    //     parent.attr('data-vote-status', 0);
+    //     vote_count.text(nFormatter(parseInt(data_vote_count) + 1, 1));
+    //     vote_count.attr('data-vote-count', parseInt(data_vote_count) + 1);
+    // }
 }
 
 function validateForm(...forms) {

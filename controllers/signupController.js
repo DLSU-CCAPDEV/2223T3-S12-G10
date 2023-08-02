@@ -7,8 +7,6 @@ const User = require('../models/usermodel.js');
 
 const { validationResult } = require('express-validator');
 
-const bcrypt = require('bcrypt');
-
 /*
     defines an object which contains functions executed as callback
     when a client requests for `signup` paths in the server

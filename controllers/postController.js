@@ -64,11 +64,24 @@ const postController = {
             //console.log(results.postTags);
             // results.postText = DOMPurify.sanitize(marked.parse(results.postText));
             // results.postText = postText;
+            // let votes = [];
             for(let i = 0; i < results.length; i++) {
                 if (results[i]._doc.postText != null || results[i]._doc.postText != undefined) {
                     results[i]._doc.postText = marked.parse(results[i]._doc.postText);
                 }
+                if (results[i]._doc.upvotes.length != 0 || results[i]._doc.downvotes.length != 0) {
+                    //calculate the votes
+                    var votecount = results[i]._doc.upvotes.length - results[i]._doc.downvotes.length;
+                    // votes.push(votecount);
+                    results[i]._doc.votes = votecount;
+                } else {
+                    //both are 0
+                    var votecount = 0;
+                    // votes.push (votecount);
+                    results[i]._doc.votes = votecount;
+                }
             }
+            // console.log(votes[0]);
             var details = {
                 post: results,
                 username: req.session.username,
@@ -77,7 +90,7 @@ const postController = {
                 joindate: req.session.joindate
             }
 
-            //console.log(details;
+            console.log(details);
             //pass the entire thing
             // render `../views/profile.hbs`
             res.render('conv_index', details);
@@ -409,11 +422,15 @@ const postController = {
     postUpvote: async function (req, res) {
         //check if the user has already upvoted/downvoted the post before
         //queries: get the specific post, check if the user is in upvote or downvote
-        var userID = req.session._id;
-        var postID = req.query.postID;
+        var username = req.session.username;
+        var finduser = await db.findOne(User, {username: username}, '_id');
+        var userID = finduser._doc._id;
+        var postID = req.body.postID;
         // var query = {_id: postID, $or:[{upvotes: userID}, {downvotes: userID}]};//
-        var query = {id: postID}; 
+        var query = {_id: postID}; 
 
+        //checker
+        console.log('UserID is ' + userID);
         //get the upvotes and downvotes only
         var projection ='upvotes downvotes';
         var voted = await db.findOne(Post, query, projection);
@@ -431,6 +448,9 @@ const postController = {
                 var removal = await db.updateOne(Post, removalquery, condition);
                 if (removal != null) {
                     //redirect to page to refresh it
+                    res.status(205);
+                } else {
+                    res.render('error');
                 }
             }
             else if ((voted.upvotes.includes(userID) == false) && (voted.downvotes.includes(userID) == true)) {
@@ -440,10 +460,20 @@ const postController = {
                 //remove the user from upvotes
                 var removal = await db.updateOne(Post, removalquery, pull);
 
-                //add to upvote
-                var addquery = {_id: postID};
-                var push = {$push: {upvotes: [{_id: userID}]} };
-                var addition = await db.updateOne(Post, addquery, push)
+                if (removal != null) {
+                    //add to upvote
+                    var addquery = {_id: postID};
+                    var push = {$push: {upvotes: [{_id: userID}]} };
+                    var addition = await db.updateOne(Post, addquery, push)
+                    if (addition != null) {
+                        res.status(205);
+                    } else {
+                        res.render('error');
+                    }
+                }
+                else {
+                    res.render('error');
+                }
             }
             else {
                 //user has not yet upvoted/downvoted the post
@@ -451,9 +481,218 @@ const postController = {
                 var push = {$push: {upvotes: [{_id: userID}]} };
                 var addition = await db.updateOne(Post, query, push)
                 //re-render the page
+                if (addition != null) {
+                    res.status(205);
+                }
             }
         } else {
             //error message, 
+        }
+    },
+
+    postDownvote: async function (req, res) {
+        //check if the user has already upvoted/downvoted the post before
+        //queries: get the specific post, check if the user is in upvote or downvote
+        var username = req.session.username;
+        var finduser = await db.findOne(User, {username: username}, '_id');
+        var userID = finduser._doc._id;
+        var postID = req.body.postID;
+        // var query = {_id: postID, $or:[{upvotes: userID}, {downvotes: userID}]};//
+        var query = {_id: postID}; 
+
+        //get the upvotes and downvotes only
+        var projection ='upvotes downvotes';
+        var voted = await db.findOne(Post, query, projection);
+
+
+        //user has interacted already
+        if(voted != null) {
+            //has downvote set
+            if (voted.upvotes.includes(userID) == false && voted.downvotes.includes(userID) == true) {
+                //downvote -> none
+                var removalquery = {_id: postID};
+                var condition = {$pullAll: {downvotes: [{_id: userID}]} };
+                //remove the user from upvotes
+                var removal = await db.updateOne(Post, removalquery, condition);
+                if (removal != null) {
+                    //redirect to page to refresh it
+                    res.status(205);
+                } else {
+                    res.render('error');
+                }
+            }
+            else if ((voted.upvotes.includes(userID) == true) && (voted.downvotes.includes(userID) == false)) {
+                //upvoted -> downvote
+                var removalquery = {_id: postID};
+                var pull = {$pullAll: {upvotes: [{_id: userID}]} };
+                //remove the user from upvotes
+                var removal = await db.updateOne(Post, removalquery, pull);
+
+                if (removal != null) {
+                    //add to upvote
+                    var addquery = {_id: postID};
+                    var push = {$push: {downvotes: [{_id: userID}]} };
+                    var addition = await db.updateOne(Post, addquery, push)
+                    if (addition != null) {
+                        res.status(205);
+                    } else {
+                        res.render('error');
+                    }
+                }
+                else {
+                    res.render('error');
+                }
+            }
+            else {
+                //user has not yet upvoted/downvoted the post
+                var query = {_id: postID};
+                var push = {$push: {downvotes: [{_id: userID}]} };
+                var addition = await db.updateOne(Post, query, push)
+                //re-render the page
+                if (addition != null) {
+                    res.status(205);
+                }
+            }
+        } else {
+            //error message, 
+            res.render('error');
+        }
+    },
+    commentUpvote: async function (req, res) {
+        //check if the user has already upvoted/downvoted the post before
+        //queries: get the specific post, check if the user is in upvote or downvote
+        var username = req.session.username;
+        var finduser = await db.findOne(User, {username: username}, '_id');
+        var userID = finduser._doc._id;
+        var commentID = req.body.commentID;
+        // var query = {_id: postID, $or:[{upvotes: userID}, {downvotes: userID}]};//
+        var query = {id: commentID}; 
+
+        //get the upvotes and downvotes only
+        var projection ='upvotes downvotes';
+        var voted = await db.findOne(Comment, query, projection);
+
+
+        //user has interacted already
+        if(voted != null) {
+            //has upvotedset
+            //decision for upvote or downvote
+            if (voted.upvotes.includes(userID) == true && voted.downvotes.includes(userID) == false) {
+                //user has already upvoted and is trying to upvote again
+                var removalquery = {_id: commentID};
+                var condition = {$pullAll: {upvotes: [{_id: userID}]} };
+                //remove the user from upvotes
+                var removal = await db.updateOne(Comment, removalquery, condition);
+                if (removal != null) {
+                    //redirect to page to refresh it
+                    res.status(205);
+                } else {
+                    res.render('error');
+                }
+            }
+            else if ((voted.upvotes.includes(userID) == false) && (voted.downvotes.includes(userID) == true)) {
+                //downvoted -> upvote 
+                var removalquery = {_id: commentID};
+                var pull = {$pullAll: {downvotes: [{_id: userID}]} };
+                //remove the user from upvotes
+                var removal = await db.updateOne(Comment, removalquery, pull);
+
+                if (removal != null) {
+                    //add to upvote
+                    var addquery = {_id: commentID};
+                    var push = {$push: {upvotes: [{_id: userID}]} };
+                    var addition = await db.updateOne(Comment, addquery, push)
+                    if (addition != null) {
+                        res.status(205);
+                    } else {
+                        res.render('error');
+                    }
+                }
+                else {
+                    res.render('error');
+                }
+            }
+            else {
+                //user has not yet upvoted/downvoted the post
+                var query = {_id: commentID};
+                var push = {$push: {upvotes: [{_id: commentID}]} };
+                var addition = await db.updateOne(Comment, query, push)
+                //re-render the page
+                if (addition != null) {
+                    res.status(205);
+                }
+            }
+        } else {
+            //error message, 
+            res.render('error');
+        }
+    },
+    commentDownvote: async function (req, res) {
+        //check if the user has already upvoted/downvoted the post before
+        //queries: get the specific post, check if the user is in upvote or downvote
+        var username = req.session.username;
+        var finduser = await db.findOne(User, {username: username}, '_id');
+        var userID = finduser._doc._id;
+        var commentID = req.body.commentID;
+        // var query = {_id: postID, $or:[{upvotes: userID}, {downvotes: userID}]};//
+        var query = {_id: commentID}; 
+
+        //get the upvotes and downvotes only
+        var projection ='upvotes downvotes';
+        var voted = await db.findOne(Comment, query, projection);
+
+
+        //user has interacted already
+        if(voted != null) {
+            //has downvote set
+            if (voted.upvotes.includes(userID) == false && voted.downvotes.includes(userID) == true) {
+                //downvote -> none
+                var removalquery = {_id: commentID};
+                var condition = {$pullAll: {downvotes: [{_id: userID}]} };
+                //remove the user from upvotes
+                var removal = await db.updateOne(Comment, removalquery, condition);
+                if (removal != null) {
+                    //redirect to page to refresh it
+                    res.status(205);
+                } else {
+                    res.render('error');
+                }
+            }
+            else if ((voted.upvotes.includes(userID) == true) && (voted.downvotes.includes(userID) == false)) {
+                //upvoted -> downvote
+                var removalquery = {_id: commentID};
+                var pull = {$pullAll: {upvotes: [{_id: userID}]} };
+                //remove the user from upvotes
+                var removal = await db.updateOne(Comment, removalquery, pull);
+
+                if (removal != null) {
+                    //add to upvote
+                    var addquery = {_id: commentID};
+                    var push = {$push: {downvotes: [{_id: userID}]} };
+                    var addition = await db.updateOne(Comment, addquery, push)
+                    if (addition != null) {
+                        res.status(205);
+                    } else {
+                        res.render('error');
+                    }
+                }
+                else {
+                    res.render('error');
+                }
+            }
+            else {
+                //user has not yet upvoted/downvoted the post
+                var query = {_id: commentID};
+                var push = {$push: {downvotes: [{_id: userID}]} };
+                var addition = await db.updateOne(Comment, query, push)
+                //re-render the page
+                if (addition != null) {
+                    res.status(205);
+                }
+            }
+        } else {
+            //error message, 
+            res.render('error');
         }
     },
 
