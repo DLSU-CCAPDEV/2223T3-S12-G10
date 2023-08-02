@@ -83,6 +83,7 @@ const postController = {
             // console.log(votes[0]);
                 await db.findOne(User, {_id: results[i]._doc.postUserId}, 'username')
                     .then(function(result) {
+                        console.log(result);
                         results[i]._doc.postUserId = result.username;
                     });
             }
@@ -114,8 +115,7 @@ const postController = {
     getOnePost: async function (req, res) {
         // find post via title
         //var query = {postTitle: req.params.postTitle};
-        //empty query
-        var query = {_id: req.params._id}; //empty for testing
+        var query = {_id: req.params._id};
         // console.log(req.params);
         // fields to be returned
         //get the entire thing
@@ -139,10 +139,10 @@ const postController = {
         projection = '';
         var comments = await db.findMany(Comment, query, projection);
 
-        //find the replies
-        query = {ParentComment: {$ne: null}, CommentPostId: req.params._id};
-        projection = '';
-        var replies = await db.findMany(Comment, query, projection);
+        // //find the replies
+        // query = {ParentComment: {$ne: null}, CommentPostId: req.params._id};
+        // projection = '';
+        // var replies = await db.findMany(Comment, query, projection);
 
 
         /*
@@ -150,6 +150,11 @@ const postController = {
             render the profile page with their details
         */
         if(results != null) {
+            await db.findOne(User, {_id: results[0]._doc.postUserId}, 'username')
+                    .then(function(result) {
+                        console.log(result);
+                        results[0]._doc.postUserId = result.username;
+                    });
             console.log("Nonnull result");
             //console.log(results);
             //console.log(results.postTags);
@@ -159,13 +164,25 @@ const postController = {
             results[0]._doc.postText = marked.parse(results[0]._doc.postText);
             
             // results.postText = DOMPurify.sanitize(marked.parse(results.postText))
+            if(comments != null) {
+                for (let i = 0; i < comments.length; i++) {
+                    await db.findOne(User, {_id: comments[0]._doc.CommentUserId}, 'username')
+                    .then(function(result) {
+                        console.log(result);
+                        results[0]._doc.postUserId = result.username;
+                    });
+                }
+                
+            }
 
             var details = {
                 post: results,
                 comments: comments,
-                replies: replies
+                username: req.session.username,
+                following: req.session.following,
+                followers: req.session.followers,
+                joindate: req.session.joindate,
             }
-            console.log('Comments that are replies: ' + replies);
             //console.log(details;
             //pass the entire thing
             // render `../views/profile.hbs`
@@ -326,15 +343,18 @@ const postController = {
 
     updateReply: async function (req, res) {
         //req.body
+        var userID = await db.findOne(User, {username: req.session.username}, '_id');
+        // var commentID = await db.findOne(Comment, {CommentUserId: userID}, '');
         var filter = {_id: req.body.commentID};
         var editedText = req.body.editedText;
         console.log('Comment ID is: ' + filter);
+
         var update = {
             Body: editedText,
         }
         
         //find the specific post and update it
-        var response = await db.updateOne(Post, filter, update);
+        var response = await db.updateOne(Comment, filter, update);
 
         if (response != null) {
             //stuff, re-render the post with the changes basically
@@ -346,11 +366,12 @@ const postController = {
     //for posting comment, not sure how it's gonna get called
     postComment: async function (req, res) {
         //assuming this is coming from /post/:_id
+        var userID = await db.findOne(User, {username: req.session.username}, '_id');
         var text = req.body.Body;
         var postID = req.body.postID;
 
         var comment = {
-            // commentUserId: req.session._id
+            CommentUserId: userID,
             CommentPostId: postID,
             Body: text,
         };
@@ -361,7 +382,7 @@ const postController = {
 
         if (response != null) {
             //console.log('Comment: ' + response);
-            await res.redirect('/post/' + postID);
+            res.status(205).redirect('/post/' + postID);
         }
     },
 
