@@ -397,78 +397,54 @@ const postController = {
     },
 
     //for voting
-    postVote: async function (req, res) {
+    postUpvote: async function (req, res) {
         //check if the user has already upvoted/downvoted the post before
         //queries: get the specific post, check if the user is in upvote or downvote
         var userID = req.session._id;
-        var query = {_id: req.body._id, $or:[{upvotes: userID}, {downvotes: userID}]};//
+        var postID = req.query.postID;
+        // var query = {_id: postID, $or:[{upvotes: userID}, {downvotes: userID}]};//
+        var query = {id: postID}; 
 
         //get the upvotes and downvotes only
         var projection ='upvotes downvotes';
-        var voted = await db.findOne(Post, query,projection);
+        var voted = await db.findOne(Post, query, projection);
 
+
+        //user has interacted already
         if(voted != null) {
+            //has upvotedset
             //decision for upvote or downvote
-            if (voted.upvotes.inlcudes(userID)) {
+            if (voted.upvotes.includes(userID) == true && voted.downvotes.includes(userID) == false) {
                 //user has already upvoted and is trying to upvote again
-                if (upvote) {
-                    var removalquery = {_id: req.body._id};
-                    var condition = {$pullAll: {upvotes: [{_id: userID}]} };
-                    var removal = await db.updateOne(Post, removalquery, condition);
-                    if(removal != null) {
-                        //update the page
-                    }
-                }
-                else {
-                    //upvote -> downvote
-                    var removalquery = {_id: req.body._id};
-                    var condition = {$pullAll: {upvotes: [{_id: userID}]} };
-                    var removal = await db.updateOne(Post, removalquery, condition);
-
-                    if (removal != null) {
-                        //add to downvote
-                        var addquery = {_id: req.body._id};
-                        var condition = {$push:{downvotes: {_id: userID} }};
-                        var downvote = await db.updateOne(Post, addquery, condition);
-                    }
+                var removalquery = {_id: postID};
+                var condition = {$pullAll: {upvotes: [{_id: userID}]} };
+                //remove the user from upvotes
+                var removal = await db.updateOne(Post, removalquery, condition);
+                if (removal != null) {
+                    //redirect to page to refresh it
                 }
             }
-            else if (voted.downvotes.includes(userID)) {
-                //downvote to downvote
-                if(downvote) {
-                    var removalquery = {_id: req.body._id};
-                    var condition = {$pullAll: {downvotes: [{_id: userID}]} };
-                    var removal = await db.updateOne(Post, removalquery, condition);
-                    if(removal != null) {
-                        //update the page
-                    }
-                }
-                else {
-                    //downvote -> upvote
-                    var removalquery = {_id: req.body._id};
-                    var condition = {$pullAll: {downvotes: [{_id: userID}]} };
-                    var removal = await db.updateOne(Post, removalquery, condition);
+            else if ((voted.upvotes.includes(userID) == false) && (voted.downvotes.includes(userID) == true)) {
+                //downvoted -> upvote 
+                var removalquery = {_id: postID};
+                var pull = {$pullAll: {downvotes: [{_id: userID}]} };
+                //remove the user from upvotes
+                var removal = await db.updateOne(Post, removalquery, pull);
 
-                    if (removal != null) {
-                        //add to downvote
-                        var addquery = {_id: req.body._id};
-                        var condition = {$push:{upvotes: {_id: userID} }};
-                        var upvote = await db.updateOne(Post, addquery, condition);
-                    }
-                }
+                //add to upvote
+                var addquery = {_id: postID};
+                var push = {$push: {upvotes: [{_id: userID}]} };
+                var addition = await db.updateOne(Post, addquery, push)
+            }
+            else {
+                //user has not yet upvoted/downvoted the post
+                var query = {_id: postID};
+                var push = {$push: {upvotes: [{_id: userID}]} };
+                var addition = await db.updateOne(Post, query, push)
+                //re-render the page
             }
         } else {
-            //user has yet to vote at all
-            if (upvote) {
-                var addquery = {_id: req.body._id};
-                var condition = {$push:{upvotes: {_id: userID} }};
-                var downvote = await db.updateOne(Post, addquery, condition);
-            } else {
-                //downvote
-                var addquery = {_id: req.body._id};
-                var condition = {$push:{downvotes: {_id: userID} }};
-                var downvote = await db.updateOne(Post, addquery, condition);
-            }
+            //error message, 
         }
     },
 

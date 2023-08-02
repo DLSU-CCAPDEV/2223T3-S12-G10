@@ -33,7 +33,7 @@ const loginController = {
             }
         }
         console.log("current result: " + result);
-        if(result) {
+        if(result != null) {
             var profile  = {
                 username: result.username,
                 joindate: result.joindate,

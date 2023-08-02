@@ -1,7 +1,7 @@
 
 // import module `database` from `../models/db.js`
 const db = require('../models/db.js');
-
+const bcrypt = require('bcrypt');
 // import module `User` from `../models/UserModel.js`
 const User = require('../models/usermodel.js');
 
