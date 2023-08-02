@@ -555,21 +555,22 @@ const postController = {
     },
 
     replyDelete: async function(req, res) {
-    var filter = {_id: req.body.replyID};
-
-    console.log(filter);
-
-    var condition = {$set: 
-        {
-            Body: "This comment has been deleted.",
+        var filter = {_id: req.body.replyID};
+    
+        console.log(filter);
+    
+        var condition = {$set: 
+            {
+                Body: "This comment has been deleted.",
+            }
+        };
+    
+        console.log(condition);
+        var response = await db.updateOne(Comment, filter, condition);
+    
+        if (response != null) {
+            console.log("A comment has been deleted.")
         }
-    };
-
-    console.log(condition);
-    var response = await db.updateOne(Comment, filter, condition);
-
-    if (response != null) {
-        console.log("A comment has been deleted.")
     }
     
 
