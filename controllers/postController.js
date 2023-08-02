@@ -213,6 +213,7 @@ const postController = {
         console.log("postTags content is: " + postTags);
         //upvotes and downvotes are defaulted to 0;
         var post = {
+            postUserId: req.session.userId,
             postTitle: postTitle,
             date: postDate,
             postText: postText,
