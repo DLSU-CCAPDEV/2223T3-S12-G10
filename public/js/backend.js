@@ -152,14 +152,14 @@ $(document).ready(function(){
     $('#btn-edit-post-form').click(function () {
         //this is the updateform
         //get the posts's id
-        var postID = $('.post_id').html();
+        var postID = $('.post_ID').html();
 
         console.log("Thes post ID is: " + postID);
 
         //get the data
         var editedTitle = $('#edit_post_title_form').val();
         var editedText = $('#edit_post_content_form').val();
-        var editedTags = $('#edit_post_tags_form').val();
+        var editedTags = $('#edit_post_tags_form').val().trim().split(',');
         $('#modal-question').modal('hide');
 
         //after getting the data put it into a variable

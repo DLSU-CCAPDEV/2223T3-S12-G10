@@ -1,0 +1,33 @@
+{{#each comments}}
+                <div class="comment-container">
+                    <div class="comment-header-container">
+                        <img class="comment-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
+                        <div class="comment-author">@{{CommentUserId}}</div>
+                        <div class="comment-header-separator">•</div>
+                        <div class="comment-timestamp">{{Date}}</div>
+                        <div class="comment_ID d-none">{{_id}}</div>
+                    </div>
+                    <div class="comment-content">
+                        {{Body}}
+                    </div>
+                    <div class="comment-footer-container">
+                        <div class="comment-votes-container">
+                            <div class="comment-vote-up">
+                                <i class="fa fa-arrow-up"></i>
+                            </div>
+                            <div class="comment-vote-count">{{votes}}</div>
+                            <div class="comment-vote-down">
+                                <i class="fa fa-arrow-down"></i>
+                            </div>
+                        </div>
+                        <div class="comment-controls-container">
+                            <div class="create-reply"><i class="fa fa-reply me-2"></i>Reply</div>
+                            {{#if editableComment}}
+                            <div class="edit-reply"><i class="fa fa-pen me-2"></i>Edit</div>
+                            <div class="delete-reply" data-reply-id="{{_id}}"><i class="fa fa-trash me-2"></i>Delete</div>
+                            {{/if}}
+                            <div class="show-replies"><i class="fa fa-caret-down me-2"></i>Show More</div>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}

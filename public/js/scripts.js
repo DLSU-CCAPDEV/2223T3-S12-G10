@@ -100,7 +100,7 @@ function handleVoteButtonsDown(e) {
     if (e.currentTarget.classList.contains('post-vote-up') ||
         e.currentTarget.classList.contains('post-vote-down')) {
         mode = '.post';
-        ID = $(e.target).parents('.post-vote-container').siblings('post-container').children('.post-author-container').children('post_ID').html();
+        ID = $(e.target).parents('.post-vote-container').siblings('.post-container').children('.post-author-container').children('.post_ID').html();
         console.log("Vote Post ID: " + ID);
     } else if (e.currentTarget.classList.contains('comment-vote-up') ||
         e.currentTarget.classList.contains('comment-vote-down')) {
@@ -401,7 +401,7 @@ $(document).ready(function() {
 
         let post_title = $('.post-title');
         let post_content = $('.post-content');
-        let post_tags = post_tags_form.val().trim().split(',')
+        let post_tags = post_tags_form.val().trim().split(',');
 
         post_title.text(post_title_form.val());
         post_content.html(DOMPurify.sanitize(marked.parse(post_content_form.val())));

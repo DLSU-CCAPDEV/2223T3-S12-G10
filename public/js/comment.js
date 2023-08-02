@@ -103,7 +103,7 @@ function handleShowbutton (e) {
         //iterate through it
         for(let i = 0; i < res.replies.length; i++) {
             console.log('Currently Processing: ' + res.replies[i]._id);
-            createReply(parentcomment, res.replies[i], res.usernames[i]);
+            createReply(parentcomment, res.replies[i], res.usernames[i].username);
         }
     };
 
@@ -148,7 +148,7 @@ function handleDelete (e) {
 function createReply(parentComment, reply, username) {
     //final version taking into account database shenanigans
     console.log('Create reply id: ' + reply._id);
-    console.log(username);
+    console.log('Username is ' + username);
 
     /**************************************/
     //this creates another wrapper so that we can nest succeeding comments

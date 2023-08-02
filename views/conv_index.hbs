@@ -40,7 +40,8 @@
             <button id="btn-mode-toggle"><i class="fa fa-bell"></i></button>
         </div>
         <div id="posts-container">
-            {{>eachpost post=post}}
+            {{#>eachpost post post=post votes=votes}}
+            {{/eachpost}}
         </div>
     </div>
 
