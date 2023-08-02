@@ -61,6 +61,10 @@ const database = {
     limitedFind: async function(model, query, projection, limit) {
         return await model.find(query, projection).limit(limit);
     },
+
+    limitedFindReverse: async function(model, query, projection, limit) {
+        return await model.find(query, projection).sort({_id: 'desc'}).limit(limit);
+    },
     
     skiplimitedFind: async function(model, query, projection, limit) {
         return await model.find(query, projection).skip(limit).limit(limit+5);

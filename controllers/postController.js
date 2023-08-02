@@ -48,7 +48,7 @@ const postController = {
        //limit is how many  documents it'll find, use skiplimited when loading MORE documents
          //placeholder\
         let limit = 0;
-        var results = await db.limitedFind(Post, query, projection, limit); //limiting works
+        var results = await db.limitedFindReverse(Post, query, projection, limit); //limiting works
         //limit = limit + 5;
 
         console.log('Limit variable testing: ' + limit);   
