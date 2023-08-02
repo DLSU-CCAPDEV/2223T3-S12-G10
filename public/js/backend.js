@@ -152,7 +152,7 @@ $(document).ready(function(){
     $('#btn-edit-post-form').click(function () {
         //this is the updateform
         //get the posts's id
-        var postID = $('.post_id').html();
+        var postID = $('.post_ID').html();
 
         console.log("Thes post ID is: " + postID);
 

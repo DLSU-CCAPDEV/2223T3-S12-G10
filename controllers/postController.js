@@ -73,12 +73,12 @@ const postController = {
                     //calculate the votes
                     var votecount = results[i]._doc.upvotes.length - results[i]._doc.downvotes.length;
                     // votes.push(votecount);
-                    results[i]._doc.votes = votecount;
+                    results[i].votes = votecount;
                 } else {
                     //both are 0
                     var votecount = 0;
                     // votes.push (votecount);
-                    results[i]._doc.votes = votecount;
+                    results[i].votes = votecount;
                 }
             // console.log(votes[0]);
                 await db.findOne(User, {_id: results[i]._doc.postUserId}, 'username')
@@ -86,6 +86,10 @@ const postController = {
                         console.log(result);
                         results[i]._doc.postUserId = result.username;
                     });
+                await db.findMany(Comment, {CommentPostId: results[i]._doc._id}, '_id')
+                    .then(function(result) {
+                        results[i].commentcount = result.length;
+                    })
             }
             var details = {
                 post: results,
@@ -133,6 +137,31 @@ const postController = {
         //Finds the post
         let limit = 0;
         var results = await db.limitedFind(Post, query, projection, limit); //limiting works
+        if (results[0]._doc.upvotes.length != 0 || results[0]._doc.downvotes.length != 0) {
+            //calculate the votes
+            var votecount = results[0]._doc.upvotes.length - results[0]._doc.downvotes.length;
+            // votes.push(votecount);
+            results[0].votes = votecount;
+        } else {
+            //both are 0
+            var votecount = 0;
+            // votes.push (votecount);
+            results[0].votes = votecount;
+        }
+
+        var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
+        // console.log(results[0]._doc.postUserId);
+        // console.log(currentuser._doc._id);
+        if (results[0].postUserId == currentuser.id) {
+            results[0].editablePost = true;
+        }
+
+        var commentcount = await db.findMany(Comment, {CommentPostId: req.params._id}, '_id');
+        if (commentcount != null) {
+            results[0].commentcount = commentcount.length;
+        } else {
+            results[0].commentcount = 0;
+        }
         //limit = limit + 5;
 
         //find the parent comments
@@ -156,7 +185,7 @@ const postController = {
                         console.log(result);
                         results[0]._doc.postUserId = result.username;
                     });
-            console.log("Nonnull result");
+            
             //console.log(results);
             //console.log(results.postTags);
 
@@ -167,13 +196,25 @@ const postController = {
             // results.postText = DOMPurify.sanitize(marked.parse(results.postText))
             if(comments != null) {
                 for (let i = 0; i < comments.length; i++) {
-                    await db.findOne(User, {_id: comments[0]._doc.CommentUserId}, 'username')
+                    if (comments[i]._doc.postText != null || comments[i]._doc.postText != undefined) {
+                        comments[i]._doc.postText = comments.parse(results[i]._doc.postText);
+                    }
+                    if (comments[i]._doc.upvotes.length != 0 || comments[i]._doc.downvotes.length != 0) {
+                        //calculate the votes
+                        var votecount = comments[i]._doc.upvotes.length - comments[i]._doc.downvotes.length;
+                        // votes.push(votecount);
+                        comments[i].votes = votecount;
+                    } else {
+                        //both are 0
+                        var votecount = 0;
+                        // votes.push (votecount);
+                        comments[i].votes = votecount;
+                    }
+                    await db.findOne(User, {_id: comments[i]._doc.CommentUserId}, 'username')
                     .then(function(result) {
-                        console.log(result);
-                        results[0]._doc.postUserId = result.username;
+                        comments[i]._doc.CommentUserId = result.username;
                     });
                 }
-                
             }
 
             var details = {
@@ -367,9 +408,10 @@ const postController = {
     //for posting comment, not sure how it's gonna get called
     postComment: async function (req, res) {
         //assuming this is coming from /post/:_id
-        var userID = await db.findOne(User, {username: req.session.username}, '_id');
+        
         var text = req.body.Body;
         var postID = req.body.postID;
+        var userID = await db.findOne(User, {username: req.session.username}, '_id');
 
         var comment = {
             CommentUserId: userID,
@@ -389,11 +431,13 @@ const postController = {
 
     postReply: async function (req, res) {
         //
+        var userID = await db.findOne(User, {username: req.session.username}, '_id');
         var parentID = req.body.parentID;
         var postID = req.body.postID;
         var replyText = req.body.Body;
 
         var reply = {
+            CommentUserId: userID,
             CommentPostId: postID,
             ParentComment: parentID,
             Body: replyText
@@ -594,7 +638,7 @@ const postController = {
         var userID = finduser._doc._id;
         var commentID = req.body.commentID;
         // var query = {_id: postID, $or:[{upvotes: userID}, {downvotes: userID}]};//
-        var query = {id: commentID}; 
+        var query = {_id: commentID}; 
 
         //get the upvotes and downvotes only
         var projection ='upvotes downvotes';
@@ -721,32 +765,6 @@ const postController = {
         } else {
             //error message, 
             res.render('error');
-        }
-    },
-
-
-    //for posting comment, not sure how it's gonna get called
-    postComment: async function (req, res) {
-        //assuming this is coming from /post/:_id
-        var text = req.body.Body;
-        var postID = req.body.postID;
-        
-        var date = Date();
-
-        var comment = {
-            // commentUserId: req.session._id
-            CommentPostId: postID,
-            Body: text,
-            Date: date,
-        };
-
-        //console.log(comment);
-
-        var response = await db.insertOne(Comment, comment);
-
-        if (response != null) {
-            //console.log('Comment: ' + response);
-            await res.redirect('/post/' + postID);
         }
     },
 

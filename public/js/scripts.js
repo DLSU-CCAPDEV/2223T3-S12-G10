@@ -100,7 +100,7 @@ function handleVoteButtonsDown(e) {
     if (e.currentTarget.classList.contains('post-vote-up') ||
         e.currentTarget.classList.contains('post-vote-down')) {
         mode = '.post';
-        ID = $(e.target).parents('.post-vote-container').siblings('post-container').children('.post-author-container').children('post_ID').html();
+        ID = $(e.target).parents('.post-vote-container').siblings('.post-container').children('.post-author-container').children('.post_ID').html();
         console.log("Vote Post ID: " + ID);
     } else if (e.currentTarget.classList.contains('comment-vote-up') ||
         e.currentTarget.classList.contains('comment-vote-down')) {
