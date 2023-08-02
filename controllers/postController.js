@@ -68,13 +68,18 @@ const postController = {
                 if (results[i]._doc.postText != null || results[i]._doc.postText != undefined) {
                     results[i]._doc.postText = marked.parse(results[i]._doc.postText);
                 }
+                await db.findOne(User, {_id: results[i]._doc.postUserId}, 'username')
+                    .then(function(result) {
+                        results[i]._doc.postUserId = result.username;
+                    });
             }
             var details = {
                 post: results,
                 username: req.session.username,
                 following: req.session.following,
                 followers: req.session.followers,
-                joindate: req.session.joindate
+                joindate: req.session.joindate,
+                postUserId: req.session.userId
             }
 
             //console.log(details;
