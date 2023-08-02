@@ -69,6 +69,18 @@ const postController = {
                 if (results[i]._doc.postText != null || results[i]._doc.postText != undefined) {
                     results[i]._doc.postText = marked.parse(results[i]._doc.postText);
                 }
+                if (results[i]._doc.upvotes.length != 0 || results[i]._doc.downvotes.length != 0) {
+                    //calculate the votes
+                    var votecount = results[i]._doc.upvotes.length - results[i]._doc.downvotes.length;
+                    // votes.push(votecount);
+                    results[i]._doc.votes = votecount;
+                } else {
+                    //both are 0
+                    var votecount = 0;
+                    // votes.push (votecount);
+                    results[i]._doc.votes = votecount;
+                }
+            // console.log(votes[0]);
                 await db.findOne(User, {_id: results[i]._doc.postUserId}, 'username')
                     .then(function(result) {
                         results[i]._doc.postUserId = result.username;
