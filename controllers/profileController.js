@@ -69,20 +69,20 @@ const profileController = {
                 var posts = await db.findMany(Post, postQuery, '');
                 
                 for(let i = 0; i < posts.length; i++) {
-                    // if (posts[i]._doc.postText != null || posts[i]._doc.postText != undefined) {
-                    //     posts[i]._doc.postText = DOMPurify.sanitize(marked.parse(posts[i]._doc.postText));
+                    // if (posts[i].postText != null || posts[i].postText != undefined) {
+                    //     posts[i].postText = DOMPurify.sanitize(marked.parse(posts[i].postText));
                     // }
-                    // if (posts[i]._doc.upvotes.length != 0 || posts[i]._doc.downvotes.length != 0) {
-                    //     //calculate the votes
-                    //     var votecount = results[i]._doc.upvotes.length - posts[i]._doc.downvotes.length;
-                    //     // votes.push(votecount);
-                    //     posts[i].votes = votecount;
-                    // } else {
-                    //     //both are 0
-                    //     var votecount = 0;
-                    //     // votes.push (votecount);
-                    //     posts[i].votes = votecount;
-                    // }
+                    if (posts[i].upvotes.length != 0 || posts[i].downvotes.length != 0) {
+                        //calculate the votes
+                        var votecount = posts[i].upvotes.length - posts[i].downvotes.length;
+                        // votes.push(votecount);
+                        posts[i].votes = votecount;
+                    } else {
+                        //both are 0
+                        var votecount = 0;
+                        // votes.push (votecount);
+                        posts[i].votes = votecount;
+                    }
     
                     var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
                     
