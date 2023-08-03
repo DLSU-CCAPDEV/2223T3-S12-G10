@@ -86,7 +86,6 @@ function handleEditbutton(e) {
 function handleShowbutton (e) {
     let parentContainer= e.target.closest('.comment-wrapper');
     //console.log(parentContainer);
-    $(parentContainer).children('.comment-container').toggleClass('opened');
 
     //get the comment's ID
     let commentID = $(e.target).parents('.comment-footer-container').siblings('.comment-header-container').children('.comment_ID').html();
@@ -119,7 +118,12 @@ function handleShowbutton (e) {
         });
     }
 
-    ajaxcall(commentID);
+    if($(parentContainer).children('.comment-container').hasClass('opened')){
+        $(parentContainer).children('.comment-container').toggleClass('opened');
+    } else {
+        $(parentContainer).children('.comment-container').toggleClass('opened');
+        ajaxcall(commentID);
+    }
 }
 
 function handleDelete (e) {
@@ -173,7 +177,7 @@ function createReply(parentComment, reply, username) {
     
     let author_username = document.createElement("div");
     author_username.classList.add("comment-author");
-    author_username.innerHTML = username;
+    author_username.innerHTML = "@" + username;
 
     let comment_header_separator = document.createElement("div");
     comment_header_separator.classList.add("comment-header-separator");
@@ -225,29 +229,11 @@ function createReply(parentComment, reply, username) {
     let reply_btn = document.createElement("div");
     reply_btn.classList.add("create-reply")
     reply_btn.innerHTML = "Reply";
-    //add the event
+
     reply_btn.addEventListener("click", handleReplies);
 
     let fa_reply = document.createElement("i");
     fa_reply.classList.add("fa", "fa-reply", "me-2");
-
-    //
-    let edit_btn = document.createElement("div");
-    edit_btn.classList.add("edit-reply");
-    edit_btn.innerHTML = "Edit";
-    edit_btn.addEventListener("click", handleEditbutton);
-
-    let fa_pen = document.createElement("i");
-    fa_pen.classList.add("fa", "fa-pen", "me-2");
-
-    //
-    let delete_btn = document.createElement("div");
-    delete_btn.classList.add("delete-reply");
-    delete_btn.innerHTML = "Delete";
-    delete_btn.addEventListener("click", handleDelete);
-
-    let fa_delete = document.createElement("i");
-    fa_delete.classList.add("fa", "fa-trash", "me-2");
 
     //
     let show_btn = document.createElement("div");
@@ -267,11 +253,34 @@ function createReply(parentComment, reply, username) {
     
     //the control-interactables
     reply_btn.prepend(fa_reply);
-    edit_btn.prepend(fa_pen);
-    delete_btn.prepend(fa_delete);
     show_btn.prepend(fa_show);
     //control container
-    comment_controls_container.append(reply_btn, edit_btn, delete_btn, show_btn);
+    if (reply.editableReply) {
+        //
+        console.log('Editable');
+        let edit_btn = document.createElement("div");
+        edit_btn.classList.add("edit-reply");
+        edit_btn.innerHTML = "Edit";
+        edit_btn.addEventListener("click", handleEditbutton);
+
+        let fa_pen = document.createElement("i");
+        fa_pen.classList.add("fa", "fa-pen", "me-2");
+
+        let delete_btn = document.createElement("div");
+        delete_btn.classList.add("delete-reply");
+        delete_btn.innerHTML = "Delete";
+        delete_btn.addEventListener("click", handleDelete);
+
+        let fa_delete = document.createElement("i");
+        fa_delete.classList.add("fa", "fa-trash", "me-2");
+        delete_btn.prepend(fa_delete);
+        edit_btn.prepend(fa_pen);
+        comment_controls_container.append(reply_btn, edit_btn, delete_btn, show_btn);
+    } else {
+        comment_controls_container.append(reply_btn, show_btn);
+    }
+    
+
     //make the footer-container
     footer_container.append(comment_votes_container, comment_controls_container);
 

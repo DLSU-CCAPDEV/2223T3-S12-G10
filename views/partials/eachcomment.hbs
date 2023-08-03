@@ -12,6 +12,25 @@
                     </div>
                     <div class="comment-footer-container">
                         <div class="comment-votes-container">
+                            {{#if upvoted}} 
+                            <div class="comment-vote-up active">
+                                <i class="fa fa-arrow-up"></i>
+                            </div>
+                            <div class="comment-vote-count">{{votes}}</div>
+                            <div class="comment-vote-down">
+                                <i class="fa fa-arrow-down"></i>
+                            </div>
+                            {{/if}}
+                            {{#if downvoted}}
+                            <div class="comment-vote-up">
+                                <i class="fa fa-arrow-up"></i>
+                            </div>
+                            <div class="comment-vote-count">{{votes}}</div>
+                            <div class="comment-vote-down active">
+                                <i class="fa fa-arrow-down"></i>
+                            </div>
+                            {{/if}}
+                            {{#if notvoted}}
                             <div class="comment-vote-up">
                                 <i class="fa fa-arrow-up"></i>
                             </div>
@@ -19,6 +38,7 @@
                             <div class="comment-vote-down">
                                 <i class="fa fa-arrow-down"></i>
                             </div>
+                            {{/if}}
                         </div>
                         <div class="comment-controls-container">
                             <div class="create-reply"><i class="fa fa-reply me-2"></i>Reply</div>

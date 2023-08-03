@@ -14,6 +14,7 @@ const { JSDOM } = require('jsdom');
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
+const moment = require('moment');
 
 const marked = require('marked');
 
@@ -86,6 +87,22 @@ const postController = {
                     // votes.push (votecount);
                     results[i].votes = votecount;
                 }
+
+                var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
+                
+                if (results[i].upvotes.includes(currentuser.id)) {
+                    results[i].upvoted = true;
+                    results[i].downvoted = false;
+                    results[i].notvoted = false;
+                } else if (results[i].downvotes.includes(currentuser.id)) {
+                    results[i].downvoted = true;
+                    results[i].upvoted = false;
+                    results[i].notvoted = false;
+                } else {
+                    results[i].downvoted = false;
+                    results[i].upvoted = false;
+                    results[i].notvoted = true;
+                }
             // console.log(votes[0]);
                 await db.findOne(User, {_id: results[i]._doc.postUserId}, 'username')
                     .then(function(result) {
@@ -157,12 +174,24 @@ const postController = {
         }
 
         var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
-        // console.log(results[0]._doc.postUserId);
-        // console.log(currentuser._doc._id);
         if (results[0].postUserId == currentuser.id) {
             results[0].editablePost = true;
         } else {
             results[0].editablePost = false;
+        }
+        // upvoted or downvoted already
+        if (results[0].upvotes.includes(currentuser.id)) {
+            results[0].upvoted = true;
+            results[0].downvoted = false;
+            results[0].notvoted = false;
+        } else if (results[0].downvotes.includes(currentuser.id)) {
+            results[0].downvoted = true;
+            results[0].upvoted = false;
+            results[0].notvoted = false;
+        } else {
+            results[0].downvoted = false;
+            results[0].upvoted = false;
+            results[0].notvoted = true;
         }
 
         var commentcount = await db.findMany(Comment, {CommentPostId: req.params._id}, '_id');
@@ -171,12 +200,13 @@ const postController = {
         } else {
             results[0].commentcount = 0;
         }
-        //limit = limit + 5;
+        
+        
 
         //find the parent comments
         query = {ParentComment:{ $eq: null}, CommentPostId: req.params._id };
         projection = '';
-        var comments = await db.findMany(Comment, query, projection);
+        var comments = await db.limitedFindReverse(Comment, query, projection, limit);
         for (let i = 0; i < comments.length; i++) {
             if(comments[i].CommentUserId == currentuser.id) {
                 comments[i].editableComment = true;
@@ -201,11 +231,6 @@ const postController = {
                         console.log(result);
                         results[0].username = result.username;
                     });
-            
-            //console.log(results);
-            //console.log(results.postTags);
-
-            //sconsole.log(results[0]._doc.postText);
 
             results[0]._doc.postText = marked.parse(results[0]._doc.postText);
             
@@ -230,7 +255,21 @@ const postController = {
                     .then(function(result) {
                         comments[i]._doc.CommentUserId = result.username;
                     });
-                    
+                    //check if upvoted/downvoted already
+                    if (comments[i].upvotes.includes(currentuser.id)) {
+                        comments[i].upvoted = true;
+                        comments[i].downvoted = false;
+                        comments[i].notvoted = false;
+                    } else if (comments[i].downvotes.includes(currentuser.id)) {
+                        comments[i].upvoted = false;
+                        comments[i].downvoted = true;
+                        comments[i].notvoted = false;
+                        
+                    } else {
+                        comments[i].upvoted = false;
+                        comments[i].downvoted = false;
+                        comments[i].notvoted = true;
+                    }
                 }
             }
 
@@ -470,8 +509,8 @@ const postController = {
     //for generating replies
     getReplies: async function (req, res) {
         var commentID = req.query.commentID;
-        console.log('CommentID is: ' + commentID);
-
+        // console.log('CommentID is: ' + commentID);
+        var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
         //find the replies whose parent are the comment's
         var query = {ParentComment: commentID};
         var projection = '-CommentPostId';
@@ -487,6 +526,16 @@ const postController = {
             var username = await db.findOne(User, namequery, want);
 
             usernames.push(username);
+
+            //convert the dates as well
+            var format = "MM/DD/YYYY, HH:mm:ss A";
+            response[i]._doc.Date = moment(response[i]._doc.Date).format(format);
+
+            if(response[i].CommentUserId == currentuser.id) {
+                response[i]._doc.editableReply= true;
+            } else {
+                response[i]._doc.editableReply = false;
+            }
         }
 
         var details = {
@@ -701,7 +750,7 @@ const postController = {
             else {
                 //user has not yet upvoted/downvoted the post
                 var query = {_id: commentID};
-                var push = {$push: {upvotes: [{_id: commentID}]} };
+                var push = {$push: {upvotes: [{_id: userID}]} };
                 var addition = await db.updateOne(Comment, query, push)
                 //re-render the page
                 if (addition != null) {
