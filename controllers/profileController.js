@@ -9,6 +9,39 @@ const Post =  require('../models/postmodel.js');
 
 const Comment =  require('../models/commentmodel.js');
 
+
+
+const mongoose = require('mongoose');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage').GridFsStorage;
+const Grid = require('gridfs-stream');
+const MongoClient = require('mongodb').MongoClient;
+const GridFSBucket = require('mongodb').GridFSBucket;
+
+
+const storage = new GridFsStorage({
+  url: 'mongodb+srv://raphaeltanai:nTISUPYixEgncCfN@projectnum1.5vkr5zy.mongodb.net/?retryWrites=true&w=majority',
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      const filename = file.originalname;
+      const fileInfo = {
+        filename: Date.now() + filename,
+        bucketName: 'uploads'
+      };
+      resolve(fileInfo);
+    });
+  }
+});
+
+const upload = multer({ storage });
+
+let gfs;
+const conn = mongoose.connection;
+conn.once('open', () => {
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+});
+
 /*
     defines an object which contains functions executed as callback
     when a client requests for `profile` paths in the server
@@ -50,9 +83,11 @@ const profileController = {
                 followers: result.followers.length,
                 following: result.following.length,
                 joindate: result.joindate,
-                userdescription: result.userdescription
+                userdescription: result.userdescription,
+                profilePicture : result.profilePicture
             };
             
+            //console.log(details);
             // render `../views/profile.hbs`
           if (req.path.includes('/usercomments')) {
                 // If '/usercomments' is present in the route, render 'profile_comments' template
@@ -129,7 +164,80 @@ const profileController = {
         else {
             res.render('error');
         }
-    }
+    },
+
+     getSettings: async function (req, res) {
+        res.render('settings');
+        //const user = await db.findOne(User, { username: 'NewUser1' });
+       // console.log(user);
+    },   
+
+    postSettings: async function (req, res)  {
+
+        var query = {username: req.session.username};
+        console.log(query);
+        
+        upload.single('file')(req, res, async (err) => {
+            if(err){
+                // handle error
+                res.status(500).send({ error: err.message });
+            }
+            else{
+                // File is uploaded successfully
+                // req.file contains the information of the uploaded file
+                const user = await db.findOne(User, query);
+                //console.log(user);
+                
+                //var result = await db.findOne(User, query, projection);
+
+                if(user){
+                    var condition = {$set: 
+                        {
+                            profilePicture: req.file.filename
+                        }
+                    };
+
+                  //  user.profileImage = req.file.filename;
+                  //  console.log(user.profileImage);
+                    await db.updateOne(User, query, condition);
+
+                    const user = await db.findOne(User, query);
+                    req.session.profilePicture = user.profilePicture;
+                    //console.log(user);
+                    res.redirect('/profile/upload/userposts');
+                }
+                else{
+                    res.status(404).send({ error: 'User not found.' });
+                }
+            }
+        });
+    },
+
+    getImage: async function (req, res) {
+      //  console.log(req.params.filename);
+
+        const filename = req.params.filename;
+        const dbURI = 'mongodb+srv://raphaeltanai:nTISUPYixEgncCfN@projectnum1.5vkr5zy.mongodb.net/test?retryWrites=true&w=majority';
+        const client = await MongoClient.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+        const db = client.db('test'); // replace 'test' with the name of your database
+
+        const bucket = new GridFSBucket(db, { bucketName: 'uploads' });
+        const downloadStream = bucket.openDownloadStreamByName(filename);
+
+        downloadStream.on('data', (chunk) => {
+          res.write(chunk);
+        });
+
+        downloadStream.on('error', () => {
+          res.sendStatus(404);
+        });
+
+        downloadStream.on('end', () => {
+          res.end();
+        });
+    } 
+
 
     
 
