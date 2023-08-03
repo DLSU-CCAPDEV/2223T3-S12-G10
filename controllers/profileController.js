@@ -204,7 +204,7 @@ const profileController = {
                     const user = await db.findOne(User, query);
                     req.session.profilePicture = user.profilePicture;
                     //console.log(user);
-                    res.redirect('/profile/upload/userposts');
+                    res.render('settings');
                 }
                 else{
                     res.status(404).send({ error: 'User not found.' });
