@@ -36,6 +36,12 @@ const postController = {
     */
 
     getManyPosts: async function (req, res) {
+
+        if (!req.session.username) {
+            res.render('login');
+            return;
+        }
+
         // find post via title
         //var query = {postTitle: req.params.postTitle};
         //empty query
