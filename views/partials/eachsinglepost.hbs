@@ -1,16 +1,18 @@
 {{#each post}}
             <div class="post-wrapper">
-                <div class="post-vote-container">
                     {{#if upvoted}}
-                    <div class="post-vote-up active">
+                    <div class="post-vote-container" data-vote-status="1">
+                    <div class="post-vote-up active" >
                         <i class="fa fa-caret-up"></i>
                     </div>
                     <div class="post-vote-count">{{votes}}</div>
                     <div class="post-vote-down">
                         <i class="fa fa-caret-down"></i>
                     </div>
+                    </div>
                     {{/if}}
                     {{#if downvoted}}
+                    <div class="post-vote-container" data-vote-status="-1">
                     <div class="post-vote-up">
                         <i class="fa fa-caret-up"></i>
                     </div>
@@ -18,8 +20,10 @@
                     <div class="post-vote-down active">
                         <i class="fa fa-caret-down"></i>
                     </div>
+                    </div>
                     {{/if}}
                     {{#if notvoted}} 
+                    <div class="post-vote-container" data-vote-status="0">
                     <div class="post-vote-up">
                         <i class="fa fa-caret-up"></i>
                     </div>
@@ -27,8 +31,8 @@
                     <div class="post-vote-down">
                         <i class="fa fa-caret-down"></i>
                     </div>
+                    </div>
                     {{/if}}
-                </div>
                 <div class="post-container">
                     <h2 class="post-title">{{postTitle}}</h2>
                     <div class="post-author-container">
