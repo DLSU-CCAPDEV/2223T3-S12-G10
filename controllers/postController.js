@@ -128,7 +128,8 @@ const postController = {
                 following: req.session.following,
                 followers: req.session.followers,
                 joindate: req.session.joindate,
-                postUserId: req.session.userId
+                postUserId: req.session.userId,
+                profilePicture: req.session.profilePicture
             }
 
             console.log(details);
