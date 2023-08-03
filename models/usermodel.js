@@ -20,7 +20,8 @@ var UserSchema = new mongoose.Schema({
     joindate: {type: Date}, //this is formatted as YYYY-MM-DD
     userdescription: String,
     following: [{type: mongoose.ObjectId}],
-    followers: [{type: mongoose.ObjectId}]
+    followers: [{type: mongoose.ObjectId}],
+    profilePicture: String
 });
 
 
