@@ -28,7 +28,7 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" name="password" id="password">
             </div>
-            <div id="error-container" data-error-status="normal"></div>
+        <div id="error-container" data-error-status="{{#if flag}}error{{else}}normal{{/if}}">{{error}}</div>
             <div>
                 <button class="btn" id="btn-login">Login</button>
             </div>
