@@ -243,6 +243,7 @@ const postController = {
             // results.postText = DOMPurify.sanitize(marked.parse(results.postText))
             if(comments != null) {
                 for (let i = 0; i < comments.length; i++) {
+                    console.log(comments[i]);
                     if (comments[i]._doc.postText != null || comments[i]._doc.postText != undefined) {
                         comments[i]._doc.postText = comments.parse(results[i]._doc.postText);
                     }

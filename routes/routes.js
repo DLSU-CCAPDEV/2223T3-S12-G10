@@ -56,9 +56,6 @@ app.post('/register', validation.signupValidation(), signupController.postSignUp
 app.get('/login', loginController.getLogin);
 
 app.post('/login', loginController.postLogin);
-
-app.get('/logout', loginController.getLogout);
-
 /*
     execute function getSuccess()
     defined in object `successController` in `../controllers/successController.js`
