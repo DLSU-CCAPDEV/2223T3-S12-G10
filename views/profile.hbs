@@ -27,7 +27,7 @@
             <div id="main-controls">
                 <div id="post-search-group">
                     <span class="fa fa-search" id="post-search-icon"></span>
-                    <input type="search" placeholder="Search" name="post-search" id="post-search">
+                    <input type="search" placeholder="Search" name="postSearch" id="post_search">
                 </div>
                 <button id="btn-ask" data-bs-toggle="modal" data-bs-target="#modal-question">Ask Question</button>
                 <button id="btn-mode-toggle"><i class="fa fa-moon"></i></button>
@@ -41,14 +41,11 @@
                 </div>
             </div>
             <div id="posts-container">
-                {{#each posts}}
-                    {{> eachpost}}
-                {{/each}}
+                   {{>eachpost post=this.posts}}
             </div>
         </div>
         <div class="col-3">
-            {{> rightuser}}
-          
+            {{> rightuser this.details}}
         </div>
     </div>
     <div class="modal fade modal-xl" id="modal-question" aria-hidden="true">
