@@ -20,6 +20,7 @@
     "jsdom": "^22.1.0",
     "marked": "^5.1.2",
     "marked-gfm-heading-id": "^3.0.4",
+    "moment": "^2.29.4",
     "mongoose": "^7.3.4"
   }
 }

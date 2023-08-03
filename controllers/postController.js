@@ -14,6 +14,7 @@ const { JSDOM } = require('jsdom');
 
 const window = new JSDOM('').window;
 const DOMPurify = createDOMPurify(window);
+const moment = require('moment');
 
 const marked = require('marked');
 
@@ -470,8 +471,8 @@ const postController = {
     //for generating replies
     getReplies: async function (req, res) {
         var commentID = req.query.commentID;
-        console.log('CommentID is: ' + commentID);
-
+        // console.log('CommentID is: ' + commentID);
+        var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
         //find the replies whose parent are the comment's
         var query = {ParentComment: commentID};
         var projection = '-CommentPostId';
@@ -487,6 +488,16 @@ const postController = {
             var username = await db.findOne(User, namequery, want);
 
             usernames.push(username);
+
+            //convert the dates as well
+            var format = "MM/DD/YYYY, HH:mm:ss A";
+            response[i]._doc.Date = moment(response[i]._doc.Date).format(format);
+
+            if(response[i].CommentUserId == currentuser.id) {
+                response[i]._doc.editableReply= true;
+            } else {
+                response[i]._doc.editableReply = false;
+            }
         }
 
         var details = {
@@ -701,7 +712,7 @@ const postController = {
             else {
                 //user has not yet upvoted/downvoted the post
                 var query = {_id: commentID};
-                var push = {$push: {upvotes: [{_id: commentID}]} };
+                var push = {$push: {upvotes: [{_id: userID}]} };
                 var addition = await db.updateOne(Comment, query, push)
                 //re-render the page
                 if (addition != null) {
