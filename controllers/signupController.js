@@ -55,7 +55,8 @@ const signupController = {
                     joindate: new Date(),
                     userdescription: '',
                     following: [],
-                    followers: []
+                    followers: [],
+                    profilePicture: null
                 }
     
                 /*
@@ -83,6 +84,7 @@ const signupController = {
                     req.session.following = user.following;
                     req.session.followers = user.followers;
                     req.session.userdescription = user.userdescription;
+                    req.session.profilePicture = user.profilePicture;
                     res.redirect('/');
                 } else {
                     res.render('error');

@@ -44,7 +44,8 @@ const loginController = {
                 password: result.password,
                 userdescription: result.userdescription,
                 following: result.following,
-                followers: result.followers
+                followers: result.followers,
+                profilePicture: result.profilePicture
             };
             console.log("Profile is: ");
             console.log(profile);
@@ -56,7 +57,8 @@ const loginController = {
                     req.session.joindate = profile.joindate;
                     req.session.following = profile.following;
                     req.session.followers = profile.followers;
-                    req.session.userdescription = profile.userdescription; 
+                    req.session.userdescription = profile.userdescription;
+                    req.session.profilePicture = profile.profilePicture;  
                     res.redirect('/');
                 }
                 else {
