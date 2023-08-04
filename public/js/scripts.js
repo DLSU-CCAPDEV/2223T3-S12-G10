@@ -201,6 +201,19 @@ $(document).ready(function() {
         $('#post-content-preview').html('');
         $('#tags-preview').html('');
     });
+    $('#btn-follow').click(function () {
+        var username = $(this).data('username'); // Retrieve the value of data-username attribute
+        var url = '/profile/' + username + '/userposts'; // Construct the URL
+        var userid = $(this).data('userid');
+        console.log(url);
+        $.ajax({
+            url: url,
+            type: "POST",
+            dataType: "json",
+            data: {followed: userid},
+            success:function(response) {liveupdate(mode, ID)}
+        });
+    });
 
     $('#btn-post-form').click(function() {
         let modal_title = $('#modal-question .modal-title');

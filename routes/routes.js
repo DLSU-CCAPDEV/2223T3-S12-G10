@@ -75,6 +75,8 @@ app.get('/success', successController.getSuccess);
 */
 app.get('/profile/:username', profileController.getProfile);
 
+app.post('/profile/:username/userposts', profileController.followProfile);
+
 app.get('/profile/:username/userposts', profileController.getProfile);
 app.get('/profile/:username/usercomments', profileController.getProfile);
 //app.post('/search/:postSearch', postController.searchPost);

@@ -8,4 +8,4 @@ const trendingController = {
   
 };
 
-module.exports = trendingController;
+module.exports = trendingController;    

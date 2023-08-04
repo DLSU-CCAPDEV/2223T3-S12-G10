@@ -252,8 +252,6 @@ $(document).ready(function(){
     $.post('/post/replyDelete', passdata);
     });
 
-    
-
     $('.create-reply').click(handleReplies);
 
 
