@@ -21,6 +21,7 @@ const validation = require('../helpers/validation.js');
 const app = express();
 const postRouter = require('./postroutes.js');
 const loginController = require('../controllers/loginController.js');
+const trendingController = require('../controllers/trendingController.js');
 
 
 /*
@@ -56,6 +57,9 @@ app.post('/register', validation.signupValidation(), signupController.postSignUp
 app.get('/login', loginController.getLogin);
 
 app.post('/login', loginController.postLogin);
+
+app.get('/logout', loginController.getLogout);
+
 /*
     execute function getSuccess()
     defined in object `successController` in `../controllers/successController.js`
@@ -73,15 +77,12 @@ app.get('/profile/:username', profileController.getProfile);
 
 app.get('/profile/:username/userposts', profileController.getProfile);
 app.get('/profile/:username/usercomments', profileController.getProfile);
-
 //app.post('/search/:postSearch', postController.searchPost);
 
 //app.get('/search/searchedPosts', postController.getSearchedPosts);
 /*
     these ones will be used specifically to get posts in the main index page
 */
-
-
 
 //this
 app.use('', postRouter);

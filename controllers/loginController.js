@@ -17,7 +17,10 @@ const loginController = {
         as defined in `../routes/routes.js`
     */
     getLogin: function (req, res) {
-        res.render('login');
+        var details = {
+            flag: false
+        };
+        res.render('login', details);
     },
 
     postLogin: async function (req, res) {
@@ -58,22 +61,28 @@ const loginController = {
                 }
                 else {
                     var details = {
-                        flag: false,
-                        error: `ID Number and/or Password is incorrect.`
+                        flag: true,
+                        error: `Incorrect username or password!`
                     };
-                    console.log(details);
-                    res.render('login');
+                    res.render('login', details);
                 }
             });
         }
         else {
             var details = {
-                flag: false,
-                error: `ID Number and/or Password is incorrect.`
+                flag: true,
+                error: `Incorrect username or password!`
             };
-            console.log(details);
-            res.render('login');
+            res.render('login', details);
         }
+    },
+
+    getLogout: function (req, res) {
+        req.session.destroy(function(err) {
+            if (err) throw err;
+
+            res.redirect('/');
+        });
     }
 }
         // if(result){

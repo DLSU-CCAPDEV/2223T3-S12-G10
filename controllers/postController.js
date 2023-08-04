@@ -121,7 +121,32 @@ const postController = {
                         results[i].commentcount = result.length;
                     })
             }
+
+            try {
+                // Get the date from 7 days ago
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                var trending = await Post.aggregate([
+                  {
+                    $unwind: "$postTags"
+                  },
+                  {
+                    $group: {
+                      _id: "$postTags",
+                      count: {$sum: 1}
+                    }
+                  },
+                  {
+                    $sort: {count: -1}
+                  },
+                  {$limit: 3}
+                ]);
+                console.log(trending);
+              } catch (error) {
+                console.log(error);
+              }
             var details = {
+                trends: trending,
                 post: results,
                 displayName: req.session.displayName,
                 username: req.session.username,
@@ -130,7 +155,6 @@ const postController = {
                 joindate: req.session.joindate,
                 postUserId: req.session.userId
             }
-
             console.log(details);
             //pass the entire thing
             // render `../views/profile.hbs`
@@ -243,7 +267,6 @@ const postController = {
             // results.postText = DOMPurify.sanitize(marked.parse(results.postText))
             if(comments != null) {
                 for (let i = 0; i < comments.length; i++) {
-                    console.log(comments[i]);
                     if (comments[i]._doc.postText != null || comments[i]._doc.postText != undefined) {
                         comments[i]._doc.postText = comments.parse(results[i]._doc.postText);
                     }
@@ -279,8 +302,31 @@ const postController = {
                     }
                 }
             }
-
+            try {
+                // Get the date from 7 days ago
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                var trending = await Post.aggregate([
+                  {
+                    $unwind: "$postTags"
+                  },
+                  {
+                    $group: {
+                      _id: "$postTags",
+                      count: {$sum: 1}
+                    }
+                  },
+                  {
+                    $sort: {count: -1}
+                  },
+                  {$limit: 3}
+                ]);
+                console.log(trending);
+              } catch (error) {
+                console.log(error);
+              }
             var details = {
+                trends: trending,
                 post: results,
                 comments: comments,
                 username: req.session.username,
@@ -408,8 +454,38 @@ const postController = {
         if (results.length != 0 ) {
             //there are posts similar in name to the search query
             console.log("query: "+ query.postTitle);
+            try {
+                // Get the date from 7 days ago
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                var trending = await Post.aggregate([
+                  {
+                    $unwind: "$postTags"
+                  },
+                  {
+                    $group: {
+                      _id: "$postTags",
+                      count: {$sum: 1}
+                    }
+                  },
+                  {
+                    $sort: {count: -1}
+                  },
+                  {$limit: 3}
+                ]);
+                console.log(trending);
+              } catch (error) {
+                console.log(error);
+              }
             var details = {
-                post: results
+                post: results,
+                trends: trending,
+                displayName: req.session.displayName,
+                username: req.session.username,
+                following: req.session.following,
+                followers: req.session.followers,
+                joindate: req.session.joindate,
+                postUserId: req.session.userId
             };
             res.render('searched_posts', details);
             console.log(details);
@@ -901,6 +977,42 @@ const postController = {
     
         if (response != null) {
             console.log("A comment has been deleted.")
+        }
+    },
+
+    getPopular: async function (req, res) {
+        try {
+          // Get the date from 7 days ago
+          const sevenDaysAgo = new Date();
+          sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    
+          var trending = await Post.aggregate([
+            {
+              $unwind: "$postTags"
+            },
+            {
+              $group: {
+                _id: "$postTags",
+                count: {
+                  $sum: 1
+                }
+              }
+            },
+            {
+              $sort: {
+                count: -1 // Sort by count in descending order (most popular first)
+              }
+            },
+            {
+              $limit: 3 // Limit the result to the top 50 trending tags
+            }
+          ]);
+          console.log(trending);
+          res.send(trending);
+
+        } catch (error) {
+          console.log(error);
+          res.send("Internal Server Error"); // Handle error appropriately
         }
     }
     

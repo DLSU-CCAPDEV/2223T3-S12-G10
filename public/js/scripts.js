@@ -28,28 +28,28 @@ function handleVoteButtonUp(e) {
         console.log("Comment Post ID: " + ID);
     }
     //Vote button
-    function liveupdate(mode, ID) {
-        //at this point it should have been updated properly
-        //this only does a local change
-        //response will either be true or false
-        if (mode == '.post') {
-                //find the vote container
-            let votes= $(".post_ID:contains(" + ID +")").parents('.post-container').siblings('.post-vote-container');
-            //votes.children('.post-vote-up').toggleClass('active');
-            let upvote = votes.children('.post-vote-count');
-            let upvotecount = parseInt(upvote.html());
-            upvotecount.html() = upvotecount + 1;
-        } else if (mode == '.comment') {
-            let votes= $(".comment_ID:contains(" + ID +")").parents('.comment-header-container').siblings('.comment-footer-container').children('.comment-votes-container');
-            //votes.children('.comment-vote-up').toggleClass('active');
-            let upvote = votes.children('.comment-vote-count');
-            let upvotecount = parseInt(upvote.html());
-            upvote.html() = upvotecount + 1;
-        } else {
-            console.log("This SHOULDN'T even be possible.");
-        }
+    // function liveupdate(mode, ID) {
+    //     //at this point it should have been updated properly
+    //     //this only does a local change
+    //     //response will either be true or false
+    //     if (mode == '.post') {
+    //             //find the vote container
+    //         let votes= $(".post_ID:contains(" + ID +")").parents('.post-container').siblings('.post-vote-container');
+    //         //votes.children('.post-vote-up').toggleClass('active');
+    //         let upvote = votes.children('.post-vote-count');
+    //         let upvotecount = parseInt(upvote.html());
+    //         upvotecount.html() = upvotecount + 1;
+    //     } else if (mode == '.comment') {
+    //         let votes= $(".comment_ID:contains(" + ID +")").parents('.comment-header-container').siblings('.comment-footer-container').children('.comment-votes-container');
+    //         //votes.children('.comment-vote-up').toggleClass('active');
+    //         let upvote = votes.children('.comment-vote-count');
+    //         let upvotecount = parseInt(upvote.html());
+    //         upvote.html() = upvotecount + 1;
+    //     } else {
+    //         console.log("This SHOULDN'T even be possible.");
+    //     }
         
-    };
+    // };
 
     function ajaxcall(mode, ID) {
         //check if it's a post or comment event 
@@ -77,21 +77,21 @@ function handleVoteButtonUp(e) {
 
     ajaxcall(mode, ID);
 
-    // let parent = $(e.currentTarget).parent();
-    // let vote_count = $(e.currentTarget).siblings(mode + '-vote-count');
+    let parent = $(e.currentTarget).parent();
+    let vote_count = $(e.currentTarget).siblings(mode + '-vote-count');
     // let data_vote_count = vote_count.attr('data-vote-count');
-    // if (parent.attr('data-vote-status') != 1) {
-    //     var diff = 1;
-    //     if (parent.attr('data-vote-status') == -1) diff = 2;
-    //     vote_count.text(nFormatter(parseInt(data_vote_count) + diff, 1));
-    //     vote_count.attr('data-vote-count', parseInt(data_vote_count) + diff);
-    //     parent.attr('data-vote-status', 1);
-    //     $(e.currentTarget).siblings(mode + '-vote-down').removeClass('active');
-    // } else {
-    //     parent.attr('data-vote-status', 0);
-    //     vote_count.text(nFormatter(parseInt(data_vote_count) - 1, 1));
-    //     vote_count.attr('data-vote-count', parseInt(data_vote_count) - 1);
-    // }
+    if (parent.attr('data-vote-status') != 1) {
+        var diff = 1;
+        if (parent.attr('data-vote-status') == -1) diff = 2;
+        vote_count.html(nFormatter(parseInt(vote_count.html()) + diff, 1));
+        // vote_count.attr('data-vote-count', parseInt(data_vote_count) + diff);
+        parent.attr('data-vote-status', 1);
+        $(e.currentTarget).siblings(mode + '-vote-down').removeClass('active');
+    } else {
+        parent.attr('data-vote-status', 0);
+        vote_count.html(nFormatter(parseInt(vote_count.html()) - 1, 1));
+        // vote_count.attr('data-vote-count', parseInt(data_vote_count) - 1);
+    }
 }
 
 function handleVoteButtonsDown(e) {
@@ -109,27 +109,27 @@ function handleVoteButtonsDown(e) {
         console.log("Comment Post ID: " + ID);
     }
 
-    function liveupdate(mode, ID) {
-        //at this point it should have been updated properly
-        //this only does a local change
-        //response will either be true or false
-        if (mode == '.post') {
-            let votes= $(".post_ID:contains(" + ID +")").parents('.post-container').siblings('.post-vote-container');
-            //votes.children('.post-vote-up').toggleClass('active'); //this is ALREADY handled by Handlevotebuttons
-            let downvote = votes.children('.post-vote-count');
-            let downvotecount = parseInt(downvote.html());
-            downvote.html() = downvotecount - 1;
-        } else if (mode == '.comment') {
-            let votes= $(".comment_ID:contains(" + ID +")").parents('.comment-header-container').siblings('.comment-footer-container').children('.comment-votes-container');
-            //votes.children('.comment-vote-up').toggleClass('active');
-            let downvote = votes.children('.comment-vote-count');
-            let downvotecount = parseInt(downvote.html());
-            downvote.html() = downvotecount - 1;
-        } else {
-            console.log("This SHOULDN'T even be possible.");
-        }
+    // function liveupdate(mode, ID) {
+    //     //at this point it should have been updated properly
+    //     //this only does a local change
+    //     //response will either be true or false
+    //     if (mode == '.post') {
+    //         let votes= $(".post_ID:contains(" + ID +")").parents('.post-container').siblings('.post-vote-container');
+    //         //votes.children('.post-vote-up').toggleClass('active'); //this is ALREADY handled by Handlevotebuttons
+    //         let downvote = votes.children('.post-vote-count');
+    //         let downvotecount = parseInt(downvote.html());
+    //         downvote.html() = downvotecount - 1;
+    //     } else if (mode == '.comment') {
+    //         let votes= $(".comment_ID:contains(" + ID +")").parents('.comment-header-container').siblings('.comment-footer-container').children('.comment-votes-container');
+    //         //votes.children('.comment-vote-up').toggleClass('active');
+    //         let downvote = votes.children('.comment-vote-count');
+    //         let downvotecount = parseInt(downvote.html());
+    //         downvote.html() = downvotecount - 1;
+    //     } else {
+    //         console.log("This SHOULDN'T even be possible.");
+    //     }
         
-    };
+    // };
 
 
     function ajaxcall(mode, ID) {
@@ -158,21 +158,21 @@ function handleVoteButtonsDown(e) {
 
     ajaxcall(mode, ID);
 
-    // let parent = $(e.currentTarget).parent();
-    // let vote_count = $(e.currentTarget).siblings(mode + '-vote-count');
+    let parent = $(e.currentTarget).parent();
+    let vote_count = $(e.currentTarget).siblings(mode + '-vote-count');
     // let data_vote_count = vote_count.attr('data-vote-count');
-    // if (parent.attr('data-vote-status') != -1) {
-    //     var diff = 1;
-    //     if (parent.attr('data-vote-status') == 1) diff = 2;
-    //     vote_count.text(nFormatter(parseInt(data_vote_count) - diff, 1));
-    //     vote_count.attr('data-vote-count', parseInt(data_vote_count) - diff);
-    //     parent.attr('data-vote-status', -1);
-    //     $(e.currentTarget).siblings(mode + '-vote-up').removeClass('active');
-    // } else {
-    //     parent.attr('data-vote-status', 0);
-    //     vote_count.text(nFormatter(parseInt(data_vote_count) + 1, 1));
-    //     vote_count.attr('data-vote-count', parseInt(data_vote_count) + 1);
-    // }
+    if (parent.attr('data-vote-status') != -1) {
+        var diff = 1;
+        if (parent.attr('data-vote-status') == 1) diff = 2;
+        vote_count.html(nFormatter(parseInt(vote_count.html()) - diff, 1));
+        // vote_count.attr('data-vote-count', parseInt(data_vote_count) - diff);
+        parent.attr('data-vote-status', -1);
+        $(e.currentTarget).siblings(mode + '-vote-up').removeClass('active');
+    } else {
+        parent.attr('data-vote-status', 0);
+        vote_count.html(nFormatter(parseInt(vote_count.html()) + 1, 1));
+        // vote_count.attr('data-vote-count', parseInt(data_vote_count) + 1);
+    }
 }
 
 function validateForm(...forms) {

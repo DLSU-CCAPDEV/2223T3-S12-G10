@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" dark>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Forum</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<!--    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css">
+    <link rel="stylesheet" href="/css/snackbar.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/post.css">
+    <link rel="stylesheet" href="/css/markdown.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/cure53/DOMPurify/dist/purify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turndown/7.1.1/turndown.min.js"></script>
+    <script src="/js/backend.js"></script>
+    <script src="/js/snackbar.js"></script>
+    <script src="/js/nFormatter.js"></script>
+    <script src="/js/scripts.js"></script>
+    <script src="/js/comment.js"></script>
+</head>
+<body>
+<div class="row g-0">
+    <div class="col-2">
+        {{#> nav user username=username}}
+        {{/nav}}
+    </div>
+    <div class="col-7 px-5 mb-4">
+        <div id="main-controls">
+            <div id="post-search-group">
+                <span class="fa fa-search" id="post-search-icon"></span>
+                <input type="search" placeholder="Search" name="post-search" id="post_search">
+            </div>
+            <button id="btn-ask" data-bs-toggle="modal" data-bs-target="#modal-question">Ask Question</button>
+            <button id="btn-mode-toggle"><i class="fa fa-moon"></i></button>
+        </div>
+        <div id="posts-container">
+            <div class="post-container">
+                    <h2 class="post-title">About Us</h2>
+                    <div class="post-content">
+                        We out here
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="col-3">
+        {{#> rightuser user displayName=displayName username=username following=following followers=followers joindate=joindate}}
+        {{/rightuser}}
+        {{#>trends}}
+        {{/trends}}
+    </div>
+</div>
+
+<div class="modal fade modal-xl" id="modal-question" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 m-0">Ask Question</h1>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <form action="" id="form-post">
+                            <div class="mb-3">
+                                <label for="post-title-form" class="form-label">Title</label>
+                                <input type="text" class="form-control" name="post-title" id="edit_post_title_form" required="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="post-content-form" class="form-label">Content</label>
+                                <textarea class="form-control" name="post-content" id="edit_post_content_form" required="" rows="10"></textarea>
+                                <p class="fs-6 fw-semibold text-muted"><a href="https://commonmark.org/help/">CommonMark Markdown</a> formatting is supported.</p>
+                            </div>
+                            <div class="mb-3">
+                                <label for="post-tags-form" class="form-label">Tags</label>
+                                <input type="text" class="form-control" name="post_tags_form" id="edit_post_tags_form" required="">
+                                <p class="fs-6 fw-semibold text-muted">Separate tags with a comma. Maximum of 5 tags allowed.</p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-6" id="post-preview-container">
+                        <h2 class="post-title" id="post-title-preview"></h2>
+                        <div class="post-content" id="post-content-preview"></div>
+                        <div class="tags-container" id="tags-preview"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    <i class="fa fa-trash me-2"></i>Discard</button>
+                <button type="button" form="form-post" class="btn btn-success" id="btn-edit-post-form">
+                    <i class="fa fa-check me-2"></i>Publish</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+</body>
+</html>
