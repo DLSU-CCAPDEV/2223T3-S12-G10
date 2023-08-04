@@ -2,7 +2,7 @@
             <h3 class="mb-5">Trends for you</h3>
             <div class="d-flex flex-column" id="trends-container">
                 {{#each trends}}
-                    <a href="#" class="mb-2">
+                    <a href="/Tags?tagSearch={{_id}}" class="mb-2">
                     <h6>{{_id}}</h6>
                     <p class="text-muted fw-semibold">{{count}} questions</p>
                     </a>
