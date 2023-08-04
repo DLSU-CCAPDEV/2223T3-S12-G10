@@ -452,7 +452,49 @@ const postController = {
         var results = await db.findMany(Post, query, projection);
 
         if (results.length != 0 ) {
-            //there are posts similar in name to the search query
+            for(let i = 0; i < results.length; i++) {
+                if (results[i]._doc.postText != null || results[i]._doc.postText != undefined) {
+                    results[i]._doc.postText = DOMPurify.sanitize(marked.parse(results[i]._doc.postText));
+                }
+                if (results[i]._doc.upvotes.length != 0 || results[i]._doc.downvotes.length != 0) {
+                    //calculate the votes
+                    var votecount = results[i]._doc.upvotes.length - results[i]._doc.downvotes.length;
+                    // votes.push(votecount);
+                    results[i].votes = votecount;
+                } else {
+                    //both are 0
+                    var votecount = 0;
+                    // votes.push (votecount);
+                    results[i].votes = votecount;
+                }
+
+                var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
+                
+                if (results[i].upvotes.includes(currentuser.id)) {
+                    results[i].upvoted = true;
+                    results[i].downvoted = false;
+                    results[i].notvoted = false;
+                } else if (results[i].downvotes.includes(currentuser.id)) {
+                    results[i].downvoted = true;
+                    results[i].upvoted = false;
+                    results[i].notvoted = false;
+                } else {
+                    results[i].downvoted = false;
+                    results[i].upvoted = false;
+                    results[i].notvoted = true;
+                }
+            // console.log(votes[0]);
+                await db.findOne(User, {_id: results[i]._doc.postUserId}, 'username')
+                    .then(function(result) {
+                        console.log(result);
+                        // results[i]._doc.postUserId = result.username;
+                        results[i].username = result.username;
+                    });
+                await db.findMany(Comment, {CommentPostId: results[i]._doc._id}, '_id')
+                    .then(function(result) {
+                        results[i].commentcount = result.length;
+                    })
+            }
             console.log("query: "+ query.postTitle);
             try {
                 // Get the date from 7 days ago
