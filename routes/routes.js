@@ -21,6 +21,7 @@ const validation = require('../helpers/validation.js');
 const app = express();
 const postRouter = require('./postroutes.js');
 const loginController = require('../controllers/loginController.js');
+const trendingController = require('../controllers/trendingController.js');
 
 
 /*
@@ -74,6 +75,8 @@ app.get('/success', successController.getSuccess);
 */
 app.get('/profile/:username', profileController.getProfile);
 
+app.post('/profile/:username/userposts', profileController.followProfile);
+
 app.get('/profile/:username/userposts', profileController.getProfile);
 app.get('/profile/:username/usercomments', profileController.getProfile);
 
@@ -90,8 +93,6 @@ app.post('/settings', profileController.postSettings);
 /*
     these ones will be used specifically to get posts in the main index page
 */
-
-
 
 //this
 app.use('', postRouter);

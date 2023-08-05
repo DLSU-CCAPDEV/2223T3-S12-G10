@@ -87,7 +87,6 @@ const profileController = {
                 profilePicture : result.profilePicture
             };
             
-            //console.log(details);
             // render `../views/profile.hbs`
           if (req.path.includes('/usercomments')) {
                 // If '/usercomments' is present in the route, render 'profile_comments' template
@@ -240,8 +239,19 @@ const profileController = {
 
 
     
-
+                    if (addition != null && addition2 != null) {
+                        //redirect to page to refresh it
+                        res.status(205);
+                    } else {
+                        res.render('error');
+                    }
+                }
+            }
+        }
+    }
+    
 }
+
 
 /*
     exports the object `profileController` (defined above)

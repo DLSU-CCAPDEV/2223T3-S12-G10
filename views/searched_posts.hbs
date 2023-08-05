@@ -26,7 +26,7 @@
 <body>
 <div class="row g-0">
     <div class="col-2">
-        {{#> nav user}}
+        {{#> nav user username=username}}
         {{/nav}}
     </div>
     <div class="col-7 px-5 mb-4">
@@ -40,52 +40,8 @@
         </div>
         <div id="posts-container">
             {{#if post}}
-                {{#each post}}
-                    <div class="post-wrapper">
-                        <div class="post-vote-container">
-                            <div class="post-vote-up">
-                                <i class="fa fa-caret-up"></i>
-                            </div>
-                            <div class="post-vote-count" data-vote-count="120">
-                            {{#if (isNull upvotes) }}
-                                {{#if (isNull downvotes) }}
-                                    0
-                                {{/if}}
-                            {{else}}
-                                {{upvotes.length-downvotes.length}}
-                            {{/if}}</div>
-                            <div class="post-vote-down">
-                                <i class="fa fa-caret-down"></i>
-                            </div>
-                        </div>
-                        <div class="post-container">
-                            <a href="/post/{{_id}}" class="text-decoration-none">
-                                <h2 class="post-title">{{postTitle}}</h2>
-                            </a>
-                            <div class="post-author-container">
-                                <img class="post-author-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=davidmiller" alt="@davidmiller">
-                                <a href="../html/profile.html" class="text-decoration-none">
-                                    <div class="post-author">@{{postUserId}}</div>
-                                </a>
-                            </div>
-                            <p class="post-content">{{postText}}
-                            </p>
-                            <div class="footer-container">
-                                <div class="tags-container">
-                                    {{#each postTags}}
-                                    <div class="tags">{{this}}</div>
-                                    {{/each}}                            
-                                </div>
-                                <div class="post-answers-count-container">
-                                    <i class="fa fa-comment-dots"></i>
-                                    <a href="../html/post.html" class="text-decoration-none">
-                                        <div class="post-answers-count">{{commentCount}}</div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {{/each}}
+                {{#>eachpost post post=post votes=votes}}
+                {{/eachpost}}
             {{else}}
                 <div class="post-wrapper">
                         <div class="post-container">
@@ -97,40 +53,10 @@
     </div>
 
     <div class="col-3">
-        {{#> rightuser user}}
+        {{#> rightuser user displayName=displayName username=username following=following followers=followers joindate=joindate}}
         {{/rightuser}}
-        <div class="p-5" id="right-container">
-            <h3 class="mb-5">Trends for you</h3>
-            <div class="d-flex flex-column" id="trends-container">
-                <a href="#" class="mb-2">
-                    <h6>Tech</h6>
-                    <p class="text-muted fw-semibold">20.8k questions</p>
-                </a>
-                <a href="#" class="mb-2">
-                    <h6>AR</h6>
-                    <p class="text-muted fw-semibold">1.3k questions</p>
-                </a>
-                <a href="#" class="mb-2">
-                    <h6>Cinema</h6>
-                    <p class="text-muted fw-semibold">65k questions</p>
-                </a>
-            </div>
-            <hr class="mb-4" />
-            <div class="row" id="footer-container">
-                <div class="col-6">
-                    <div class="d-flex flex-column">
-                        <a href="/about" class="fw-semibold">About</a>
-                        <a href="/privacy" class="fw-semibold">Contact Us</a>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="d-flex flex-column">
-                        <a href="/about" class="fw-semibold">Terms of Service</a>
-                        <a href="/privacy" class="fw-semibold">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {{#>trends}}
+        {{/trends}}
     </div>
 </div>
 

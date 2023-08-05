@@ -121,7 +121,32 @@ const postController = {
                         results[i].commentcount = result.length;
                     })
             }
+
+            try {
+                // Get the date from 7 days ago
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                var trending = await Post.aggregate([
+                  {
+                    $unwind: "$postTags"
+                  },
+                  {
+                    $group: {
+                      _id: "$postTags",
+                      count: {$sum: 1}
+                    }
+                  },
+                  {
+                    $sort: {count: -1}
+                  },
+                  {$limit: 3}
+                ]);
+                console.log(trending);
+              } catch (error) {
+                console.log(error);
+              }
             var details = {
+                trends: trending,
                 post: results,
                 displayName: req.session.displayName,
                 username: req.session.username,
@@ -131,7 +156,6 @@ const postController = {
                 postUserId: req.session.userId,
                 profilePicture: req.session.profilePicture
             }
-
             console.log(details);
             //pass the entire thing
             // render `../views/profile.hbs`
@@ -279,8 +303,31 @@ const postController = {
                     }
                 }
             }
-
+            try {
+                // Get the date from 7 days ago
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                var trending = await Post.aggregate([
+                  {
+                    $unwind: "$postTags"
+                  },
+                  {
+                    $group: {
+                      _id: "$postTags",
+                      count: {$sum: 1}
+                    }
+                  },
+                  {
+                    $sort: {count: -1}
+                  },
+                  {$limit: 3}
+                ]);
+                console.log(trending);
+              } catch (error) {
+                console.log(error);
+              }
             var details = {
+                trends: trending,
                 post: results,
                 comments: comments,
                 username: req.session.username,
@@ -406,10 +453,82 @@ const postController = {
         var results = await db.findMany(Post, query, projection);
 
         if (results.length != 0 ) {
-            //there are posts similar in name to the search query
+            for(let i = 0; i < results.length; i++) {
+                if (results[i]._doc.postText != null || results[i]._doc.postText != undefined) {
+                    results[i]._doc.postText = DOMPurify.sanitize(marked.parse(results[i]._doc.postText));
+                }
+                if (results[i]._doc.upvotes.length != 0 || results[i]._doc.downvotes.length != 0) {
+                    //calculate the votes
+                    var votecount = results[i]._doc.upvotes.length - results[i]._doc.downvotes.length;
+                    // votes.push(votecount);
+                    results[i].votes = votecount;
+                } else {
+                    //both are 0
+                    var votecount = 0;
+                    // votes.push (votecount);
+                    results[i].votes = votecount;
+                }
+
+                var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
+                
+                if (results[i].upvotes.includes(currentuser.id)) {
+                    results[i].upvoted = true;
+                    results[i].downvoted = false;
+                    results[i].notvoted = false;
+                } else if (results[i].downvotes.includes(currentuser.id)) {
+                    results[i].downvoted = true;
+                    results[i].upvoted = false;
+                    results[i].notvoted = false;
+                } else {
+                    results[i].downvoted = false;
+                    results[i].upvoted = false;
+                    results[i].notvoted = true;
+                }
+            // console.log(votes[0]);
+                await db.findOne(User, {_id: results[i]._doc.postUserId}, 'username')
+                    .then(function(result) {
+                        console.log(result);
+                        // results[i]._doc.postUserId = result.username;
+                        results[i].username = result.username;
+                    });
+                await db.findMany(Comment, {CommentPostId: results[i]._doc._id}, '_id')
+                    .then(function(result) {
+                        results[i].commentcount = result.length;
+                    })
+            }
             console.log("query: "+ query.postTitle);
+            try {
+                // Get the date from 7 days ago
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                var trending = await Post.aggregate([
+                  {
+                    $unwind: "$postTags"
+                  },
+                  {
+                    $group: {
+                      _id: "$postTags",
+                      count: {$sum: 1}
+                    }
+                  },
+                  {
+                    $sort: {count: -1}
+                  },
+                  {$limit: 3}
+                ]);
+                console.log(trending);
+              } catch (error) {
+                console.log(error);
+              }
             var details = {
-                post: results
+                post: results,
+                trends: trending,
+                displayName: req.session.displayName,
+                username: req.session.username,
+                following: req.session.following,
+                followers: req.session.followers,
+                joindate: req.session.joindate,
+                postUserId: req.session.userId
             };
             res.render('searched_posts', details);
             console.log(details);
@@ -902,8 +1021,146 @@ const postController = {
         if (response != null) {
             console.log("A comment has been deleted.")
         }
-    }
+    },
+
+    getPopular: async function (req, res) {
+        try {
+          // Get the date from 7 days ago
+          const sevenDaysAgo = new Date();
+          sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
     
+          var trending = await Post.aggregate([
+            {
+              $unwind: "$postTags"
+            },
+            {
+              $group: {
+                _id: "$postTags",
+                count: {
+                  $sum: 1
+                }
+              }
+            },
+            {
+              $sort: {
+                count: -1 // Sort by count in descending order (most popular first)
+              }
+            },
+            {
+              $limit: 3 // Limit the result to the top 50 trending tags
+            }
+          ]);
+          console.log(trending);
+          res.send(trending);
+
+        } catch (error) {
+          console.log(error);
+          res.send("Internal Server Error"); // Handle error appropriately
+        }
+    },
+    getTrending: async function (req, res) {
+        console.log('Trending Accessed...');
+        var query = {
+            postTags: {
+                $elemMatch: {
+                  $regex: new RegExp('.*' + req.query.tagSearch + '.*', 'i')
+                }
+              }
+        };
+        console.log("Tags is: " + req.query.tagSearch);
+        var projection = '';
+
+        var results = await db.findMany(Post, query, projection);
+
+        if (results.length != 0 ) {
+            for(let i = 0; i < results.length; i++) {
+                if (results[i]._doc.postText != null || results[i]._doc.postText != undefined) {
+                    results[i]._doc.postText = DOMPurify.sanitize(marked.parse(results[i]._doc.postText));
+                }
+                if (results[i]._doc.upvotes.length != 0 || results[i]._doc.downvotes.length != 0) {
+                    //calculate the votes
+                    var votecount = results[i]._doc.upvotes.length - results[i]._doc.downvotes.length;
+                    // votes.push(votecount);
+                    results[i].votes = votecount;
+                } else {
+                    //both are 0
+                    var votecount = 0;
+                    // votes.push (votecount);
+                    results[i].votes = votecount;
+                }
+
+                var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
+                
+                if (results[i].upvotes.includes(currentuser.id)) {
+                    results[i].upvoted = true;
+                    results[i].downvoted = false;
+                    results[i].notvoted = false;
+                } else if (results[i].downvotes.includes(currentuser.id)) {
+                    results[i].downvoted = true;
+                    results[i].upvoted = false;
+                    results[i].notvoted = false;
+                } else {
+                    results[i].downvoted = false;
+                    results[i].upvoted = false;
+                    results[i].notvoted = true;
+                }
+            // console.log(votes[0]);
+                await db.findOne(User, {_id: results[i]._doc.postUserId}, 'username')
+                    .then(function(result) {
+                        console.log(result);
+                        // results[i]._doc.postUserId = result.username;
+                        results[i].username = result.username;
+                    });
+                await db.findMany(Comment, {CommentPostId: results[i]._doc._id}, '_id')
+                    .then(function(result) {
+                        results[i].commentcount = result.length;
+                    })
+            }
+            console.log("query: "+ query.postTags);
+            try {
+                // Get the date from 7 days ago
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                var trending = await Post.aggregate([
+                  {
+                    $unwind: "$postTags"
+                  },
+                  {
+                    $group: {
+                      _id: "$postTags",
+                      count: {$sum: 1}
+                    }
+                  },
+                  {
+                    $sort: {count: -1}
+                  },
+                  {$limit: 3}
+                ]);
+                console.log(trending);
+              } catch (error) {
+                console.log(error);
+              }
+            var details = {
+                post: results,
+                trends: trending,
+                displayName: req.session.displayName,
+                username: req.session.username,
+                following: req.session.following,
+                followers: req.session.followers,
+                joindate: req.session.joindate,
+                postUserId: req.session.userId
+            };
+            res.render('searched_posts', details);
+            console.log(details);
+        }
+        else {
+            var details = {};
+            console.log('There are no posts with similar names');
+            console.log(details);
+            res.render('searched_posts', details);
+        }
+
+    },
 
 }
 

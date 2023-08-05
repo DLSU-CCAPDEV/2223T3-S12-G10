@@ -42,26 +42,12 @@
             <button id="btn-mode-toggle"><i class="fa fa-moon"></i></button>
         </div>
         <div id="posts-container">
-        {{#> eachsinglepost post=post}}
-        {{/eachsinglepost}}
-        </div>
-        <div id="add-comment-wrapper">
-            <div id="add-comment-container">
-                <img class="profile-img" src="https://api.dicebear.com/6.x/avataaars/svg?seed=Aaron+Hall" alt="@aaronhall">
-                <textarea id="add_comment_textarea" class="form-control" name="add-comment" placeholder="Write a comment …"></textarea>
-            </div>
-            <div id="add-comment-controls-container" class="d-none">
-                <button type="button" class="btn btn-danger" id="btn-comment-discard">
-                    <i class="fa fa-times me-2"></i>Discard</button>
-                <button type="button" class="btn btn-success" id="btn_comment_send">
-                    <i class="fa fa-paper-plane me-2"></i>Send</button>
-            </div>
-        </div>
-        <div id="comments-container">
-            <div class="comment-wrapper opened">
-            {{#> eachcomment comments=comments}}
-            {{/eachcomment}}
-            </div>
+            <div class="post-container">
+                    <h2 class="post-title">About Us</h2>
+                    <div class="post-content">
+                        We out here
+                    </div>
+                </div>
         </div>
     </div>
     <div class="col-3">
