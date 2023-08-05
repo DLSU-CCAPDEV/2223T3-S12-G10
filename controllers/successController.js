@@ -24,7 +24,7 @@ const successController = {
         // render `../views/success.hbs`
         res.render('success', details);
     }
-
+    
 }
 
 /*

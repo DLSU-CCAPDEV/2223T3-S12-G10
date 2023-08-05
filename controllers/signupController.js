@@ -42,12 +42,14 @@ const signupController = {
                 Example: the value entered in <input type="text" name="fName">
                 can be retrieved using `req.body.fName`
             */
+            var displayName = req.body.display_name;
             var username = req.body.username;
             var password = req.body.password;
             console.log('password is: ' + password);
     
             bcrypt.hash(password, 10, async function (err, hash) {
                 var user = {
+                    displayName: displayName,
                     username: username,
                     password: hash,
                     joindate: new Date(),
@@ -72,6 +74,10 @@ const signupController = {
                 */
     
                 if (response != null) {
+                    await db.findOne(User, {username: username}, '_id').then(function(result) {
+                        req.session.userId = result;
+                    });
+                    req.session.displayName = user.displayName;
                     req.session.username = user.username;
                     req.session.joindate = user.joindate;
                     req.session.following = user.following;
