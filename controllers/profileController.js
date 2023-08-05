@@ -236,7 +236,7 @@ const profileController = {
         downloadStream.on('end', () => {
           res.end();
         });
-    } 
+    }
 
 
     
