@@ -54,6 +54,7 @@ const loginController = {
                     req.session.userId = result._id;
                     req.session.displayName = profile.displayName;
                     req.session.username = profile.username;
+                    req.session.password = profile.password;
                     req.session.joindate = profile.joindate;
                     req.session.following = profile.following;
                     req.session.followers = profile.followers;

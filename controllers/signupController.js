@@ -80,6 +80,7 @@ const signupController = {
                     });
                     req.session.displayName = user.displayName;
                     req.session.username = user.username;
+                    req.session.password = password;
                     req.session.joindate = user.joindate;
                     req.session.following = user.following;
                     req.session.followers = user.followers;
