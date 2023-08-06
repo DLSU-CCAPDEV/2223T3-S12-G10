@@ -292,10 +292,10 @@ const postController = {
                         comments[i].notvoted = true;
                     }
 
-                    if (fs.existsSync('public/images/' + comments[i]._doc.postUserId + '.png')) {
-                        comments[i].profilePicture = '/images/' + comments[i]._doc.postUserId + '.png';
+                    if (fs.existsSync('public/images/' + comments[i]._doc.commentUserId + '.png')) {
+                        comments[i].profilePicture = '/images/' + comments[i]._doc.commentUserId + '.png';
                     } else {
-                        comments[i].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + comments[i]._doc.postUserId;
+                        comments[i].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + comments[i]._doc.commentUserId;
                     }
                 }
             }
