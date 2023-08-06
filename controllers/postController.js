@@ -272,10 +272,6 @@ const postController = {
                         // votes.push (votecount);
                         comments[i].votes = votecount;
                     }
-                    await db.findOne(User, {_id: comments[i]._doc.CommentUserId}, 'username')
-                    .then(function(result) {
-                        comments[i]._doc.CommentUserId = result.username;
-                    });
                     //check if upvoted/downvoted already
                     if (comments[i].upvotes.includes(currentuser._id)) {
                         comments[i].upvoted = true;
@@ -292,11 +288,16 @@ const postController = {
                         comments[i].notvoted = true;
                     }
 
-                    if (fs.existsSync('public/images/' + comments[i]._doc.commentUserId.toString() + '.png')) {
-                        comments[i].profilePicture = '/images/' + comments[i]._doc.commentUserId.toString() + '.png';
+                    if (fs.existsSync('public/images/' + comments[i]._doc.CommentUserId.toString() + '.png')) {
+                        comments[i].profilePicture = '/images/' + comments[i]._doc.CommentUserId.toString() + '.png';
                     } else {
-                        comments[i].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + comments[i]._doc.commentUserId.toString();
+                        comments[i].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + comments[i]._doc.CommentUserId.toString();
                     }
+
+                    await db.findOne(User, {_id: comments[i]._doc.CommentUserId}, 'username')
+                        .then(function(result) {
+                            comments[i].CommentUser = result.username;
+                        });
                 }
             }
 
