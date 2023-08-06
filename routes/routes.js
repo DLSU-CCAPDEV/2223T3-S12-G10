@@ -95,7 +95,6 @@ app.get('/profile/:username/usercomments', profileController.getProfile);
 
 //app.get('/upload',profileController.getUpload);
 //app.post('/upload',profileController.postUpload);
-app.get('/image/:filename', profileController.getImage);
 
 app.get('/settings', profileController.getSettings);
 app.post('/settings', upload.single('profile_picture'), profileController.postSettings);

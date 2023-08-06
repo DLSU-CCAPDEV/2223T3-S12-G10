@@ -244,6 +244,66 @@ const profileController = {
                 }
             }
         });*/
+    },
+
+    followProfile: async function (req, res) {
+        console.log("helo");
+        var followed = {_id: req.body.followed}// ID of the person to be followed
+        console.log(followed);
+        var currentuser = await db.findOne(User, {_id: req.session.userId}, '');
+
+        var result = await db.findOne(User, followed, 'Followers');
+        console.log(result);
+        if (result != null) {
+            //Case 1: User is in Followers already
+            if(!result.followers){
+                result.followers = [];
+                var condition = {$push: {followers: [{_id: req.session.userId}]} };
+                var addition = await db.updateOne(User, followed, condition);
+
+                var follow = {$push: {followed: [{_id: req.body.followid}]} };
+                var addition2 = await db.updateOne(User, {id: req.session.userId}, follow)
+
+                if (addition != null && addition2 != null) {
+                    //redirect to page to refresh it
+                    res.status(205);
+                } else {
+                    res.render('error');
+                }
+            }
+            else{
+                if (result.followers.includes(currentuser.id)) {
+                    //remove the user from the other person's follower list
+                    var condition = {$pullAll: {followers: [{_id: req.session.userId}]} };
+                    var removal = await db.updateOne(User, followed, condition);
+
+                    //remove other person from user's followed list
+                    var unfollowed = {$pullAll: {following: [{_id: req.body.followid}]}}
+                    var removal2 = await db.updateOne(User, {_id: req.session.userId}, unfollowed)
+                    if (removal != null && removal2 != null) {
+                        //redirect to page to refresh it
+                        res.status(205);
+                    } else {
+                        res.render('error');
+                    }
+                } else {
+                    //Case 2: User has not yet followed
+                    //add the user to other person's follower list
+                    var condition = {$push: {followers: [{_id: req.session.userId}]} };
+                    var addition = await db.updateOne(User, followed, condition);
+
+                    var follow = {$push: {followed: [{_id: req.body.followid}]} };
+                    var addition2 = await db.updateOne(User, {id: req.session.userId}, follow)
+
+                    if (addition != null && addition2 != null) {
+                        //redirect to page to refresh it
+                        res.status(205);
+                    } else {
+                        res.render('error');
+                    }
+                }
+            }
+        }
     }
 }
 
