@@ -96,6 +96,10 @@
     margin-top: 1.5rem;
 }
 
+.comment-container:first-child {
+    margin-top: 0;
+}
+
 .comment-header-container {
     display: flex;
     margin-bottom: 1rem;
@@ -105,6 +109,7 @@
 .comment-header-container > .comment-author-img {
     width: var(--comment-author-height);
     margin-right: 1rem;
+    border-radius: var(--radius);
 }
 
 .comment-header-container > .comment-author {
