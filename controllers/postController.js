@@ -292,18 +292,18 @@ const postController = {
                         comments[i].notvoted = true;
                     }
 
-                    if (fs.existsSync('public/images/' + comments[i]._doc.commentUserId + '.png')) {
-                        comments[i].profilePicture = '/images/' + comments[i]._doc.commentUserId + '.png';
+                    if (fs.existsSync('public/images/' + comments[i]._doc.commentUserId.toString() + '.png')) {
+                        comments[i].profilePicture = '/images/' + comments[i]._doc.commentUserId.toString() + '.png';
                     } else {
-                        comments[i].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + comments[i]._doc.commentUserId;
+                        comments[i].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + comments[i]._doc.commentUserId.toString();
                     }
                 }
             }
 
-            if (fs.existsSync('public/images/' + results[0]._doc.postUserId + '.png')) {
-                results[0].profilePicture = '/images/' + results[0]._doc.postUserId + '.png';
+            if (fs.existsSync('public/images/' + results[0]._doc.postUserId.toString() + '.png')) {
+                results[0].profilePicture = '/images/' + results[0]._doc.postUserId.toString() + '.png';
             } else {
-                results[0].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + results[0]._doc.postUserId;
+                results[0].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + results[0]._doc.postUserId.toString();
             }
 
             var details = {
