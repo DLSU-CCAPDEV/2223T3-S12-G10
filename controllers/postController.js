@@ -291,13 +291,19 @@ const postController = {
                         comments[i].downvoted = false;
                         comments[i].notvoted = true;
                     }
+
+                    if (fs.existsSync('public/images/' + comments[i]._doc.postUserId + '.png')) {
+                        comments[i].profilePicture = '/images/' + comments[i]._doc.postUserId + '.png';
+                    } else {
+                        comments[i].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + comments[i]._doc.postUserId;
+                    }
                 }
             }
 
-            if (fs.existsSync('public/images/' + req.session.userId + '.png')) {
-                results[0].profilePicture = '/images/' + req.session.userId + '.png';
+            if (fs.existsSync('public/images/' + results[0]._doc.postUserId + '.png')) {
+                results[0].profilePicture = '/images/' + results[0]._doc.postUserId + '.png';
             } else {
-                results[0].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId;
+                results[0].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + results[0]._doc.postUserId;
             }
 
             var details = {
