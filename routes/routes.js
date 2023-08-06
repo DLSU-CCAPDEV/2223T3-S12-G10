@@ -87,6 +87,10 @@ app.get('/image/:filename', profileController.getImage);
 app.get('/settings', profileController.getSettings);
 app.post('/settings', profileController.postSettings);
 
+app.get('/about', postController.getAbout);
+app.get('/terms', postController.getTerms);
+app.get('/contact', postController.getContact);
+app.get('/privacy', postController.getPrivacy);
 //app.post('/search/:postSearch', postController.searchPost);
 
 //app.get('/search/searchedPosts', postController.getSearchedPosts);
