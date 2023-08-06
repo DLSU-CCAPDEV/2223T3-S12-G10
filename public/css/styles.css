@@ -524,3 +524,24 @@ input.form-control, textarea.form-control {
 .avatar-selection.selected {
     border-color: red;
 }
+
+#profile-settings-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    color: #F35;
+}
+
+#btn-profile-settings-submit {
+    background: var(--color-accent);
+    color: var(--color-background);
+}
+
+.input-group-text {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    border-top: none;
+    border-left: none;
+    border-bottom: none;
+}
