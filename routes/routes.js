@@ -22,6 +22,19 @@ const app = express();
 const postRouter = require('./postroutes.js');
 const loginController = require('../controllers/loginController.js');
 
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/images');
+    },
+    filename: (req, file, cb) => {
+        cb(null, req.session.userId + ".png");
+    }
+});
+
+const upload = multer({storage: storage});
+
 
 /*
     execute function getFavicon()
@@ -82,7 +95,7 @@ app.get('/profile/:username/usercomments', profileController.getProfile);
 app.get('/image/:filename', profileController.getImage);
 
 app.get('/settings', profileController.getSettings);
-app.post('/settings', profileController.postSettings);
+app.post('/settings', upload.single('profile_picture'), profileController.postSettings);
 
 //app.post('/search/:postSearch', postController.searchPost);
 
