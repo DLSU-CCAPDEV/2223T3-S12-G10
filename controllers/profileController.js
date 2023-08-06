@@ -58,10 +58,10 @@ const profileController = {
                 joindate: result.joindate,
                 userdescription: result.userdescription,
             };
-            if (fs.existsSync('public/images/' + req.session.userId + '.png')) {
-                details.profilePicture = '/images/' + req.session.userId + '.png';
+            if (fs.existsSync('public/images/' + req.session.userId.toString() + '.png')) {
+                details.profilePicture = '/images/' + req.session.userId.toString() + '.png';
             } else {
-                details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId;
+                details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId.toString();
             }
             
             //console.log(details);
@@ -154,10 +154,10 @@ const profileController = {
             followers: req.session.followers,
             joindate: req.session.joindate,
         }
-         if (fs.existsSync('public/images/' + req.session.userId + '.png')) {
-             details.profilePicture = '/images/' + req.session.userId + '.png';
+         if (fs.existsSync('public/images/' + req.session.userId.toString() + '.png')) {
+             details.profilePicture = '/images/' + req.session.userId.toString() + '.png';
          } else {
-             details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId;
+             details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId.toString();
          }
         res.render('settings', details);
         //const user = await db.findOne(User, { username: 'NewUser1' });
@@ -177,10 +177,10 @@ const profileController = {
                     followers: req.session.followers,
                     joindate: req.session.joindate
                 };
-                if (fs.existsSync('public/images/' + req.session.userId + '.png')) {
-                    details.profilePicture = '/images/' + req.session.userId + '.png';
+                if (fs.existsSync('public/images/' + req.session.userId.toString() + '.png')) {
+                    details.profilePicture = '/images/' + req.session.userId.toString() + '.png';
                 } else {
-                    details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId;
+                    details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId.toString();
                 }
                 res.render('settings', details);
             } else {
