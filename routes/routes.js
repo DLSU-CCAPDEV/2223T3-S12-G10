@@ -21,6 +21,7 @@ const validation = require('../helpers/validation.js');
 const app = express();
 const postRouter = require('./postroutes.js');
 const loginController = require('../controllers/loginController.js');
+const trendingController = require('../controllers/trendingController.js');
 
 const multer = require('multer');
 
@@ -87,6 +88,8 @@ app.get('/success', successController.getSuccess);
 */
 app.get('/profile/:username', profileController.getProfile);
 
+app.post('/profile/:username/userposts', profileController.followProfile);
+
 app.get('/profile/:username/userposts', profileController.getProfile);
 app.get('/profile/:username/usercomments', profileController.getProfile);
 
@@ -97,14 +100,16 @@ app.get('/image/:filename', profileController.getImage);
 app.get('/settings', profileController.getSettings);
 app.post('/settings', upload.single('profile_picture'), profileController.postSettings);
 
+app.get('/about', postController.getAbout);
+app.get('/terms', postController.getTerms);
+app.get('/contact', postController.getContact);
+app.get('/privacy', postController.getPrivacy);
 //app.post('/search/:postSearch', postController.searchPost);
 
 //app.get('/search/searchedPosts', postController.getSearchedPosts);
 /*
     these ones will be used specifically to get posts in the main index page
 */
-
-
 
 //this
 app.use('', postRouter);

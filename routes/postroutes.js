@@ -25,6 +25,7 @@ router.post('/questions', postController.getManyPosts);
 
 router.get('/search?:postSearch', postController.getSearchedPosts);
 router.get('/getReplies', postController.getReplies);
+router.get('/tags?:tagSearch', postController.getTrending);
 
 router.post('/post/upvote', postController.postUpvote);
 router.post('/post/downvote', postController.postDownvote);

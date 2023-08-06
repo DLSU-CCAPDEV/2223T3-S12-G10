@@ -183,6 +183,22 @@ p { font-family: var(--font-body); }
     color: var(--color-background);
 }
 
+#btn-follow {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    border: 0;
+    border-radius: var(--radius);
+    padding: 0 calc(0.5rem + var(--radius) / 2);
+    font-weight: 700;
+    transition: background-color 180ms ease;
+}
+
+#btn-follow:hover {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+    opacity: 1;
+}
+
 .post-wrapper {
     background-color: var(--color-secondary);
     padding: calc(1.5rem + var(--radius) / 4) !important;

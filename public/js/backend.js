@@ -115,7 +115,11 @@ $(document).ready(function(){
         const post_content = $('#post_content_form').val();
         const post_tags_form = $('#post_tags_form').val();
 
-        var post_tags = post_tags_form.trim().split(',');
+        var post_tags = post_tags_form.split(',');
+
+        for(let i = 0; i<post_tags.length; i++) {
+            post_tags[i] = post_tags[i].trim();
+        }
 
         console.log("The tags are: " + post_tags);
 
