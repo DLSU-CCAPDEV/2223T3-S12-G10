@@ -17,6 +17,7 @@ const DOMPurify = createDOMPurify(window);
 const moment = require('moment');
 
 const marked = require('marked');
+const fs = require("fs");
 
 marked.use({
     mangle: false,
@@ -120,6 +121,14 @@ const postController = {
                     .then(function(result) {
                         results[i].commentcount = result.length;
                     })
+
+                console.log("id");
+                console.log(results[i]._doc.postUserId.toString());
+                if (fs.existsSync('public/images/' + results[i]._doc.postUserId.toString() + '.png')) {
+                    results[i].profilePicture = '/images/' + results[i]._doc.postUserId.toString() + '.png';
+                } else {
+                    results[i].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + results[i]._doc.postUserId.toString();
+                }
             }
             var details = {
                 post: results,
@@ -130,6 +139,11 @@ const postController = {
                 joindate: req.session.joindate,
                 postUserId: req.session.userId,
                 profilePicture: req.session.profilePicture
+            }
+            if (fs.existsSync('public/images/' + req.session.userId + '.png')) {
+                details.profilePicture = '/images/' + req.session.userId + '.png';
+            } else {
+                details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId;
             }
 
             console.log(details);
@@ -287,6 +301,11 @@ const postController = {
                 following: req.session.following,
                 followers: req.session.followers,
                 joindate: req.session.joindate,
+            }
+            if (fs.existsSync('public/images/' + req.session.userId + '.png')) {
+                details.profilePicture = '/images/' + req.session.userId + '.png';
+            } else {
+                details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId;
             }
             //console.log(details;
             //pass the entire thing
