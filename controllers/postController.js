@@ -97,11 +97,11 @@ const postController = {
 
                 var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
                 
-                if (results[i].upvotes.includes(currentuser.id)) {
+                if (results[i].upvotes.includes(currentuser._id)) {
                     results[i].upvoted = true;
                     results[i].downvoted = false;
                     results[i].notvoted = false;
-                } else if (results[i].downvotes.includes(currentuser.id)) {
+                } else if (results[i].downvotes.includes(currentuser._id)) {
                     results[i].downvoted = true;
                     results[i].upvoted = false;
                     results[i].notvoted = false;
@@ -195,17 +195,17 @@ const postController = {
         }
 
         var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
-        if (results[0].postUserId == currentuser.id) {
+        if (results[0].postUserId == currentuser._id) {
             results[0].editablePost = true;
         } else {
             results[0].editablePost = false;
         }
         // upvoted or downvoted already
-        if (results[0].upvotes.includes(currentuser.id)) {
+        if (results[0].upvotes.includes(currentuser._id)) {
             results[0].upvoted = true;
             results[0].downvoted = false;
             results[0].notvoted = false;
-        } else if (results[0].downvotes.includes(currentuser.id)) {
+        } else if (results[0].downvotes.includes(currentuser._id)) {
             results[0].downvoted = true;
             results[0].upvoted = false;
             results[0].notvoted = false;
@@ -229,7 +229,7 @@ const postController = {
         projection = '';
         var comments = await db.limitedFindReverse(Comment, query, projection, limit);
         for (let i = 0; i < comments.length; i++) {
-            if(comments[i].CommentUserId == currentuser.id) {
+            if(comments[i].CommentUserId == currentuser._id) {
                 comments[i].editableComment = true;
             } else {
                 comments[i].editableComment = false;
@@ -277,11 +277,11 @@ const postController = {
                         comments[i]._doc.CommentUserId = result.username;
                     });
                     //check if upvoted/downvoted already
-                    if (comments[i].upvotes.includes(currentuser.id)) {
+                    if (comments[i].upvotes.includes(currentuser._id)) {
                         comments[i].upvoted = true;
                         comments[i].downvoted = false;
                         comments[i].notvoted = false;
-                    } else if (comments[i].downvotes.includes(currentuser.id)) {
+                    } else if (comments[i].downvotes.includes(currentuser._id)) {
                         comments[i].upvoted = false;
                         comments[i].downvoted = true;
                         comments[i].notvoted = false;
@@ -572,7 +572,7 @@ const postController = {
             var format = "MM/DD/YYYY, HH:mm:ss A";
             response[i]._doc.Date = moment(response[i]._doc.Date).format(format);
 
-            if(response[i].CommentUserId == currentuser.id) {
+            if(response[i].CommentUserId == currentuser._id) {
                 response[i]._doc.editableReply= true;
             } else {
                 response[i]._doc.editableReply = false;
@@ -971,11 +971,11 @@ const postController = {
 
                 var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
 
-                if (results[i].upvotes.includes(currentuser.id)) {
+                if (results[i].upvotes.includes(currentuser._id)) {
                     results[i].upvoted = true;
                     results[i].downvoted = false;
                     results[i].notvoted = false;
-                } else if (results[i].downvotes.includes(currentuser.id)) {
+                } else if (results[i].downvotes.includes(currentuser._id)) {
                     results[i].downvoted = true;
                     results[i].upvoted = false;
                     results[i].notvoted = false;
