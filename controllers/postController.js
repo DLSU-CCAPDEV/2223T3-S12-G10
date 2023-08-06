@@ -1075,8 +1075,7 @@ const postController = {
             following: req.session.following,
             followers: req.session.followers,
             joindate: req.session.joindate,
-            postUserId: req.session.userId,
-            profilePicture: req.session.profilePicture
+            postUserId: req.session.userId
         }
         res.render('about',details);
     },
@@ -1115,8 +1114,7 @@ const postController = {
             following: req.session.following,
             followers: req.session.followers,
             joindate: req.session.joindate,
-            postUserId: req.session.userId,
-            profilePicture: req.session.profilePicture
+            postUserId: req.session.userId
         }
         res.render('terms',details);
     },
@@ -1154,8 +1152,7 @@ const postController = {
             following: req.session.following,
             followers: req.session.followers,
             joindate: req.session.joindate,
-            postUserId: req.session.userId,
-            profilePicture: req.session.profilePicture
+            postUserId: req.session.userId
         }
         res.render('contact',details);
     },
@@ -1193,8 +1190,7 @@ const postController = {
             following: req.session.following,
             followers: req.session.followers,
             joindate: req.session.joindate,
-            postUserId: req.session.userId,
-            profilePicture: req.session.profilePicture
+            postUserId: req.session.userId
         }
         res.render('privacy',details);
     }
