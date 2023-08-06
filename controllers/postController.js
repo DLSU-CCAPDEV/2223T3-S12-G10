@@ -1161,6 +1161,162 @@ const postController = {
         }
 
     },
+    getAbout: async function (req, res) {
+
+         try {
+                // Get the date from 7 days ago
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                var trending = await Post.aggregate([
+                  {
+                    $unwind: "$postTags"
+                  },
+                  {
+                    $group: {
+                      _id: "$postTags",
+                      count: {$sum: 1}
+                    }
+                  },
+                  {
+                    $sort: {count: -1}
+                  },
+                  {$limit: 3}
+                ]);
+                console.log(trending);
+              } catch (error) {
+                console.log(error);
+              }
+
+       var details = {
+                trends: trending,
+                displayName: req.session.displayName,
+                username: req.session.username,
+                following: req.session.following,
+                followers: req.session.followers,
+                joindate: req.session.joindate,
+                postUserId: req.session.userId,
+                profilePicture: req.session.profilePicture
+            }
+        res.render('about',details);
+    },
+
+    getTerms: async function (req, res) {
+
+
+        try {
+                // Get the date from 7 days ago
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                var trending = await Post.aggregate([
+                  {
+                    $unwind: "$postTags"
+                  },
+                  {
+                    $group: {
+                      _id: "$postTags",
+                      count: {$sum: 1}
+                    }
+                  },
+                  {
+                    $sort: {count: -1}
+                  },
+                  {$limit: 3}
+                ]);
+                console.log(trending);
+              } catch (error) {
+                console.log(error);
+              }
+
+       var details = {
+                trends: trending,
+                displayName: req.session.displayName,
+                username: req.session.username,
+                following: req.session.following,
+                followers: req.session.followers,
+                joindate: req.session.joindate,
+                postUserId: req.session.userId,
+                profilePicture: req.session.profilePicture
+            }
+        res.render('terms',details);
+    },
+
+     getContact: async function (req, res) {
+
+        try {
+                // Get the date from 7 days ago
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                var trending = await Post.aggregate([
+                  {
+                    $unwind: "$postTags"
+                  },
+                  {
+                    $group: {
+                      _id: "$postTags",
+                      count: {$sum: 1}
+                    }
+                  },
+                  {
+                    $sort: {count: -1}
+                  },
+                  {$limit: 3}
+                ]);
+                console.log(trending);
+              } catch (error) {
+                console.log(error);
+              }
+
+       var details = {
+                trends: trending,
+                displayName: req.session.displayName,
+                username: req.session.username,
+                following: req.session.following,
+                followers: req.session.followers,
+                joindate: req.session.joindate,
+                postUserId: req.session.userId,
+                profilePicture: req.session.profilePicture
+            }
+        res.render('contact',details);
+    },
+
+    getPrivacy: async function (req, res) {
+
+        try {
+                // Get the date from 7 days ago
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                var trending = await Post.aggregate([
+                  {
+                    $unwind: "$postTags"
+                  },
+                  {
+                    $group: {
+                      _id: "$postTags",
+                      count: {$sum: 1}
+                    }
+                  },
+                  {
+                    $sort: {count: -1}
+                  },
+                  {$limit: 3}
+                ]);
+                console.log(trending);
+              } catch (error) {
+                console.log(error);
+              }
+
+       var details = {
+                trends: trending,
+                displayName: req.session.displayName,
+                username: req.session.username,
+                following: req.session.following,
+                followers: req.session.followers,
+                joindate: req.session.joindate,
+                postUserId: req.session.userId,
+                profilePicture: req.session.profilePicture
+            }
+        res.render('privacy',details);
+    }
 
 }
 
