@@ -47,9 +47,16 @@ const profileController = {
             if the user exists in the database
             render the profile page with their details
         */
-        if(result != null) {
 
+        var isOwnProfile = true;
+        if(result.username == req.session.username)
+            isOwnProfile = false;
+        //console.log(result.username + " " +req.session.username);
+        //console.log(isOwnProfile);
+        if(result != null) {
+        
             var details = {
+                isOwnProfile,
                 userid: result._id,
                 displayName: result.displayName,
                 username: result.username,
