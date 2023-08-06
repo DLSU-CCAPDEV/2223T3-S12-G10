@@ -297,10 +297,12 @@ const postController = {
             var details = {
                 post: results,
                 comments: comments,
+                displayName: req.session.displayName,
                 username: req.session.username,
                 following: req.session.following,
                 followers: req.session.followers,
                 joindate: req.session.joindate,
+                profilePicture: req.session.profilePicture
             }
             if (fs.existsSync('public/images/' + req.session.userId + '.png')) {
                 details.profilePicture = '/images/' + req.session.userId + '.png';
