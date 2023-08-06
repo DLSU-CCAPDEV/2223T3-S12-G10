@@ -29,6 +29,7 @@
 
 #add-comment-container > .profile-img {
     width: var(--add-comment-height);
+    border-radius: var(--radius);
 }
 
 #add-comment-container > #add_comment_textarea {
