@@ -32,6 +32,9 @@ hbs.registerHelper('isNull', function (value) {
     return value !== undefined;
 });
 
+hbs.registerHelper('isEmpty', function(string) {
+    return string == '';
+});
 
 hbs.registerHelper('isEqual', function (val1, val2, options) {
     if (val1 == val2) {
