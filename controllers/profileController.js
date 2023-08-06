@@ -9,38 +9,11 @@ const Post =  require('../models/postmodel.js');
 
 const Comment =  require('../models/commentmodel.js');
 
-
+const bcrypt = require('bcrypt');
 
 const mongoose = require('mongoose');
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage').GridFsStorage;
-const Grid = require('gridfs-stream');
-const MongoClient = require('mongodb').MongoClient;
-const GridFSBucket = require('mongodb').GridFSBucket;
 
-
-const storage = new GridFsStorage({
-  url: 'mongodb+srv://raphaeltanai:nTISUPYixEgncCfN@projectnum1.5vkr5zy.mongodb.net/?retryWrites=true&w=majority',
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      const filename = file.originalname;
-      const fileInfo = {
-        filename: Date.now() + filename,
-        bucketName: 'uploads'
-      };
-      resolve(fileInfo);
-    });
-  }
-});
-
-const upload = multer({ storage });
-
-let gfs;
-const conn = mongoose.connection;
-conn.once('open', () => {
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-});
+const fs = require('fs');
 
 /*
     defines an object which contains functions executed as callback
@@ -84,8 +57,12 @@ const profileController = {
                 following: result.following.length,
                 joindate: result.joindate,
                 userdescription: result.userdescription,
-                profilePicture : result.profilePicture
             };
+            if (fs.existsSync('public/images/' + req.session.userId + '.png')) {
+                details.profilePicture = '/images/' + req.session.userId + '.png';
+            } else {
+                details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId;
+            }
             
             //console.log(details);
             // render `../views/profile.hbs`
@@ -167,17 +144,73 @@ const profileController = {
     },
 
      getSettings: async function (req, res) {
-        res.render('settings');
+        var details = {
+            flag: false,
+            error: '',
+            displayName: req.session.displayName,
+            username: req.session.username,
+            user_description: req.session.userdescription,
+            following: req.session.following,
+            followers: req.session.followers,
+            joindate: req.session.joindate,
+        }
+         if (fs.existsSync('public/images/' + req.session.userId + '.png')) {
+             details.profilePicture = '/images/' + req.session.userId + '.png';
+         } else {
+             details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId;
+         }
+        res.render('settings', details);
         //const user = await db.findOne(User, { username: 'NewUser1' });
        // console.log(user);
     },   
 
     postSettings: async function (req, res)  {
+        bcrypt.compare(req.body.old_password, req.session.password, async function (err, equal) {
+            if (!equal) {
+                var details = {
+                    flag: true,
+                    error: "Current password is incorrect!",
+                    displayName: req.session.displayName,
+                    username: req.session.username,
+                    user_description: req.session.userdescription,
+                    following: req.session.following,
+                    followers: req.session.followers,
+                    joindate: req.session.joindate
+                };
+                if (fs.existsSync('public/images/' + req.session.userId + '.png')) {
+                    details.profilePicture = '/images/' + req.session.userId + '.png';
+                } else {
+                    details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId;
+                }
+                res.render('settings', details);
+            } else {
+                var update = {
+                    displayName: req.body.display_name,
+                    username: req.body.username,
+                    userdescription: req.body.user_description
+                }
 
-        var query = {username: req.session.username};
-        console.log(query);
-        
-        upload.single('file')(req, res, async (err) => {
+                req.session.displayName = update.displayName;
+                req.session.username = update.username;
+                req.session.userdescription = update.userdescription;
+
+                if (req.body.new_password != '') {
+                    bcrypt.hash(req.body.new_password, 10, function (err, hash) {
+                        update.password = hash;
+                        req.session.password = hash;
+                    });
+                }
+
+                await db.updateOne(User, {_id: req.session.userId}, update);
+
+                res.status(200);
+                res.redirect('/settings');
+            }
+        });
+
+        //if (passEqual == false) return;
+
+        /*upload.single('file')(req, res, async (err) => {
             if(err){
                 // handle error
                 res.status(500).send({ error: err.message });
@@ -210,37 +243,8 @@ const profileController = {
                     res.status(404).send({ error: 'User not found.' });
                 }
             }
-        });
-    },
-
-    getImage: async function (req, res) {
-      //  console.log(req.params.filename);
-
-        const filename = req.params.filename;
-        const dbURI = 'mongodb+srv://raphaeltanai:nTISUPYixEgncCfN@projectnum1.5vkr5zy.mongodb.net/test?retryWrites=true&w=majority';
-        const client = await MongoClient.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true });
-
-        const db = client.db('test'); // replace 'test' with the name of your database
-
-        const bucket = new GridFSBucket(db, { bucketName: 'uploads' });
-        const downloadStream = bucket.openDownloadStreamByName(filename);
-
-        downloadStream.on('data', (chunk) => {
-          res.write(chunk);
-        });
-
-        downloadStream.on('error', () => {
-          res.sendStatus(404);
-        });
-
-        downloadStream.on('end', () => {
-          res.end();
-        });
-    } 
-
-
-    
-
+        });*/
+    }
 }
 
 /*
