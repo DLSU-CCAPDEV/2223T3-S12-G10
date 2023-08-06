@@ -294,6 +294,12 @@ const postController = {
                 }
             }
 
+            if (fs.existsSync('public/images/' + req.session.userId + '.png')) {
+                results[0].profilePicture = '/images/' + req.session.userId + '.png';
+            } else {
+                results[0].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId;
+            }
+
             var details = {
                 post: results,
                 comments: comments,
@@ -301,14 +307,15 @@ const postController = {
                 username: req.session.username,
                 following: req.session.following,
                 followers: req.session.followers,
-                joindate: req.session.joindate,
-                profilePicture: req.session.profilePicture
+                joindate: req.session.joindate
             }
+
             if (fs.existsSync('public/images/' + req.session.userId + '.png')) {
                 details.profilePicture = '/images/' + req.session.userId + '.png';
             } else {
                 details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId;
             }
+
             //console.log(details;
             //pass the entire thing
             // render `../views/profile.hbs`
