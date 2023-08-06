@@ -48,15 +48,15 @@ const profileController = {
             render the profile page with their details
         */
 
-        var isOwnProfile = true;
+        var isNotProfile = true;
         if(result.username == req.session.username)
-            isOwnProfile = false;
+            isNotProfile = false;
         //console.log(result.username + " " +req.session.username);
         //console.log(isOwnProfile);
         if(result != null) {
         
             var details = {
-                isOwnProfile,
+                isNotProfile,
                 userid: result._id,
                 displayName: result.displayName,
                 username: result.username,
