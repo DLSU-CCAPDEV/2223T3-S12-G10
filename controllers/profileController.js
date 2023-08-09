@@ -151,6 +151,10 @@ const profileController = {
     },
 
      getSettings: async function (req, res) {
+         if (!req.session.username) {
+            res.redirect('/');
+            return;
+        }
         var details = {
             flag: false,
             error: '',
