@@ -39,17 +39,17 @@ $(document).ready(function() {
             else showError('Username can only contain alphanumeric characters and underscores!');
         }
 
+        if (newPassword.length != 0 && newPassword.length < 8) {
+            e.preventDefault();
+            showError('Password should contain at least 8 characters!');
+        }
+
         $.get('/checkUsername', {username: username}, function(result) {
             if (result.username == username) {
                 e.preventDefault();
                 showError('Username is already taken!');
             }
         });
-
-        if (newPassword.length != 0 && newPassword.length < 8) {
-            e.preventDefault();
-            showError('Password should contain at least 8 characters!');
-        }
     });
 
     $('#profile_settings #username').on("keyup", function() {
