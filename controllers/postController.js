@@ -194,7 +194,7 @@ const postController = {
         }
 
         var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
-        if (results[0].postUserId == currentuser._id) {
+        if (results[0].postUserId == currentuser.id) {
             results[0].editablePost = true;
         } else {
             results[0].editablePost = false;
@@ -228,7 +228,7 @@ const postController = {
         projection = '';
         var comments = await db.limitedFindReverse(Comment, query, projection, limit);
         for (let i = 0; i < comments.length; i++) {
-            if(comments[i].CommentUserId == currentuser._id) {
+            if(comments[i].CommentUserId == currentuser.id) {
                 comments[i].editableComment = true;
             } else {
                 comments[i].editableComment = false;
@@ -431,7 +431,10 @@ const postController = {
 
     },
 
-    getSearchedPosts: async function (req, res) {
+     getSearchedPosts: async function (req, res) {
+
+
+
         console.log('Secondary Search Accessed...');
         var query = {postTitle: {$regex: new RegExp('.*' + req.query.postSearch + '.*', 'i') } };
         console.log("postSearch is: " + req.query.postSearch);
@@ -440,10 +443,68 @@ const postController = {
         var results = await db.findMany(Post, query, projection);
 
         if (results.length != 0 ) {
+
+             for(let i = 0; i < results.length; i++) {
+                if (results[i]._doc.postText != null || results[i]._doc.postText != undefined) {
+                    results[i]._doc.postText = DOMPurify.sanitize(marked.parse(results[i]._doc.postText));
+                }
+                if (results[i]._doc.upvotes.length != 0 || results[i]._doc.downvotes.length != 0) {
+                    //calculate the votes
+                    var votecount = results[i]._doc.upvotes.length - results[i]._doc.downvotes.length;
+                    // votes.push(votecount);
+                    results[i].votes = votecount;
+                } else {
+                    //both are 0
+                    var votecount = 0;
+                    // votes.push (votecount);
+                    results[i].votes = votecount;
+                }
+
+                var currentuser = await db.findOne(User, {username: req.session.username}, '_id');
+                
+                if (results[i].upvotes.includes(currentuser._id)) {
+                    results[i].upvoted = true;
+                    results[i].downvoted = false;
+                    results[i].notvoted = false;
+                } else if (results[i].downvotes.includes(currentuser._id)) {
+                    results[i].downvoted = true;
+                    results[i].upvoted = false;
+                    results[i].notvoted = false;
+                } else {
+                    results[i].downvoted = false;
+                    results[i].upvoted = false;
+                    results[i].notvoted = true;
+                }
+            // console.log(votes[0]);
+                await db.findOne(User, {_id: results[i]._doc.postUserId}, 'username')
+                    .then(function(result) {
+                        console.log(result);
+                        // results[i]._doc.postUserId = result.username;
+                        results[i].username = result.username;
+                    });
+                await db.findMany(Comment, {CommentPostId: results[i]._doc._id}, '_id')
+                    .then(function(result) {
+                        results[i].commentcount = result.length;
+                    })
+
+                console.log("id");
+                console.log(results[i]._doc.postUserId.toString());
+                if (fs.existsSync('public/images/' + results[i]._doc.postUserId.toString() + '.png')) {
+                    results[i].profilePicture = '/images/' + results[i]._doc.postUserId.toString() + '.png';
+                } else {
+                    results[i].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + results[i]._doc.postUserId.toString();
+                }
+            }
             //there are posts similar in name to the search query
             console.log("query: "+ query.postTitle);
             var details = {
-                post: results
+                post: results,
+                displayName: req.session.displayName,
+                username: req.session.username,
+                following: req.session.following,
+                followers: req.session.followers,
+                joindate: req.session.joindate,
+                postUserId: req.session.userId
             };
             res.render('searched_posts', details);
             console.log(details);
