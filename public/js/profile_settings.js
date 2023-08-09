@@ -1,5 +1,12 @@
 function showError(error_text) {
     let error_container = $('#error-container');
+
+    if (error_text == '') {
+        error_container.attr('data-error-status', 'normal');
+        error_container.text(error_text);
+        return;
+    }
+
     error_container.attr('data-error-status', 'error');
     error_container.css('animation', 'shake ease-in-out 0.375s');
     setTimeout(function() {
@@ -32,6 +39,13 @@ $(document).ready(function() {
             else showError('Username can only contain alphanumeric characters and underscores!');
         }
 
+        $.get('/checkUsername', {username: username}, function(result) {
+            if (result.username == username) {
+                e.preventDefault();
+                showError('Username is already taken!');
+            }
+        });
+
         if (newPassword.length != 0 && newPassword.length < 8) {
             e.preventDefault();
             showError('Password should contain at least 8 characters!');
@@ -47,6 +61,16 @@ $(document).ready(function() {
         } else {
             $(this).removeClass('form-input-error');
         }
+
+        $.get('/checkUsernameAsync', {username: username}, function(result) {
+            if (result.username == username) {
+                $('#profile_settings #username').addClass('form-input-error');
+                showError('Username is already taken!');
+            } else {
+                $('#profile_settings #username').removeClass('form-input-error');
+                showError('');
+            }
+        });
     });
 
     $('#profile_settings #display_name').on("keyup", function() {

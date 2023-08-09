@@ -27,6 +27,12 @@ const signupController = {
     */
     postSignUp: async function (req, res) {
 
+        var usernameDb = db.findOne(User, {username: req.body.username}, 'username');
+        if (usernameDb == req.body.username) {
+            res.render('register', {errors: ['Username is already taken!']});
+            return;
+        }
+
         var errors = validationResult(req);
 
         if (!errors.isEmpty()) {

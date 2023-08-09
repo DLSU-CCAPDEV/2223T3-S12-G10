@@ -1,5 +1,12 @@
 function showError(error_text) {
     let error_container = $('#error-container');
+
+    if (error_text == '') {
+        error_container.attr('data-error-status', 'normal');
+        error_container.text(error_text);
+        return;
+    }
+
     error_container.attr('data-error-status', 'error');
     error_container.css('animation', 'shake ease-in-out 0.375s');
     setTimeout(function() {
@@ -36,6 +43,13 @@ $(document).ready(function() {
             else if (username.indexOf(' ') >= 0) showError('Username cannot contain spaces!');
             else showError('Username can only contain\nalphanumeric characters and underscores!');
         }
+
+        $.get('/checkUsername', {username: username}, function(result) {
+            if (result.username == username) {
+                e.preventDefault();
+                showError('Username is already taken!');
+            }
+        });
     });
 
     $('#confirm_password').on("keyup", function() {
@@ -55,5 +69,15 @@ $(document).ready(function() {
         } else {
             $(this).removeClass('form-input-error');
         }
+
+        $.get('/checkUsernameAsync', {username: username}, function(result) {
+            if (result.username == username) {
+                $('#form-register #username').addClass('form-input-error');
+                showError('Username is already taken!');
+            } else {
+                $('#form-register #username').removeClass('form-input-error');
+                showError('');
+            }
+        });
     });
 });

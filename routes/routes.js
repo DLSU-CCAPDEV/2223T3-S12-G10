@@ -98,6 +98,9 @@ app.get('/profile/:username/usercomments', profileController.getProfile);
 
 app.get('/settings', profileController.getSettings);
 app.post('/settings', upload.single('profile_picture'), profileController.postSettings);
+app.get('/checkUsername', profileController.checkUsername);
+app.get('/checkUsernameAsync', profileController.checkUsernameAsync);
+
 
 app.get('/about', postController.getAbout);
 app.get('/terms', postController.getTerms);

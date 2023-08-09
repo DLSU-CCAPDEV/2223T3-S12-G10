@@ -437,6 +437,18 @@ const profileController = {
                 }
             }
         }
+    },
+
+    checkUsername: function(req, res) {
+        db.findOne(User, {username: req.query.username}, 'username').then(function(result) {
+            res.send(result);
+        });
+    },
+
+    checkUsernameAsync: async function(req, res) {
+        await db.findOne(User, {username: req.query.username}, 'username').then(function(result) {
+            res.send(result);
+        });
     }
 }
 
