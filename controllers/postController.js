@@ -633,7 +633,7 @@ const postController = {
             var format = "MM/DD/YYYY, HH:mm:ss A";
             response[i]._doc.Date = moment(response[i]._doc.Date).format(format);
 
-            if(response[i].CommentUserId == currentuser._id) {
+            if(response[i].CommentUserId == currentuser.id) {
                 response[i]._doc.editableReply= true;
             } else {
                 response[i]._doc.editableReply = false;
