@@ -15,6 +15,18 @@ const mongoose = require('mongoose');
 
 const fs = require('fs');
 
+const createDOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const marked = require("marked");
+
+const window = new JSDOM('').window;
+const DOMPurify = createDOMPurify(window);
+
+marked.use({
+    mangle: false,
+    headerIds: false
+});
+
 /*
     defines an object which contains functions executed as callback
     when a client requests for `profile` paths in the server
@@ -129,6 +141,8 @@ const profileController = {
                         .then(function(result) {
                             posts[i].commentcount = result.length;
                         })
+
+                    posts[i].postText = DOMPurify.sanitize(marked.parse(posts[i].postText));
                 }
 
                 
