@@ -43,6 +43,30 @@ const postController = {
             return;
         }
 
+        try {
+            // Get the date from 7 days ago
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            var trending = await Post.aggregate([
+                {
+                    $unwind: "$postTags"
+                },
+                {
+                    $group: {
+                        _id: "$postTags",
+                        count: {$sum: 1}
+                    }
+                },
+                {
+                    $sort: {count: -1}
+                },
+                {$limit: 3}
+            ]);
+            console.log(trending);
+        } catch (error) {
+            console.log(error);
+        }
+
         // find post via title
         //var query = {postTitle: req.params.postTitle};
         //empty query
@@ -131,6 +155,7 @@ const postController = {
                 }
             }
             var details = {
+                trends: trending,
                 post: results,
                 displayName: req.session.displayName,
                 username: req.session.username,
@@ -162,6 +187,31 @@ const postController = {
     },
 
     getOnePost: async function (req, res) {
+
+        try {
+            // Get the date from 7 days ago
+            const sevenDaysAgo = new Date();
+            sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+            var trending = await Post.aggregate([
+                {
+                    $unwind: "$postTags"
+                },
+                {
+                    $group: {
+                        _id: "$postTags",
+                        count: {$sum: 1}
+                    }
+                },
+                {
+                    $sort: {count: -1}
+                },
+                {$limit: 3}
+            ]);
+            console.log(trending);
+        } catch (error) {
+            console.log(error);
+        }
+
         // find post via title
         //var query = {postTitle: req.params.postTitle};
         var query = {_id: req.params._id};
@@ -307,6 +357,7 @@ const postController = {
             }
 
             var details = {
+                trends: trending,
                 post: results,
                 comments: comments,
                 displayName: req.session.displayName,
@@ -433,6 +484,30 @@ const postController = {
 
      getSearchedPosts: async function (req, res) {
 
+         try {
+             // Get the date from 7 days ago
+             const sevenDaysAgo = new Date();
+             sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+             var trending = await Post.aggregate([
+                 {
+                     $unwind: "$postTags"
+                 },
+                 {
+                     $group: {
+                         _id: "$postTags",
+                         count: {$sum: 1}
+                     }
+                 },
+                 {
+                     $sort: {count: -1}
+                 },
+                 {$limit: 3}
+             ]);
+             console.log(trending);
+         } catch (error) {
+             console.log(error);
+         }
+
 
 
         console.log('Secondary Search Accessed...');
@@ -498,6 +573,7 @@ const postController = {
             //there are posts similar in name to the search query
             console.log("query: "+ query.postTitle);
             var details = {
+                trends: trending,
                 post: results,
                 displayName: req.session.displayName,
                 username: req.session.username,
