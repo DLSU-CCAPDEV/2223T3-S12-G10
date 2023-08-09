@@ -89,6 +89,18 @@ const profileController = {
                 // If '/usercomments' is present in the route, render 'profile_comments' template
                 var commentQuery = {CommentUserId: result._id};
                 var comments = await db.findMany(Comment, commentQuery, '');
+                for (let i = 0; i < comments.length; i++) {
+                    /*db.findOne(User, {_id: comments[i].CommentUserId}, 'username').then(function(result) {
+                        comments[i].CommentUser = result.username;
+                    });*/
+                    comments[i].CommentUser = req.session.username;
+                    if (fs.existsSync('public/images/' + comments[i].CommentUserId.toString() + '.png')) {
+                        comments[i].profilePicture = '/images/' + comments[i].CommentUserId.toString() + '.png';
+                    } else {
+                        comments[i].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + comments[i].CommentUserId.toString();
+                    }
+                    comments[i].editableComment = true;
+                }
                 var data = {
                     details: details,
                     comments: comments
