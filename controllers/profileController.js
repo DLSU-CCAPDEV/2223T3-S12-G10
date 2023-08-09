@@ -214,6 +214,108 @@ const profileController = {
                     details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId.toString();
                 }
                 res.render('settings', details);
+            } else if (req.body.display_name.length == 0) {
+                var details = {
+                    flag: true,
+                    error: "Please enter a display name!",
+                    displayName: req.session.displayName,
+                    username: req.session.username,
+                    user_description: req.session.userdescription,
+                    following: req.session.following,
+                    followers: req.session.followers,
+                    joindate: req.session.joindate
+                };
+                if (fs.existsSync('public/images/' + req.session.userId.toString() + '.png')) {
+                    details.profilePicture = '/images/' + req.session.userId.toString() + '.png';
+                } else {
+                    details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId.toString();
+                }
+                res.render('settings', details);
+            } else if (req.body.display_name.length > 16) {
+                var details = {
+                    flag: true,
+                    error: "Display name is too long!",
+                    displayName: req.session.displayName,
+                    username: req.session.username,
+                    user_description: req.session.userdescription,
+                    following: req.session.following,
+                    followers: req.session.followers,
+                    joindate: req.session.joindate
+                };
+                if (fs.existsSync('public/images/' + req.session.userId.toString() + '.png')) {
+                    details.profilePicture = '/images/' + req.session.userId.toString() + '.png';
+                } else {
+                    details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId.toString();
+                }
+                res.render('settings', details);
+            } else if (req.body.username.length < 3) {
+                var details = {
+                    flag: true,
+                    error: "Username is too short!",
+                    displayName: req.session.displayName,
+                    username: req.session.username,
+                    user_description: req.session.userdescription,
+                    following: req.session.following,
+                    followers: req.session.followers,
+                    joindate: req.session.joindate
+                };
+                if (fs.existsSync('public/images/' + req.session.userId.toString() + '.png')) {
+                    details.profilePicture = '/images/' + req.session.userId.toString() + '.png';
+                } else {
+                    details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId.toString();
+                }
+                res.render('settings', details);
+            } else if (req.body.username.length > 16) {
+                var details = {
+                    flag: true,
+                    error: "Username is too long!",
+                    displayName: req.session.displayName,
+                    username: req.session.username,
+                    user_description: req.session.userdescription,
+                    following: req.session.following,
+                    followers: req.session.followers,
+                    joindate: req.session.joindate
+                };
+                if (fs.existsSync('public/images/' + req.session.userId.toString() + '.png')) {
+                    details.profilePicture = '/images/' + req.session.userId.toString() + '.png';
+                } else {
+                    details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId.toString();
+                }
+                res.render('settings', details);
+            } else if (req.body.username.indexOf(' ') >= 0) {
+                var details = {
+                    flag: true,
+                    error: "Username cannot contain spaces!",
+                    displayName: req.session.displayName,
+                    username: req.session.username,
+                    user_description: req.session.userdescription,
+                    following: req.session.following,
+                    followers: req.session.followers,
+                    joindate: req.session.joindate
+                };
+                if (fs.existsSync('public/images/' + req.session.userId.toString() + '.png')) {
+                    details.profilePicture = '/images/' + req.session.userId.toString() + '.png';
+                } else {
+                    details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId.toString();
+                }
+                res.render('settings', details);
+            } else if (!req.body.username.match("^(?=.{3,16}$)[a-zA-Z0-9_]+$")) {
+                var details = {
+                    flag: true,
+                    error: "Username can only contain alphanumeric characters and underscores!",
+                    displayName: req.session.displayName,
+                    username: req.session.username,
+                    user_description: req.session.userdescription,
+                    following: req.session.following,
+                    followers: req.session.followers,
+                    joindate: req.session.joindate
+                };
+                if (fs.existsSync('public/images/' + req.session.userId.toString() + '.png')) {
+                    details.profilePicture = '/images/' + req.session.userId.toString() + '.png';
+                } else {
+                    details.profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + req.session.userId.toString();
+                }
+                res.render('settings', details);
             } else {
                 var update = {
                     displayName: req.body.display_name,
