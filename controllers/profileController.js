@@ -143,6 +143,12 @@ const profileController = {
                         })
 
                     posts[i].postText = DOMPurify.sanitize(marked.parse(posts[i].postText));
+
+                    if (fs.existsSync('public/images/' + posts[i].postUserId.toString() + '.png')) {
+                        posts[i].profilePicture = '/images/' + posts[i].postUserId.toString() + '.png';
+                    } else {
+                        posts[i].profilePicture = "https://api.dicebear.com/6.x/avataaars/svg?seed=" + posts[i].postUserId.toString();
+                    }
                 }
 
                 
